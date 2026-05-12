@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>カレンダー｜Imagine Deck</title>
+<meta name="description" content="Imagine Deck の予約状況を月単位で確認できます。日付をクリックすると、その日のイベントと予約状況が表示されます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body>
+<a class="u-skip-link" href="#main">本文へスキップ</a>
+
+<header class="l-header" id="site-header">
+  <div class="l-container l-header__inner">
+    <a class="l-header__brand" href="index.html"><span class="l-header__brand-mark" aria-hidden="true">ID</span><span>Imagine Deck<small>愛媛大学ミュージアム交流スペース</small></span></a>
+    <nav class="l-nav" aria-label="グローバル">
+      <a href="index.html">ホーム</a>
+      <a href="event-log.html">開催ログ</a>
+      <a href="calendar.html" aria-current="page">カレンダー</a>
+      <a href="guidelines.html">ガイドライン</a>
+      <a href="reserve.html">予約</a>
+    </nav>
+    <a class="c-button c-button--primary l-header__cta" href="reserve.html">予約する</a>
+    <button class="l-header__menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="メニューを開く" data-menu-toggle><span></span></button>
+  </div>
+  <nav class="l-mobile-nav" id="mobile-nav" aria-label="モバイル">
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="event-log.html">開催ログ</a></li>
+      <li><a href="calendar.html" aria-current="page">カレンダー</a></li>
+      <li><a href="guidelines.html">ガイドライン</a></li>
+      <li><a href="reserve.html">予約</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="l-page-hero l-page-hero--calendar m-mesh m-mesh--soft">
+    <div class="l-container l-page-hero__inner">
+      <span class="t-eyebrow" data-reveal>Calendar</span>
+      <h1 class="t-display-3" data-mask-reveal>予約状況カレンダー</h1>
+      <p>月単位で空き状況を確認できます。日付をクリックすると、その日のイベントと「この日で予約する」ボタンが表示されます。</p>
+    </div>
+  </section>
+
+  <section class="l-section l-section--tight">
+    <div class="l-container">
+      <div class="p-calendar-layout">
+        <div>
+          <div id="full-calendar" data-calendar data-full></div>
+        </div>
+        <aside>
+          <div class="c-card p-calendar-aside-card p-calendar-aside-card--legend" style="padding:24px;">
+            <h3 style="font-size:1.05rem;margin-bottom:12px;">凡例</h3>
+            <div style="display:grid;gap:8px;font-size:0.9rem;">
+              <div style="display:flex;align-items:center;gap:8px;"><span class="c-calendar__dot c-calendar__dot--event"></span> イベント</div>
+              <div style="display:flex;align-items:center;gap:8px;"><span class="c-calendar__dot c-calendar__dot--exhibition"></span> 展示</div>
+              <div style="display:flex;align-items:center;gap:8px;"><span class="c-calendar__dot c-calendar__dot--workshop"></span> ワークショップ</div>
+              <div style="display:flex;align-items:center;gap:8px;"><span class="c-calendar__dot c-calendar__dot--academic"></span> 学術</div>
+              <div style="display:flex;align-items:center;gap:8px;"><span class="c-calendar__dot c-calendar__dot--maintenance"></span> メンテナンス</div>
+            </div>
+          </div>
+
+          <div class="c-card p-calendar-aside-card p-calendar-aside-card--hint" style="padding:24px;margin-top:16px;">
+            <h3 style="font-size:1.05rem;margin-bottom:8px;">予約のヒント</h3>
+            <p style="font-size:0.9rem;color:var(--color-text-muted);line-height:1.85;">
+              日付をクリックすると、その日のイベントと「この日で予約する」ボタンが出ます。<br>
+              空き時間がある場合、そのまま予約フォームへ進めます。
+            </p>
+            <a class="c-button c-button--primary c-button--sm" href="reserve.html" style="margin-top:12px;">予約フォームを開く →</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day modal -->
+  <div class="c-modal" id="day-modal" role="dialog" aria-modal="true" aria-labelledby="day-modal-title" hidden>
+    <div class="c-modal__panel">
+      <header class="c-modal__head">
+        <h2 id="day-modal-title" style="font-size:1.15rem;"></h2>
+        <button type="button" class="c-modal__close" aria-label="閉じる" data-modal-close>×</button>
+      </header>
+      <div id="day-modal-body"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="l-footer">
+  <div class="l-container">
+    <div class="l-footer__inner">
+      <div class="l-footer__brand"><h3>Imagine Deck</h3><p>愛媛大学ミュージアムに生まれた、知的交流のハブ。研究のショーケース、学生のワークショップ、自由な対話の場として。</p></div>
+      <div class="l-footer__cols">
+        <div class="l-footer__col"><h4>About</h4><ul><li><a href="index.html#about">Imagine Deck とは</a></li><li><a href="index.html#features">できること</a></li><li><a href="index.html#flow">利用の流れ</a></li></ul></div>
+        <div class="l-footer__col"><h4>Use</h4><ul><li><a href="reserve.html">予約フォーム</a></li><li><a href="calendar.html">カレンダー</a></li><li><a href="guidelines.html">ガイドライン</a></li></ul></div>
+        <div class="l-footer__col"><h4>Archive</h4><ul><li><a href="event-log.html">開催ログ</a></li><li><a href="https://www.ehime-u.ac.jp/" rel="noopener" target="_blank">愛媛大学 ↗</a></li></ul></div>
+      </div>
+    </div>
+    <div class="l-container l-footer__bottom">
+      <span>© Imagine Deck / 愛媛大学ミュージアム</span>
+      <span>利用時間: 10:00 – 16:30 / 休館日: 日曜・祝日</span>
+    </div>
+  </div>
+</footer>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/motion.js"></script>
+<script type="module" src="js/calendar.js"></script>
+</body>
+</html>

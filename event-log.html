@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>開催ログ｜Imagine Deck</title>
+<meta name="description" content="Imagine Deck で開催されてきたイベント・展示・ワークショップ・学術企画のアーカイブ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body>
+<a class="u-skip-link" href="#main">本文へスキップ</a>
+
+<header class="l-header" id="site-header">
+  <div class="l-container l-header__inner">
+    <a class="l-header__brand" href="index.html"><span class="l-header__brand-mark" aria-hidden="true">ID</span><span>Imagine Deck<small>愛媛大学ミュージアム交流スペース</small></span></a>
+    <nav class="l-nav" aria-label="グローバル">
+      <a href="index.html">ホーム</a>
+      <a href="event-log.html" aria-current="page">開催ログ</a>
+      <a href="calendar.html">カレンダー</a>
+      <a href="guidelines.html">ガイドライン</a>
+      <a href="reserve.html">予約</a>
+    </nav>
+    <a class="c-button c-button--primary l-header__cta" href="reserve.html">予約する</a>
+    <button class="l-header__menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="メニューを開く" data-menu-toggle><span></span></button>
+  </div>
+  <nav class="l-mobile-nav" id="mobile-nav" aria-label="モバイル">
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="event-log.html" aria-current="page">開催ログ</a></li>
+      <li><a href="calendar.html">カレンダー</a></li>
+      <li><a href="guidelines.html">ガイドライン</a></li>
+      <li><a href="reserve.html">予約</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="l-page-hero l-page-hero--eventlog m-mesh m-mesh--soft">
+    <div class="l-container l-page-hero__inner">
+      <span class="t-eyebrow" data-reveal>Event Archive</span>
+      <h1 class="t-display-3" data-mask-reveal>開催ログ</h1>
+      <p>Imagine Deck で生まれた、学生・研究室・地域の知の交わり。<br>過去の事例は、次にここを使う人のヒントになります。</p>
+    </div>
+  </section>
+
+  <section class="l-section l-section--tight">
+    <div class="l-container">
+      <div class="p-eventlog-toolbar">
+        <div class="p-eventlog-toolbar__row">
+          <div class="c-search" style="flex:1;min-width:240px;">
+            <span class="c-search__icon" aria-hidden="true">🔍</span>
+            <input type="search" class="c-search__input" id="event-search" placeholder="タイトル・概要で検索…" aria-label="開催ログを検索">
+          </div>
+          <select class="c-select" id="event-month-filter" style="max-width:200px;" aria-label="年月で絞り込み">
+            <option value="">すべての年月</option>
+            <option value="2026-04">2026 年 4 月</option>
+            <option value="2026-03">2026 年 3 月</option>
+            <option value="2026-02">2026 年 2 月</option>
+            <option value="2026-01">2026 年 1 月</option>
+            <option value="2025-12">2025 年 12 月</option>
+          </select>
+        </div>
+        <div class="p-eventlog-toolbar__row">
+          <div class="c-chips" id="event-tag-filter" role="group" aria-label="種別フィルター">
+            <button type="button" class="c-chip is-active" data-tag="all">すべて</button>
+            <button type="button" class="c-chip" data-tag="event">イベント</button>
+            <button type="button" class="c-chip" data-tag="exhibition">展示</button>
+            <button type="button" class="c-chip" data-tag="workshop">ワークショップ</button>
+            <button type="button" class="c-chip" data-tag="academic">学術</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-eventlog-grid" id="event-grid" data-reveal-stagger>
+
+        <a class="c-event-card m-lift" href="event-detail.html" data-tags="exhibition" data-date="2026-04-18" data-search="学生 私のミュージアム 展示 写真">
+          <div class="c-event-card__media"><img src="assets/images/event/event-01-mymuseum.jpg" alt="" loading="lazy"></div>
+          <div class="c-event-card__body">
+            <div class="c-event-card__meta">
+              <span class="c-tag c-tag--exhibition">展示</span>
+              <span>2026.04.18</span>
+            </div>
+            <h3 class="c-event-card__title">学生たちが選んだ「私のミュージアム」展</h3>
+            <p class="c-event-card__excerpt">愛媛大学の学生が自分にとっての「ミュージアム的瞬間」を写真と短文で展示。3 日間で延べ 120 名が来場しました。</p>
+            <div class="c-event-card__footer">
+              <span>参加 120名</span>
+              <span>主催: 学芸ゼミ有志</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="c-event-card m-lift" href="event-detail.html" data-tags="workshop" data-date="2026-03-22" data-search="3D プリンタ 猫 工学 ワークショップ">
+          <div class="c-event-card__media"><img src="assets/images/event/event-02-3dprinter.jpg" alt="" loading="lazy"></div>
+          <div class="c-event-card__body">
+            <div class="c-event-card__meta">
+              <span class="c-tag c-tag--workshop">ワークショップ</span>
+              <span>2026.03.22</span>
+            </div>
+            <h3 class="c-event-card__title">3D プリンタで「ミュージアムの猫」を作る</h3>
+            <p class="c-event-card__excerpt">工学部の学生が講師になり、来場者に 3D プリンタの基礎と造形の楽しさを伝える会。子どもから教員まで参加。</p>
+            <div class="c-event-card__footer">
+              <span>参加 24名</span>
+              <span>主催: 機械工学・学生プロジェクト</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="c-event-card m-lift" href="event-detail.html" data-tags="academic" data-date="2026-02-09" data-search="研究 公開トーク 大学院 高校教員">
+          <div class="c-event-card__media"><img src="assets/images/event/event-03-publictalk.jpg" alt="" loading="lazy"></div>
+          <div class="c-event-card__body">
+            <div class="c-event-card__meta">
+              <span class="c-tag c-tag--academic">学術</span>
+              <span>2026.02.09</span>
+            </div>
+            <h3 class="c-event-card__title">研究を、誰のために語るか — 公開トーク</h3>
+            <p class="c-event-card__excerpt">大学院生 4 名が、自分の研究を「専門外の人に 5 分で伝える」ことに挑戦。司会は地域の高校教員。</p>
+            <div class="c-event-card__footer">
+              <span>参加 45名</span>
+              <span>主催: 大学院連携委員会</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="c-event-card m-lift" href="event-detail.html" data-tags="event" data-date="2026-01-26" data-search="新年 顔合わせ 交流 学生団体">
+          <div class="c-event-card__media"><img src="assets/images/event/event-04-newyear.jpg" alt="" loading="lazy"></div>
+          <div class="c-event-card__body">
+            <div class="c-event-card__meta">
+              <span class="c-tag c-tag--event">イベント</span>
+              <span>2026.01.26</span>
+            </div>
+            <h3 class="c-event-card__title">学生団体の新年顔合わせ会</h3>
+            <p class="c-event-card__excerpt">学内の 12 団体が集まり、活動紹介と相互交流。学部を超えたコラボ企画が 3 件生まれました。</p>
+            <div class="c-event-card__footer">
+              <span>参加 38名</span>
+              <span>主催: 学生団体連絡会</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="c-event-card m-lift" href="event-detail.html" data-tags="exhibition" data-date="2026-01-12" data-search="文学 古典 展示 書籍 装幀">
+          <div class="c-event-card__media"><img src="assets/images/event/event-05-bookbinding.jpg" alt="" loading="lazy"></div>
+          <div class="c-event-card__body">
+            <div class="c-event-card__meta">
+              <span class="c-tag c-tag--exhibition">展示</span>
+              <span>2026.01.12</span>
+            </div>
+            <h3 class="c-event-card__title">古典の装幀展 — 紙とインクと言葉</h3>
+            <p class="c-event-card__excerpt">人文学部の学生が、和装本・洋装本の構造と装幀の美しさを紹介。手で触れられる展示が好評でした。</p>
+            <div class="c-event-card__footer">
+              <span>参加 87名</span>
+              <span>主催: 人文学・装幀研究会</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="c-event-card m-lift" href="event-detail.html" data-tags="workshop" data-date="2025-12-14" data-search="絵本 子供 地域 朗読">
+          <div class="c-event-card__media"><img src="assets/images/event/event-06-picturebook.jpg" alt="" loading="lazy"></div>
+          <div class="c-event-card__body">
+            <div class="c-event-card__meta">
+              <span class="c-tag c-tag--workshop">ワークショップ</span>
+              <span>2025.12.14</span>
+            </div>
+            <h3 class="c-event-card__title">地域の子どもと作る絵本朗読の会</h3>
+            <p class="c-event-card__excerpt">教育学部の学生が地域の小学生と一緒に、自作絵本の朗読発表会を実施。保護者にも好評でした。</p>
+            <div class="c-event-card__footer">
+              <span>参加 32名</span>
+              <span>主催: 教育学・地域連携プロジェクト</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="p-eventlog-empty" id="event-empty">
+        <p style="font-size:1.1rem;font-weight:600;">該当するイベントが見つかりませんでした。</p>
+        <p style="margin-top:8px;">フィルター条件を変えてお試しください。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="l-footer">
+  <div class="l-container">
+    <div class="l-footer__inner">
+      <div class="l-footer__brand"><h3>Imagine Deck</h3><p>愛媛大学ミュージアムに生まれた、知的交流のハブ。研究のショーケース、学生のワークショップ、自由な対話の場として。</p></div>
+      <div class="l-footer__cols">
+        <div class="l-footer__col"><h4>About</h4><ul><li><a href="index.html#about">Imagine Deck とは</a></li><li><a href="index.html#features">できること</a></li><li><a href="index.html#flow">利用の流れ</a></li></ul></div>
+        <div class="l-footer__col"><h4>Use</h4><ul><li><a href="reserve.html">予約フォーム</a></li><li><a href="calendar.html">カレンダー</a></li><li><a href="guidelines.html">ガイドライン</a></li></ul></div>
+        <div class="l-footer__col"><h4>Archive</h4><ul><li><a href="event-log.html">開催ログ</a></li><li><a href="https://www.ehime-u.ac.jp/" rel="noopener" target="_blank">愛媛大学 ↗</a></li></ul></div>
+      </div>
+    </div>
+    <div class="l-container l-footer__bottom">
+      <span>© Imagine Deck / 愛媛大学ミュージアム</span>
+      <span>利用時間: 10:00 – 16:30 / 休館日: 日曜・祝日</span>
+    </div>
+  </div>
+</footer>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/motion.js"></script>
+<script type="module" src="js/event-log.js"></script>
+</body>
+</html>

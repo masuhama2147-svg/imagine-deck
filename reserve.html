@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>スペースを予約する｜Imagine Deck</title>
+<meta name="description" content="Imagine Deck を予約する 6 ステップフォーム。日時・主催者情報・利用内容・利用箇所・詳細・確認の順で、必要な情報を一つずつ入力できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body class="p-reserve-page">
+<a class="u-skip-link" href="#main">本文へスキップ</a>
+
+<header class="l-header" id="site-header">
+  <div class="l-container l-header__inner">
+    <a class="l-header__brand" href="index.html"><span class="l-header__brand-mark" aria-hidden="true">ID</span><span>Imagine Deck<small>愛媛大学ミュージアム交流スペース</small></span></a>
+    <nav class="l-nav" aria-label="グローバル">
+      <a href="index.html">ホーム</a>
+      <a href="event-log.html">開催ログ</a>
+      <a href="calendar.html">カレンダー</a>
+      <a href="guidelines.html">ガイドライン</a>
+      <a href="reserve.html" aria-current="page">予約</a>
+    </nav>
+    <a class="c-button c-button--primary l-header__cta" href="reserve.html" aria-current="page">予約する</a>
+    <button class="l-header__menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="メニューを開く" data-menu-toggle><span></span></button>
+  </div>
+  <nav class="l-mobile-nav" id="mobile-nav" aria-label="モバイル">
+    <ul>
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="event-log.html">開催ログ</a></li>
+      <li><a href="calendar.html">カレンダー</a></li>
+      <li><a href="guidelines.html">ガイドライン</a></li>
+      <li><a href="reserve.html" aria-current="page">予約</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="l-page-hero l-page-hero--reserve m-mesh m-mesh--soft">
+    <div class="l-container l-page-hero__inner">
+      <span class="t-eyebrow" data-reveal>Reserve</span>
+      <h1 class="t-display-3" data-mask-reveal>スペースを予約する</h1>
+      <p>必要な情報を 6 ステップに分けてお聞きします。各ステップで「今やること」だけに集中できる構成です。<br>送信前に内容を確認できますので、安心して進めてください。</p>
+    </div>
+  </section>
+
+  <section class="l-section l-section--tight">
+    <div class="l-container">
+      <div class="p-reserve-layout">
+        <div class="p-reserve-layout__main">
+
+          <!-- Stepper -->
+          <div class="c-stepper" aria-label="予約ステップ">
+            <div class="c-form-progress" aria-hidden="true">
+              <span class="c-form-progress__bar" id="progress-bar"></span>
+            </div>
+            <p class="c-stepper__status" id="reserve-step-status" aria-live="polite">ステップ 1 / 6：日時</p>
+            <ol class="c-stepper__list" id="stepper">
+              <li class="c-stepper__item is-current" data-step="1">
+                <span class="c-stepper__item__num">1</span>
+                <span class="c-stepper__item__label">日時</span>
+              </li>
+              <li class="c-stepper__item" data-step="2">
+                <span class="c-stepper__item__num">2</span>
+                <span class="c-stepper__item__label">主催者</span>
+              </li>
+              <li class="c-stepper__item" data-step="3">
+                <span class="c-stepper__item__num">3</span>
+                <span class="c-stepper__item__label">利用内容</span>
+              </li>
+              <li class="c-stepper__item" data-step="4">
+                <span class="c-stepper__item__num">4</span>
+                <span class="c-stepper__item__label">利用箇所</span>
+              </li>
+              <li class="c-stepper__item" data-step="5">
+                <span class="c-stepper__item__num">5</span>
+                <span class="c-stepper__item__label">詳細・添付</span>
+              </li>
+              <li class="c-stepper__item" data-step="6">
+                <span class="c-stepper__item__num">6</span>
+                <span class="c-stepper__item__label">確認</span>
+              </li>
+            </ol>
+          </div>
+
+          <form id="reserve-form" data-endpoint="" novalidate>
+
+            <!-- ============ Step 1: 日時 ============ -->
+            <section class="p-reserve-step c-step-card is-current" data-step="1" aria-labelledby="step1-title">
+              <header class="c-step-card__head">
+                <span class="c-step-card__num">STEP 01 / 06</span>
+                <h2 class="c-step-card__title" id="step1-title">まず、予約できるか確認しましょう</h2>
+                <p class="c-step-card__lead">
+                  最初に、希望する日付と時間を選んでください。Imagine Deck の利用時間は <strong>10:00〜16:30</strong>、休館日は日曜・祝日です。
+                </p>
+              </header>
+
+              <div class="c-error-summary" data-error-summary hidden></div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="date">利用したい日</label>
+                <p class="c-field-help">予約済みの日には色が付きます。休館日は選べません。</p>
+                <div id="reserve-calendar" data-calendar></div>
+                <input type="hidden" id="date" name="date" required>
+                <p class="c-error-message" data-error-for="date" hidden></p>
+              </div>
+
+              <div class="c-time-row" style="margin-top:24px;">
+                <div class="c-field">
+                  <label class="c-field__label c-field__label--required" for="start-time">開始時間</label>
+                  <select class="c-select" id="start-time" name="start-time" required></select>
+                  <p class="c-error-message" data-error-for="start-time" hidden></p>
+                </div>
+                <div class="c-time-row__sep" aria-hidden="true">〜</div>
+                <div class="c-field">
+                  <label class="c-field__label c-field__label--required" for="end-time">終了時間</label>
+                  <select class="c-select" id="end-time" name="end-time" required></select>
+                  <p class="c-error-message" data-error-for="end-time" hidden></p>
+                </div>
+              </div>
+
+              <div class="p-reserve-feedback" id="availability-feedback" hidden></div>
+
+              <div class="c-step-card__actions">
+                <a class="c-button c-button--ghost-dark" href="calendar.html">カレンダーで空きを確認</a>
+                <button type="button" class="c-button c-button--primary" data-next>次へ進む <span aria-hidden="true">→</span></button>
+              </div>
+            </section>
+
+            <!-- ============ Step 2: 主催者情報 ============ -->
+            <section class="p-reserve-step c-step-card" data-step="2" aria-labelledby="step2-title" hidden>
+              <header class="c-step-card__head">
+                <span class="c-step-card__num">STEP 02 / 06</span>
+                <h2 class="c-step-card__title" id="step2-title">主催者情報を教えてください</h2>
+                <p class="c-step-card__lead">
+                  「誰が責任を持って利用するか」を明確にするための情報です。学生団体・授業・ゼミなどの場合は、代表者と確認者を分けて記入してください。
+                </p>
+              </header>
+
+              <div class="c-error-summary" data-error-summary hidden></div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="org-name">主催者・団体名</label>
+                <p class="c-field-help">例：「○○ゼミ」「学生団体△△」「機械工学科 学生プロジェクト」</p>
+                <input class="c-input" type="text" id="org-name" name="org-name" required maxlength="100" placeholder="〇〇ゼミ / △△プロジェクト">
+                <p class="c-error-message" data-error-for="org-name" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="student-name">担当学生 氏名</label>
+                <p class="c-field-help">当日 Imagine Deck で対応する学生の氏名を記入してください。</p>
+                <input class="c-input" type="text" id="student-name" name="student-name" required maxlength="50" placeholder="愛媛 太郎">
+                <p class="c-error-message" data-error-for="student-name" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="student-email">担当学生 メールアドレス</label>
+                <p class="c-field-help">大学発行のメール（@stu.ehime-u.ac.jp など）を推奨します。運営から確認連絡がいきます。</p>
+                <input class="c-input" type="email" id="student-email" name="student-email" required maxlength="100" placeholder="taro@stu.ehime-u.ac.jp" inputmode="email" autocomplete="email">
+                <p class="c-error-message" data-error-for="student-email" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="staff-name">担当教員・担当職員 氏名</label>
+                <p class="c-field-why">企画内容を確認できる大学関係者を記入してください。研究室・授業・学生団体の場合は、指導教員・顧問など。</p>
+                <input class="c-input" type="text" id="staff-name" name="staff-name" required maxlength="50" placeholder="山田 花子（指導教員）">
+                <p class="c-error-message" data-error-for="staff-name" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="staff-email">担当教員・担当職員 メールアドレス</label>
+                <p class="c-field-help">@ehime-u.ac.jp など教職員アドレスを推奨。</p>
+                <input class="c-input" type="email" id="staff-email" name="staff-email" required maxlength="100" placeholder="yamada@ehime-u.ac.jp" inputmode="email" autocomplete="email">
+                <p class="c-error-message" data-error-for="staff-email" hidden></p>
+              </div>
+
+              <div class="c-step-card__actions">
+                <button type="button" class="c-button c-button--ghost-dark" data-prev>← 戻る</button>
+                <button type="button" class="c-button c-button--primary" data-next>次へ進む →</button>
+              </div>
+            </section>
+
+            <!-- ============ Step 3: 利用内容 ============ -->
+            <section class="p-reserve-step c-step-card" data-step="3" aria-labelledby="step3-title" hidden>
+              <header class="c-step-card__head">
+                <span class="c-step-card__num">STEP 03 / 06</span>
+                <h2 class="c-step-card__title" id="step3-title">どんな利用内容ですか？</h2>
+                <p class="c-step-card__lead">
+                  入力負担を減らすため、まずは選択式で大枠を決めましょう。詳細は次のステップで聞きます。
+                </p>
+              </header>
+
+              <div class="c-error-summary" data-error-summary hidden></div>
+
+              <fieldset class="c-field">
+                <legend class="c-field__label c-field__label--required">利用目的タイプ</legend>
+                <p class="c-field-help">最も近いものを 1 つ選んでください。複数の性質がある場合は、メインの方を。</p>
+                <div class="c-choice-grid" data-radio-group="purpose-type" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="purpose-type" value="exhibition" required>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">🖼 展示・発表</span>
+                    <span class="c-choice-card__desc">研究成果、制作物、活動紹介などを展示する</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="purpose-type" value="event">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">🎤 イベント・交流</span>
+                    <span class="c-choice-card__desc">トーク、説明会、交流会、対話の場</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="purpose-type" value="workshop">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">🛠 ワークショップ</span>
+                    <span class="c-choice-card__desc">参加者が手を動かして学ぶ、体験型の企画</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="purpose-type" value="study">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">📖 自習・打ち合わせ</span>
+                    <span class="c-choice-card__desc">少人数での学習・相談・打ち合わせ</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="purpose-type" hidden></p>
+              </fieldset>
+
+              <fieldset class="c-field" style="margin-top:28px;">
+                <legend class="c-field__label c-field__label--required">予約形態</legend>
+                <p class="c-field-help">スペース全体を貸し切るか、他の利用者と共有するか。</p>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="reserve-type" value="shared" required>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">通常利用（共有）</span>
+                    <span class="c-choice-card__desc">他の利用者と空間を共有します</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="reserve-type" value="exclusive">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">専有利用（貸切）</span>
+                    <span class="c-choice-card__desc">スペース全体を貸し切ります</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="reserve-type" hidden></p>
+              </fieldset>
+
+              <fieldset class="c-field" style="margin-top:28px;">
+                <legend class="c-field__label c-field__label--required">参加形態</legend>
+                <p class="c-field-help">どなたが参加できる企画ですか？</p>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="audience" value="public" required>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">一般公開</span>
+                    <span class="c-choice-card__desc">どなたでも参加できる</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="audience" value="campus">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">学内のみ</span>
+                    <span class="c-choice-card__desc">愛媛大学の関係者のみ</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="audience" value="closed">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">関係者のみ</span>
+                    <span class="c-choice-card__desc">招待・関係者限定</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="audience" hidden></p>
+              </fieldset>
+
+              <fieldset class="c-field" style="margin-top:28px;">
+                <legend class="c-field__label c-field__label--required">学術イベントですか？</legend>
+                <p class="c-field-help">「学術」を選んだ場合、教員の承認が必要になることがあります。</p>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="academic" value="academic" required>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">学術イベント</span>
+                    <span class="c-choice-card__desc">研究発表・学術シンポジウムなど</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="academic" value="non-academic">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">学術以外</span>
+                    <span class="c-choice-card__desc">展示・交流イベントなど</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="academic" value="study">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">自習・交流</span>
+                    <span class="c-choice-card__desc">特定のイベントではない</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="academic" hidden></p>
+              </fieldset>
+
+              <div class="c-field" style="margin-top:28px;">
+                <label class="c-field__label c-field__label--required" for="capacity">想定人数</label>
+                <p class="c-field-help">主催者を含めた、当日の最大参加者数の見込み（1〜100 人）。</p>
+                <input class="c-input" type="number" id="capacity" name="capacity" min="1" max="100" required inputmode="numeric" placeholder="例：20" style="max-width:200px;">
+                <p class="c-error-message" data-error-for="capacity" hidden></p>
+              </div>
+
+              <fieldset class="c-field" style="margin-top:28px;">
+                <legend class="c-field__label c-field__label--required">参加費</legend>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="fee" value="free" required>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">無料</span>
+                    <span class="c-choice-card__desc">参加費は徴収しない</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="fee" value="paid">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">有料</span>
+                    <span class="c-choice-card__desc">参加費を徴収する（備考欄に金額を記入）</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="fee" hidden></p>
+              </fieldset>
+
+              <fieldset class="c-field" style="margin-top:28px;">
+                <legend class="c-field__label c-field__label--required">飲食</legend>
+                <p class="c-field-help">飲み物 OK・食事 NG が原則です。蓋付き容器のみ持込可。</p>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="catering" value="none" required>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">なし</span>
+                    <span class="c-choice-card__desc">飲食物の提供・持込はしない</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="catering" value="drinks">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">飲み物のみ</span>
+                    <span class="c-choice-card__desc">蓋付き容器の飲み物のみ</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="catering" value="snacks">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">軽食あり（要相談）</span>
+                    <span class="c-choice-card__desc">事前に運営と相談してください</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="catering" hidden></p>
+              </fieldset>
+
+              <div class="c-step-card__actions">
+                <button type="button" class="c-button c-button--ghost-dark" data-prev>← 戻る</button>
+                <button type="button" class="c-button c-button--primary" data-next>次へ進む →</button>
+              </div>
+            </section>
+
+            <!-- ============ Step 4: 利用箇所 ============ -->
+            <section class="p-reserve-step c-step-card" data-step="4" aria-labelledby="step4-title" hidden>
+              <header class="c-step-card__head">
+                <span class="c-step-card__num">STEP 04 / 06</span>
+                <h2 class="c-step-card__title" id="step4-title">どこを使いますか？</h2>
+                <p class="c-step-card__lead">
+                  Imagine Deck の中で、利用したい場所を選んでください（複数可）。各カードの説明を参考に、企画に合った場所を選んでください。
+                </p>
+              </header>
+
+              <div class="c-error-summary" data-error-summary hidden></div>
+
+              <fieldset class="c-field">
+                <legend class="c-field__label c-field__label--required">利用箇所（複数選択可）</legend>
+                <p class="c-field-help">将来的には見取り図 UI に置き換えられます。今は文章で利用イメージをお伝えします。</p>
+                <div class="c-choice-grid" data-area-group>
+                  <label class="c-choice-card">
+                    <input type="checkbox" name="area" value="wall-front">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">壁面（入口側）</span>
+                    <span class="c-choice-card__desc">ポスター展示、来場者への案内、入口付近の掲示に向いています。</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="checkbox" name="area" value="wall-back">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">壁面（奥）</span>
+                    <span class="c-choice-card__desc">落ち着いた展示、長期間の掲示、長文を読ませる展示に向いています。</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="checkbox" name="area" value="floor-front">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">フロア（入口側）</span>
+                    <span class="c-choice-card__desc">ライトな立ち話・受付・物販・短時間の活動に向いています。</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="checkbox" name="area" value="floor-back">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">フロア（奥）</span>
+                    <span class="c-choice-card__desc">ワークショップ、少人数イベント、机を使う活動に向いています。</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="checkbox" name="area" value="counter">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">カウンター</span>
+                    <span class="c-choice-card__desc">受付・ドリンク提供・物販などに向いています。</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="checkbox" name="area" value="other">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">その他</span>
+                    <span class="c-choice-card__desc">上記以外の利用形態の場合（次のステップで詳細を記入）</span>
+                  </label>
+                </div>
+                <p class="c-error-message" data-error-for="area" hidden></p>
+              </fieldset>
+
+              <div class="c-step-card__actions">
+                <button type="button" class="c-button c-button--ghost-dark" data-prev>← 戻る</button>
+                <button type="button" class="c-button c-button--primary" data-next>次へ進む →</button>
+              </div>
+            </section>
+
+            <!-- ============ Step 5: 詳細・添付 ============ -->
+            <section class="p-reserve-step c-step-card" data-step="5" aria-labelledby="step5-title" hidden>
+              <header class="c-step-card__head">
+                <span class="c-step-card__num">STEP 05 / 06</span>
+                <h2 class="c-step-card__title" id="step5-title">企画の詳細を教えてください</h2>
+                <p class="c-step-card__lead">
+                  ここが最後の入力です。書きにくい場合は、あとで運営から確認連絡もできますので、まずは分かる範囲で大丈夫です。
+                </p>
+              </header>
+
+              <div class="c-error-summary" data-error-summary hidden></div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="purpose">利用目的</label>
+                <p class="c-field-help">
+                  例：研究成果の展示、学生向けワークショップ、地域交流イベント、授業外活動の発表、ゼミの中間発表、研究室の合同勉強会 など
+                </p>
+                <textarea class="c-textarea" id="purpose" name="purpose" required maxlength="500" rows="3" placeholder="例：機械工学科 学生プロジェクトの成果展示。3D プリンタで製作した作品 12 点を展示し、来場者に技術の裏側を解説します。"></textarea>
+                <p class="c-error-message" data-error-for="purpose" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--required" for="event-detail">イベント詳細</label>
+                <p class="c-field-help">
+                  当日の流れ、展示物、参加対象者、必要な備品、運営体制などを記入してください。タイムテーブルがあれば箇条書きで OK。
+                </p>
+                <textarea class="c-textarea" id="event-detail" name="event-detail" required maxlength="2000" rows="6" placeholder="14:00 開場・受付&#10;14:10 オープニング&#10;14:20 作品解説（5 分 × 3 人）&#10;15:00 来場者との交流&#10;16:30 終了・撤収"></textarea>
+                <p class="c-error-message" data-error-for="event-detail" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--optional" for="sns">SNS リンク</label>
+                <p class="c-field-help">広報や記録用に使う SNS（Twitter/X, Instagram など）のリンクがあれば。</p>
+                <input class="c-input" type="url" id="sns" name="sns" maxlength="300" placeholder="https://x.com/...">
+                <p class="c-error-message" data-error-for="sns" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--optional" for="related-url">関連 URL</label>
+                <p class="c-field-help">企画ページ、研究室ページ、団体サイトなど、参考になるリンク。</p>
+                <input class="c-input" type="url" id="related-url" name="related-url" maxlength="300" placeholder="https://...">
+                <p class="c-error-message" data-error-for="related-url" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <span class="c-field__label c-field__label--optional">添付資料</span>
+                <p class="c-field-help">企画書、ポスター案、展示レイアウト案、タイムテーブルなど。<strong>PDF / PNG / JPG / GIF、各 10MB まで、合計 30MB まで</strong>。</p>
+
+                <div class="c-file-drop" data-file-drop>
+                  <div class="c-file-drop__icon" aria-hidden="true">📎</div>
+                  <div class="c-file-drop__title">ドラッグ＆ドロップで追加</div>
+                  <div class="c-file-drop__hint">または、ボタンから選択もできます</div>
+                  <button type="button" class="c-file-drop__button" data-file-pick>ファイルを選ぶ</button>
+                  <input type="file" id="files" name="files" multiple accept=".pdf,.png,.jpg,.jpeg,.gif">
+                </div>
+                <ul class="c-file-list" data-file-list></ul>
+                <p class="c-error-message" data-error-for="files" hidden></p>
+              </div>
+
+              <div class="c-field">
+                <label class="c-field__label c-field__label--optional" for="notes">備考</label>
+                <p class="c-field-help">参加費がある場合の金額、特別な備品、連絡事項などをご記入ください。</p>
+                <textarea class="c-textarea" id="notes" name="notes" maxlength="1000" rows="3" placeholder="参加費 500 円（材料費）。プロジェクター借用希望。"></textarea>
+                <p class="c-error-message" data-error-for="notes" hidden></p>
+              </div>
+
+              <div class="c-step-card__actions">
+                <button type="button" class="c-button c-button--ghost-dark" data-prev>← 戻る</button>
+                <button type="button" class="c-button c-button--primary" data-next>確認画面へ進む →</button>
+              </div>
+            </section>
+
+            <!-- ============ Step 6: 確認 ============ -->
+            <section class="p-reserve-step c-step-card" data-step="6" aria-labelledby="step6-title" hidden>
+              <header class="c-step-card__head">
+                <span class="c-step-card__num">STEP 06 / 06</span>
+                <h2 class="c-step-card__title" id="step6-title">入力内容を確認してください</h2>
+                <p class="c-step-card__lead">
+                  これが運営に届く内容です。各セクションの「修正」を押すと、入力内容を残したまま、そのステップに戻れます。
+                </p>
+              </header>
+
+              <div id="confirm-summary"></div>
+
+              <div class="c-alert c-alert--info" style="margin-top:24px;">
+                <span class="c-alert__icon" aria-hidden="true">ℹ︎</span>
+                <div>
+                  送信後、入力されたメールアドレスに受付確認の連絡が届きます（数日以内に運営から内容確認のメールがいきます）。
+                </div>
+              </div>
+
+              <div class="c-step-card__actions">
+                <button type="button" class="c-button c-button--ghost-dark" data-prev>← 詳細に戻る</button>
+                <button type="submit" class="c-button c-button--primary" data-submit>予約リクエストを送信する</button>
+              </div>
+
+              <div id="submit-result" hidden></div>
+            </section>
+
+          </form>
+
+        </div>
+
+        <!-- Aside -->
+        <aside class="p-reserve-layout__aside">
+          <div class="p-reserve-aside-card">
+            <h3>📌 入力前に確認</h3>
+            <ul>
+              <li>利用時間: 10:00〜16:30</li>
+              <li>休館日: 日曜・祝日</li>
+              <li>飲み物 OK / 食事 NG</li>
+              <li>ゴミは持ち帰り</li>
+              <li>学外主催者は有料（要見積）</li>
+            </ul>
+          </div>
+          <div class="p-reserve-aside-card">
+            <h3>💬 困ったら</h3>
+            <ul>
+              <li><a href="guidelines.html">ガイドラインを見る</a></li>
+              <li><a href="calendar.html">空き状況を確認する</a></li>
+              <li><a href="event-log.html">過去の利用例を見る</a></li>
+            </ul>
+          </div>
+          <div class="p-reserve-aside-card">
+            <h3>⏱ 入力時間の目安</h3>
+            <ul>
+              <li>5〜10 分で送信できます</li>
+              <li>戻るボタンで内容は保持</li>
+              <li>送信前に全項目を確認できます</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="l-footer">
+  <div class="l-container">
+    <div class="l-footer__inner">
+      <div class="l-footer__brand">
+        <h3>Imagine Deck</h3>
+        <p>愛媛大学ミュージアムに生まれた、知的交流のハブ。研究のショーケース、学生のワークショップ、自由な対話の場として。</p>
+      </div>
+      <div class="l-footer__cols">
+        <div class="l-footer__col"><h4>About</h4><ul><li><a href="index.html#about">Imagine Deck とは</a></li><li><a href="index.html#features">できること</a></li><li><a href="index.html#flow">利用の流れ</a></li></ul></div>
+        <div class="l-footer__col"><h4>Use</h4><ul><li><a href="reserve.html">予約フォーム</a></li><li><a href="calendar.html">カレンダー</a></li><li><a href="guidelines.html">ガイドライン</a></li></ul></div>
+        <div class="l-footer__col"><h4>Archive</h4><ul><li><a href="event-log.html">開催ログ</a></li><li><a href="https://www.ehime-u.ac.jp/" rel="noopener" target="_blank">愛媛大学 ↗</a></li></ul></div>
+      </div>
+    </div>
+    <div class="l-container l-footer__bottom">
+      <span>© Imagine Deck / 愛媛大学ミュージアム</span>
+      <span>利用時間: 10:00 – 16:30 / 休館日: 日曜・祝日</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/motion.js"></script>
+<script type="module" src="js/calendar.js"></script>
+<script type="module" src="js/reservation.js"></script>
+</body>
+</html>

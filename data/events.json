@@ -1,0 +1,15 @@
+{
+  "reserved": [
+    { "date": "2026-05-12", "type": "exhibition", "title": "工学部成果展示", "organizer": "工学部 学生プロジェクト", "start": "10:00", "end": "16:30" },
+    { "date": "2026-05-15", "type": "workshop",   "title": "プログラミング体験会", "organizer": "情報学科 有志", "start": "13:00", "end": "16:00" },
+    { "date": "2026-05-18", "type": "event",      "title": "学生団体交流会", "organizer": "学生団体連絡会", "start": "14:00", "end": "16:30" },
+    { "date": "2026-05-22", "type": "academic",   "title": "公開ゼミナール", "organizer": "人文学部", "start": "10:00", "end": "12:00" },
+    { "date": "2026-05-22", "type": "exhibition", "title": "古典装幀展（午後）", "organizer": "装幀研究会", "start": "13:00", "end": "16:30" },
+    { "date": "2026-05-26", "type": "workshop",   "title": "和紙でつくる本", "organizer": "教育学部", "start": "10:00", "end": "12:30" },
+    { "date": "2026-05-29", "type": "event",      "title": "地域交流会", "organizer": "地域連携センター", "start": "14:00", "end": "16:30" },
+    { "date": "2026-06-03", "type": "maintenance","title": "メンテナンス日", "organizer": "Imagine Deck 運営", "start": "10:00", "end": "16:30" },
+    { "date": "2026-06-08", "type": "exhibition", "title": "写真展「街の余白」", "organizer": "写真サークル", "start": "10:00", "end": "16:30" },
+    { "date": "2026-06-12", "type": "academic",   "title": "シンポジウム「知を開く」", "organizer": "大学院連携委員会", "start": "10:00", "end": "16:30" },
+    { "date": "2026-06-19", "type": "workshop",   "title": "3D プリンタ体験", "organizer": "機械工学プロジェクト", "start": "13:00", "end": "16:00" }
+  ]
+}
