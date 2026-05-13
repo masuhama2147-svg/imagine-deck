@@ -374,6 +374,10 @@
 }
 
 @media (max-width: 767px) {
+  .p-reserve-page {
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
   .p-reserve-page .l-page-hero {
     padding-block: 56px 44px;
   }
