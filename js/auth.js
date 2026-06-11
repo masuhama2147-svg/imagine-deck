@@ -169,12 +169,12 @@ function escapeHtml(s) {
 
 /* プレビュー（?preview=...）中、内部リンクに preview を引き継ぎ、遷移してもログイン状態を維持する */
 function persistPreviewLinks(preview) {
+  const q = `?preview=${encodeURIComponent(preview)}`;
   document.querySelectorAll("a[href]").forEach((a) => {
     const href = a.getAttribute("href");
-    // 同一サイトの .html リンク（外部URL・既存クエリ・アンカー無しのもの）にのみ付与
-    if (/^(?!https?:)[\w./-]+\.html$/.test(href)) {
-      a.setAttribute("href", `${href}?preview=${encodeURIComponent(preview)}`);
-    }
+    // 内部の .html リンク（任意の #anchor 付き）に preview を継承。外部URL・既存クエリ付きは対象外
+    const m = /^(?!https?:)([\w./-]+\.html)(#[\w-]+)?$/.exec(href);
+    if (m) a.setAttribute("href", `${m[1]}${q}${m[2] || ""}`);
   });
 }
 
