@@ -167,10 +167,26 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
+/* プレビュー（?preview=...）中、内部リンクに preview を引き継ぎ、遷移してもログイン状態を維持する */
+function persistPreviewLinks(preview) {
+  document.querySelectorAll("a[href]").forEach((a) => {
+    const href = a.getAttribute("href");
+    // 同一サイトの .html リンク（外部URL・既存クエリ・アンカー無しのもの）にのみ付与
+    if (/^(?!https?:)[\w./-]+\.html$/.test(href)) {
+      a.setAttribute("href", `${href}?preview=${encodeURIComponent(preview)}`);
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  // ローカルのプレビュー表示（?preview=...）中はヘッダー認証表示を上書きしない
+  // ローカル/プレビュー環境（localhost・preview channel・github.io）では ?preview= でログイン状態を再現
   const previewHost = ["localhost", "127.0.0.1"].includes(location.hostname) || location.hostname.includes("--") || location.hostname.endsWith(".github.io");
   const preview = previewHost ? new URLSearchParams(location.search).get("preview") : null;
-  if (preview) return;
+  if (preview && ["external", "university", "staff"].includes(preview)) {
+    renderAuthPreview(preview);   // 全ページでヘッダーを「ログイン中」表示
+    persistPreviewLinks(preview); // クリック遷移してもログイン状態を維持
+    return;
+  }
+  if (preview) return; // 想定外の値：本番認証もせず素の状態のまま
   onAuthStateChanged(auth, renderHeaderAuth);
 });
