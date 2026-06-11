@@ -1,48 +1,55 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>カレンダー｜Imagine Deck</title>
 <meta name="description" content="Imagine Deck の予約状況を月単位で確認できます。日付をクリックすると、その日のイベントと予約状況が表示されます。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/pages.css">
-<link rel="stylesheet" href="css/motion.css">
+<link rel="stylesheet" href="css/base.css?v=6">
+<link rel="stylesheet" href="css/layout.css?v=6">
+<link rel="stylesheet" href="css/components.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+<link rel="stylesheet" href="css/motion.css?v=6">
 </head>
 <body>
 <a class="u-skip-link" href="#main">本文へスキップ</a>
 
 <header class="l-header" id="site-header">
   <div class="l-container l-header__inner">
-    <a class="l-header__brand" href="index.html"><span class="l-header__brand-mark" aria-hidden="true">ID</span><span>Imagine Deck<small>愛媛大学ミュージアム交流スペース</small></span></a>
+        <a class="l-header__brand" href="index.html" aria-label="Imagine Deck｜愛媛大学ミュージアム交流スペース トップへ">
+      <img class="l-header__logo" src="assets/logo/imagine-deck-logo.png" alt="Imagine Deck｜愛媛大学ミュージアム交流スペース" width="125" height="44">
+    </a>
     <nav class="l-nav" aria-label="グローバル">
       <a href="index.html">ホーム</a>
       <a href="event-log.html">開催ログ</a>
       <a href="calendar.html" aria-current="page">カレンダー</a>
       <a href="guidelines.html">ガイドライン</a>
       <a href="reserve.html">予約</a>
+          <a class="l-nav__portal" href="https://portal.museum.ehime-u.ac.jp/" target="_blank" rel="noopener">ミュージアムポータル<span aria-hidden="true"> ↗</span></a>
     </nav>
+    <span class="l-header__auth" data-auth-slot hidden></span>
     <a class="c-button c-button--primary l-header__cta" href="reserve.html">予約する</a>
     <button class="l-header__menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="メニューを開く" data-menu-toggle><span></span></button>
   </div>
-  <nav class="l-mobile-nav" id="mobile-nav" aria-label="モバイル">
+  </header>
+<nav class="l-mobile-nav" id="mobile-nav" aria-label="モバイル">
     <ul>
       <li><a href="index.html">ホーム</a></li>
       <li><a href="event-log.html">開催ログ</a></li>
       <li><a href="calendar.html" aria-current="page">カレンダー</a></li>
       <li><a href="guidelines.html">ガイドライン</a></li>
       <li><a href="reserve.html">予約</a></li>
+          <li><a class="l-mobile-nav__portal" href="https://portal.museum.ehime-u.ac.jp/" target="_blank" rel="noopener">ミュージアムポータル ↗</a></li>
     </ul>
   </nav>
-</header>
 
 <main id="main">
-  <section class="l-page-hero l-page-hero--calendar m-mesh m-mesh--soft">
+  <section class="l-page-hero l-page-hero--calendar">
+    <video class="l-page-hero__video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-hidden="true"><source src="assets/video/hero-bg.mp4" type="video/mp4"></video>
     <div class="l-container l-page-hero__inner">
       <span class="t-eyebrow" data-reveal>Calendar</span>
       <h1 class="t-display-3" data-mask-reveal>予約状況カレンダー</h1>
@@ -100,7 +107,8 @@
       <div class="l-footer__cols">
         <div class="l-footer__col"><h4>About</h4><ul><li><a href="index.html#about">Imagine Deck とは</a></li><li><a href="index.html#features">できること</a></li><li><a href="index.html#flow">利用の流れ</a></li></ul></div>
         <div class="l-footer__col"><h4>Use</h4><ul><li><a href="reserve.html">予約フォーム</a></li><li><a href="calendar.html">カレンダー</a></li><li><a href="guidelines.html">ガイドライン</a></li></ul></div>
-        <div class="l-footer__col"><h4>Archive</h4><ul><li><a href="event-log.html">開催ログ</a></li><li><a href="https://www.ehime-u.ac.jp/" rel="noopener" target="_blank">愛媛大学 ↗</a></li></ul></div>
+        <div class="l-footer__col"><h4>Archive</h4><ul><li><a href="event-log.html">開催ログ</a></li><li><a href="https://portal.museum.ehime-u.ac.jp/" rel="noopener" target="_blank">ミュージアムポータル ↗</a></li>
+            <li><a href="https://www.ehime-u.ac.jp/" rel="noopener" target="_blank">愛媛大学 ↗</a></li></ul></div>
       </div>
     </div>
     <div class="l-container l-footer__bottom">
@@ -109,6 +117,7 @@
     </div>
   </div>
 </footer>
+<script type="module" src="js/auth.js"></script>
 <script type="module" src="js/main.js"></script>
 <script type="module" src="js/motion.js"></script>
 <script type="module" src="js/calendar.js"></script>

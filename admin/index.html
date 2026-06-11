@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>管理者：開催ログ承認｜Imagine Deck</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/base.css?v=6">
+<link rel="stylesheet" href="../css/layout.css?v=6">
+<link rel="stylesheet" href="../css/components.css?v=6">
+<link rel="stylesheet" href="../css/pages.css?v=6">
+</head>
+<body>
+<header class="l-header" id="site-header">
+  <div class="l-container l-header__inner">
+    <a class="l-header__brand" href="../index.html" aria-label="Imagine Deck トップへ">
+      <img class="l-header__logo" src="../assets/logo/imagine-deck-logo.png" alt="Imagine Deck" width="125" height="44">
+    </a>
+    <span class="l-header__auth" data-auth-slot hidden></span>
+  </div>
+</header>
+
+<main id="main" class="l-section">
+  <div class="l-container l-container--narrow">
+    <div class="l-section__head" style="text-align:left">
+      <span class="t-eyebrow">Admin</span>
+      <h1 style="font-size:var(--fs-h2)">開催ログの承認</h1>
+      <p class="t-lead">主催者から投稿された開催報告を確認し、<strong>承認すると開催ログに公開</strong>されます。</p>
+    </div>
+
+    <h2 style="font-size:1.15rem;margin:24px 0 12px">審査待ち <span id="pending-count" style="color:var(--color-primary)"></span></h2>
+    <div id="pending-list" class="u-stack"></div>
+    <p id="pending-empty" class="t-muted" hidden>審査待ちの投稿はありません。</p>
+  </div>
+</main>
+
+<script type="module">
+  import { requireAuth } from "../js/auth.js";
+  import { db } from "../js/firebase.js";
+  import { collection, query, where, getDocs, doc, updateDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const TYPE_LABEL = { event:"イベント", exhibition:"展示", workshop:"ワークショップ", academic:"学術" };
+  function el(tag, attrs={}, ...kids){
+    const n=document.createElement(tag);
+    for(const[k,v]of Object.entries(attrs)){ if(v==null)continue; if(k==="class")n.className=v; else if(k==="on")Object.entries(v).forEach(([ev,fn])=>n.addEventListener(ev,fn)); else n.setAttribute(k,v);}
+    for(const c of kids.flat()){ if(c==null||c===false)continue; n.appendChild(typeof c==="string"?document.createTextNode(c):c);}
+    return n;
+  }
+
+  await requireAuth({ staffOnly: true }); // k520185k 以外はトップへ
+  const list = document.getElementById("pending-list");
+  const countEl = document.getElementById("pending-count");
+  const emptyEl = document.getElementById("pending-empty");
+
+  async function load(){
+    list.replaceChildren();
+    const snap = await getDocs(query(collection(db,"events"), where("status","==","pending")));
+    const items = snap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+    countEl.textContent = `(${items.length}件)`;
+    emptyEl.hidden = items.length>0;
+    for(const ev of items){
+      const card = el("div",{class:"c-card",style:"padding:18px;display:grid;gap:10px"},
+        el("div",{style:"display:flex;gap:10px;align-items:center;flex-wrap:wrap"},
+          el("span",{class:`c-tag c-tag--${ev.type||'event'}`}, TYPE_LABEL[ev.type]||ev.type||""),
+          el("span",{class:"t-muted"}, (ev.date||"").replace(/-/g,".")),
+          el("span",{class:"t-muted"}, `主催: ${ev.organizer||""}`)),
+        el("strong",{style:"font-size:1.05rem"}, ev.title||"（無題）"),
+        el("p",{class:"t-muted",style:"font-size:.92rem"}, ev.excerpt||""),
+        ev.photoUrl ? el("img",{src:ev.photoUrl,alt:"",loading:"lazy",style:"max-height:160px;width:auto;border-radius:8px"}) : null,
+        el("div",{style:"display:flex;gap:10px;margin-top:4px"},
+          el("button",{class:"c-button c-button--primary c-button--sm",on:{click:()=>decide(ev.id,"published",card)}},"承認して公開"),
+          el("button",{class:"c-button c-button--ghost-dark c-button--sm",on:{click:()=>decide(ev.id,"rejected",card)}},"却下")));
+      list.appendChild(card);
+    }
+  }
+
+  async function decide(id, status, card){
+    card.style.opacity=".5";
+    try{
+      await updateDoc(doc(db,"events",id), { status, reviewedAt: serverTimestamp() });
+      card.remove();
+      const remaining = list.querySelectorAll(".c-card").length;
+      countEl.textContent = `(${remaining}件)`;
+      emptyEl.hidden = remaining>0;
+    }catch(e){ card.style.opacity=""; alert("更新に失敗しました: "+(e.message||e)); }
+  }
+
+  load();
+</script>
+</body>
+</html>

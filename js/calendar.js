@@ -194,6 +194,37 @@ class Calendar {
   }
 }
 
+/* ---------- 選択した日の開催内容を描画（フル/予約フォーム共通） ---------- */
+function renderDayInto(container, dateStr, events, { heading = false } = {}) {
+  while (container.firstChild) container.removeChild(container.firstChild);
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const closed = isClosed(new Date(y, m - 1, d));
+  if (heading) {
+    container.appendChild(el('div', { class: 'c-day-events__head' }, `${m} 月 ${d} 日の予約状況`));
+  }
+  if (closed) {
+    container.appendChild(el('div', { class: 'c-alert c-alert--warning' },
+      el('span', { class: 'c-alert__icon', 'aria-hidden': 'true' }, '⚠'),
+      el('div', {}, 'この日は休館日です。Imagine Deck の利用はできません。')));
+  } else if (events.length === 0) {
+    container.appendChild(el('div', { class: 'c-alert c-alert--success' },
+      el('span', { class: 'c-alert__icon', 'aria-hidden': 'true' }, '✓'),
+      el('div', {}, 'この日はまだ予約が入っていません。終日空いています。')));
+  } else {
+    const list = el('div', { class: 'c-day-events__list' });
+    events.forEach((ev) => {
+      list.appendChild(el('div', { class: 'c-day-events__item' },
+        el('div', { class: 'c-day-events__meta' },
+          el('span', { class: `c-tag c-tag--${ev.type}` }, TYPE_LABEL[ev.type] || ev.type),
+          el('strong', {}, `${ev.start} – ${ev.end}`)),
+        el('div', { class: 'c-day-events__title' }, ev.title),
+        el('div', { class: 'c-day-events__org' }, `主催: ${ev.organizer}`)));
+    });
+    container.appendChild(list);
+  }
+  return closed;
+}
+
 /* ---------- Full calendar wiring ---------- */
 function initFullCalendar() {
   const elRoot = document.querySelector('#full-calendar[data-calendar]');
@@ -207,45 +238,13 @@ function initFullCalendar() {
     onSelectDate(dateStr, events) {
       const [y, m, d] = dateStr.split('-').map(Number);
       titleEl.textContent = `${y} 年 ${m} 月 ${d} 日`;
-      while (bodyEl.firstChild) bodyEl.removeChild(bodyEl.firstChild);
-
-      const closed = isClosed(new Date(y, m - 1, d));
-
-      if (closed) {
-        bodyEl.appendChild(
-          el('div', { class: 'c-alert c-alert--warning' },
-            el('span', { class: 'c-alert__icon', 'aria-hidden': 'true' }, '⚠'),
-            el('div', {}, 'この日は休館日です。Imagine Deck の利用はできません。')
-          )
-        );
-      } else if (events.length === 0) {
-        bodyEl.appendChild(
-          el('div', { class: 'c-alert c-alert--success' },
-            el('span', { class: 'c-alert__icon', 'aria-hidden': 'true' }, '✓'),
-            el('div', {}, 'この日はまだ予約が入っていません。終日空いています。')
-          )
-        );
-      } else {
-        const list = el('div', { style: { display: 'grid', gap: '10px' } });
-        events.forEach(ev => {
-          const meta = el('div', { style: { display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
-            el('span', { class: `c-tag c-tag--${ev.type}` }, TYPE_LABEL[ev.type] || ev.type),
-            el('strong', {}, `${ev.start} – ${ev.end}`),
-          );
-          const title = el('div', { style: { fontWeight: '600' } }, ev.title);
-          const org = el('div', { style: { fontSize: '0.85rem', color: 'var(--color-text-muted)' } }, `主催: ${ev.organizer}`);
-          list.appendChild(el('div', { class: 'c-card', style: { padding: '14px', display: 'grid', gap: '4px' } }, meta, title, org));
-        });
-        bodyEl.appendChild(list);
-      }
+      const closed = renderDayInto(bodyEl, dateStr, events);
       if (!closed) {
-        bodyEl.appendChild(
-          el('a', {
-            class: 'c-button c-button--primary c-button--block',
-            style: { marginTop: '18px' },
-            href: `reserve.html?date=${dateStr}`,
-          }, 'この日で予約する →')
-        );
+        bodyEl.appendChild(el('a', {
+          class: 'c-button c-button--primary c-button--block',
+          style: { marginTop: '18px' },
+          href: `reserve.html?date=${dateStr}`,
+        }, 'この日で予約する →'));
       }
       openModal(modal);
     },
@@ -257,10 +256,17 @@ function initReserveCalendar() {
   const elRoot = document.querySelector('#reserve-calendar[data-calendar]');
   if (!elRoot) return;
   const dateInput = document.getElementById('date');
+  const dayPanel = document.getElementById('reserve-day-events');
+  const showDay = (dateStr, events) => {
+    if (!dayPanel) return;
+    renderDayInto(dayPanel, dateStr, events, { heading: true });
+    dayPanel.hidden = false;
+  };
   const cal = new Calendar(elRoot, {
-    onSelectDate(dateStr) {
+    onSelectDate(dateStr, events) {
       dateInput.value = dateStr;
       dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+      showDay(dateStr, events); // 選んだ日の開催内容を表示
     },
   });
   window.__reserveCalendar = cal;
@@ -272,6 +278,7 @@ function initReserveCalendar() {
       cal.setSelected(qDate);
       dateInput.value = qDate;
       dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+      showDay(qDate, cal.eventsOnDate(qDate));
     }, 120);
   }
 }

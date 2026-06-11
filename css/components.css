@@ -63,10 +63,6 @@
 .c-button--lg { min-height: 56px; padding: 0 28px; font-size: 1.0625rem; }
 .c-button--sm { min-height: 38px; padding: 0 14px; font-size: 0.875rem; }
 .c-button--block { width: 100%; }
-.c-button__icon {
-  display: inline-flex;
-  width: 18px; height: 18px;
-}
 
 /* ---------- Card ---------- */
 .c-card {
@@ -133,14 +129,6 @@
   color: var(--color-primary-dark);
   font-size: 0.75rem;
   font-weight: 600;
-}
-.c-feature__icon {
-  width: 56px; height: 56px;
-  display: grid; place-items: center;
-  border-radius: 18px;
-  background: var(--color-primary);
-  color: #fff;
-  font-size: 24px;
 }
 .c-feature h3 { font-size: 1.15rem; }
 .c-feature p {
@@ -209,11 +197,6 @@
   background: var(--color-primary-light);
   color: var(--color-primary-dark);
   white-space: nowrap;
-}
-.c-tag--outline {
-  background: transparent;
-  border: 1px solid var(--color-border-strong);
-  color: var(--color-text);
 }
 .c-tag--event       { background: #f7e8f8; color: var(--tag-event); }
 .c-tag--exhibition  { background: #e3f3e6; color: var(--tag-exhibition); }
@@ -391,11 +374,21 @@
   border-color: var(--color-primary);
   background: var(--color-primary-soft);
 }
+/* 選べない選択肢（例：空間全体展示のときの「専有(貸切)」）は薄くして無効を明示 */
+.c-choice-card:has(input:disabled) {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.c-choice-card:has(input:disabled):hover {
+  border-color: var(--color-border);
+  background: #fff;
+  transform: none;
+  box-shadow: none;
+}
 .c-choice-card.is-selected,
 .c-choice-card:has(input:checked) {
   border-color: var(--color-primary);
-  background: var(--color-primary-light);
-  box-shadow: 0 0 0 4px rgba(139, 22, 143, 0.10);
+  background: var(--color-primary-soft);
 }
 .c-choice-card__title {
   font-weight: 700;
@@ -965,13 +958,18 @@
   background: #f5f5f0;
 }
 .c-calendar__day.is-disabled:hover { background: #f5f5f0; border-color: transparent; }
-.c-calendar__day.is-selected {
+.c-calendar__day.has-events { background: var(--color-primary-light); }
+/* 選択時は「紫背景・白文字」を最優先で適用（has-events より後＋高詳細度で上書き → 白文字がつぶれない） */
+.c-calendar__day.is-selected,
+.c-calendar__day.is-selected.has-events {
   background: var(--color-primary);
   color: #fff;
   border-color: var(--color-primary);
 }
 .c-calendar__day.is-selected::after { background: #fff; }
-.c-calendar__day.has-events { background: var(--color-primary-light); }
+/* 日付の数字を読みやすく大きめに */
+.c-calendar__day > span:first-child { font-size: 1.05rem; font-weight: 600; line-height: 1.05; }
+.c-calendar__day.is-today > span:first-child { font-weight: 700; }
 .c-calendar__dots {
   display: flex;
   gap: 2px;
@@ -989,15 +987,6 @@
 .c-calendar__dot--workshop    { background: var(--tag-workshop); }
 .c-calendar__dot--academic    { background: var(--tag-academic); }
 .c-calendar__dot--maintenance { background: var(--tag-maintenance); }
-.c-calendar__legend {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
-.c-calendar__legend-item { display: inline-flex; align-items: center; gap: 6px; }
 
 /* ---------- Time picker ---------- */
 .c-time-row {
@@ -1088,12 +1077,6 @@
 .c-event-card__media img {
   width: 100%; height: 100%;
   object-fit: cover;
-}
-.c-event-card__media-placeholder {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  color: var(--color-primary);
-  opacity: .35;
 }
 .c-event-card__body {
   padding: 18px 22px 22px;
@@ -1256,25 +1239,300 @@
   font-weight: 700;
 }
 
-/* ---------- Cat decoration ---------- */
-.c-cat {
-  position: absolute;
-  width: 64px; height: 64px;
-  pointer-events: none;
-  opacity: 0.85;
+/* ============================================================
+   Rules & agreement gate (reserve) — progressive disclosure UI
+   ============================================================ */
+.c-rules {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 4vw, 40px);
+}
+.c-rules__head h2 { font-size: var(--fs-h2); margin-top: 6px; }
+.c-rules__intro { color: var(--color-text-muted); margin-top: 10px; max-width: var(--measure-cjk); }
+.c-rules__points { display: grid; gap: 12px; margin: 24px 0 20px; }
+.c-rules__point {
+  display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+  padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+.c-rules__num {
+  width: 28px; height: 28px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  background: var(--color-primary); color: #fff; font-weight: 700; font-size: 0.9rem;
+}
+.c-rules__point h3 { font-size: 1rem; margin-bottom: 4px; }
+.c-rules__point p { font-size: 0.9375rem; color: var(--color-text-muted); line-height: 1.7; }
+.c-rules__details { display: grid; gap: 8px; margin-bottom: 24px; }
+.c-disclosure { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+.c-disclosure > summary {
+  cursor: pointer; list-style: none; padding: 14px 18px;
+  font-weight: 600; display: flex; align-items: center; gap: 10px;
+  background: var(--color-surface);
+}
+.c-disclosure > summary::-webkit-details-marker { display: none; }
+.c-disclosure > summary::before { content: "＋"; color: var(--color-primary); font-weight: 700; width: 1em; }
+.c-disclosure[open] > summary::before { content: "−"; }
+.c-disclosure[open] > summary { border-bottom: 1px solid var(--color-border); }
+.c-disclosure__body { padding: 14px 18px 18px; }
+.c-disclosure__body ul { display: grid; gap: 8px; }
+.c-disclosure__body li { position: relative; padding-left: 16px; font-size: 0.9375rem; color: var(--color-text-muted); line-height: 1.75; }
+.c-disclosure__body li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-primary); }
+.c-rules__agree {
+  border-top: 1px solid var(--color-border); padding-top: 20px; margin-top: 4px;
+  display: grid; gap: 14px; justify-items: start;
+}
+.c-check { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-weight: 500; line-height: 1.6; }
+.c-check input { width: 22px; height: 22px; accent-color: var(--color-primary); flex: none; margin-top: 2px; }
+.c-rules__agree-hint { font-size: 0.85rem; color: var(--color-text-soft); }
+
+/* Gate the form until agreed — only when JS is active (robust without JS) */
+html.js #reserve-form-section { display: none; }
+html.js #reserve-form-section.is-revealed { display: block; }
+
+/* ---- Rules points: white card (no gray) + smooth scroll OPEN/CLOSE (Apple/Tesla-style) ---- */
+.c-rules__point {
+  background: #fff;
+  border-color: #e2e2dd;
+  transition: box-shadow .55s var(--ease-out), border-color .55s var(--ease-out);
+}
+/* Collapsed by default (JS active); opens in the reading band, closes when it leaves.
+   True content-height animation via grid 0fr->1fr (no max-height snap) = gentle reveal. */
+html.js .c-rules__point .c-rules__reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    grid-template-rows .8s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity .55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform .7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: grid-template-rows, opacity;
+}
+html.js .c-rules__point .c-rules__reveal > * { overflow: hidden; min-height: 0; }
+html.js .c-rules__point.is-open .c-rules__reveal {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+/* only the focused (open) card stands out -> minimal at-a-glance */
+html.js .c-rules__point.is-open { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); }
+html.js .c-rules__point:not(.is-open) .c-rules__num { opacity: .42; transition: opacity .55s var(--ease-out); }
+@media (prefers-reduced-motion: reduce) {
+  html.js .c-rules__point .c-rules__reveal { transition: opacity .25s; transform: none; }
 }
 
-/* ---------- Stamp / preparing ---------- */
-.c-stamp {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: var(--color-accent);
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  border-radius: var(--radius-sm);
-  transform: rotate(-4deg);
-  box-shadow: 0 6px 20px rgba(244, 169, 58, 0.4);
+/* ============================================================
+   Carousel — Apple-Store-style horizontal showcase + autoplay
+   ============================================================ */
+.c-carousel { position: relative; }
+.c-carousel__viewport { overflow: hidden; }
+.c-carousel__track {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 4px 2px 8px;
 }
+.c-carousel__track::-webkit-scrollbar { display: none; }
+.c-carousel__slide {
+  flex: 0 0 clamp(280px, 44%, 520px);
+  scroll-snap-align: start;
+}
+@media (max-width: 767px) { .c-carousel__slide { flex-basis: 86%; } }
+
+.c-carousel__ui {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-top: var(--space-5);
+}
+.c-carousel__play {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 22px; border-radius: var(--radius-pill);
+  background: var(--color-primary); color: #fff; font-weight: 600; font-size: .95rem;
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.c-carousel__play:hover { opacity: .9; }
+.c-carousel__play-icon { font-size: .8em; line-height: 1; }
+.c-carousel__dots { display: flex; gap: 8px; align-items: center; margin-inline: auto; }
+.c-carousel__dot {
+  width: 8px; height: 8px; border-radius: 999px; background: #cdcdd2;
+  transition: width var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+}
+.c-carousel__dot.is-active { width: 28px; background: var(--color-primary); }
+.c-carousel__nav { display: flex; gap: 8px; }
+.c-carousel__nav button {
+  width: 46px; height: 46px; border-radius: 50%; background: #fff;
+  border: 1.5px solid var(--color-border-strong);
+  display: grid; place-items: center; font-size: 1.35rem; line-height: 1; color: var(--color-text);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), background var(--dur-fast);
+}
+.c-carousel__nav button:hover { border-color: var(--color-primary); color: var(--color-primary); }
+/* subtle "now playing" cue on the active slide */
+.c-carousel.is-playing .c-carousel__slide { transition: opacity .5s var(--ease-out); }
+
+/* ============================================================
+   Section table-of-contents (jump to home sections) — advanced cards
+   ============================================================ */
+.c-section-toc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-top: var(--space-6);
+}
+.c-section-toc a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 20px; border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  background: #fff; color: var(--color-text); text-decoration: none; font-weight: 600;
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.c-section-toc a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+  border-color: var(--color-primary);
+}
+.c-section-toc__num { font-family: var(--font-display); color: var(--color-primary); font-weight: 700; font-size: 1.05rem; }
+.c-section-toc__label { flex: 1; }
+.c-section-toc__arrow { color: var(--color-primary); transition: transform var(--dur-fast) var(--ease-out); }
+.c-section-toc a:hover .c-section-toc__arrow { transform: translateX(5px); }
+
+/* ===== 料金ノーティス（確認画面 ⑥・編集的でブランド感のある意匠） =====
+   丸アイコン＋色面の“汎用カード”をやめ、見出し(eyebrow)＋表示フォントの金額＋
+   左の細いブランドアクセントで、サイト全体（明朝見出し・抑制された紫）と統一。 */
+.c-fee-notice {
+  display: grid;
+  gap: 8px;
+  position: relative;
+  padding: 20px 22px 20px 26px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: #fff;
+}
+.c-fee-notice::before {
+  content: "";
+  position: absolute; left: 0; top: 18px; bottom: 18px;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--color-primary);
+}
+.c-fee-notice__title {
+  margin: 0;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--color-primary); text-transform: uppercase;
+}
+.c-fee-notice__amount {
+  margin: 0;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.5rem, 3.5vw, 1.9rem); color: var(--color-text); line-height: 1.12;
+}
+.c-fee-notice__amount small { font-family: var(--font-sans); font-size: 0.82rem; font-weight: 500; color: var(--color-text-soft); margin-left: 8px; }
+.c-fee-notice__text { margin: 0; font-size: 0.9rem; color: var(--color-text-soft); line-height: 1.78; }
+
+/* ===== STEP1 の料金ヒント（編集的・ブランド調：見出し＋表示フォントの金額） ===== */
+.c-fee-line {
+  display: grid;
+  gap: 5px;
+  position: relative;
+  padding: 15px 18px 15px 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+.c-fee-line::before {
+  content: "";
+  position: absolute; left: 0; top: 15px; bottom: 15px;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--color-primary);
+}
+.c-fee-line__label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--color-primary); text-transform: uppercase;
+}
+.c-fee-line__amount {
+  margin: 0;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.3rem, 3vw, 1.55rem); color: var(--color-text); line-height: 1.12;
+}
+.c-fee-line__amount small { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 500; color: var(--color-text-soft); margin-left: 8px; }
+.c-fee-line__hint { margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--color-text); }
+.c-fee-line__sub { margin: 0; font-size: 0.84rem; color: var(--color-text-soft); line-height: 1.7; }
+
+/* ===== 予約フォーム：選択した日の開催内容パネル（カレンダーページと同等の表示） ===== */
+.c-day-events {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #f7f6f9;
+}
+.c-day-events__head { font-weight: 700; margin-bottom: 12px; font-size: 0.98rem; }
+.c-day-events__list { display: grid; gap: 10px; }
+.c-day-events__item {
+  display: grid; gap: 4px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.c-day-events__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.c-day-events__title { font-weight: 600; }
+.c-day-events__org { font-size: 0.85rem; color: var(--color-text-soft); }
+
+/* ===== 施設の様子ギャラリー（予約 STEP3）＋ ライトボックス ===== */
+.c-space-gallery { margin: 4px 0 26px; }
+.c-space-gallery__head { margin-bottom: 14px; }
+.c-space-gallery__eyebrow {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--color-primary); text-transform: uppercase;
+}
+.c-space-gallery__note { margin: 6px 0 0; font-size: 0.9rem; color: var(--color-text-soft); line-height: 1.7; }
+.c-space-gallery__grid { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 760px) { .c-space-gallery__grid { grid-template-columns: repeat(4, 1fr); } }
+.c-space-gallery__item {
+  position: relative; margin: 0; cursor: pointer; overflow: hidden;
+  border-radius: var(--radius-md); border: 1px solid var(--color-border);
+  background: #efeef1;
+}
+.c-space-gallery__item img {
+  display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.c-space-gallery__item:hover img,
+.c-space-gallery__item:focus-visible img { transform: scale(1.05); }
+.c-space-gallery__item figcaption {
+  position: absolute; inset: auto 0 0 0;
+  padding: 22px 12px 9px;
+  font-size: 0.78rem; font-weight: 600; color: #fff;
+  background: linear-gradient(180deg, rgba(8,6,10,0) 0%, rgba(8,6,10,0.74) 100%);
+}
+.c-space-gallery__item:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 2px; }
+
+/* ライトボックス（.c-modal を流用：画像を自然サイズで中央表示。パネルは画像にシュリンクラップ） */
+.c-modal--lightbox { padding: 24px; }
+.c-modal__panel--lightbox {
+  position: relative;
+  background: transparent; box-shadow: none; padding: 0; overflow: visible;
+  width: auto; max-width: none; max-height: none;
+  transform: scale(0.96);
+}
+.c-modal--lightbox.is-open .c-modal__panel--lightbox { transform: scale(1); }
+#space-lightbox-img {
+  display: block;
+  max-width: min(94vw, 1100px);
+  max-height: 80vh;
+  width: auto; height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+#space-lightbox-cap {
+  margin: 12px 0 0; text-align: center; color: #fff;
+  font-size: 0.92rem; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.6);
+}
+.c-modal--lightbox .c-modal__close {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  background: rgba(255,255,255,0.94); box-shadow: 0 4px 16px rgba(0,0,0,.35);
+}
+
+/* アラート内の太字は紫ではなく、そのアラートの意味色（緑/赤など）を継承する */
+.c-alert strong, .c-alert b { color: inherit; }

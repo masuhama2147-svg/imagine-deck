@@ -29,12 +29,13 @@ li { list-style: none; }
   --color-primary-light:  #f7e8f8;
   --color-primary-soft:   #fbf3fc;
   --color-accent:         #f4a93a;
-  --color-bg:             #f7f7f4;
-  --color-bg-soft:        #fdfcfa;
+  --color-bg:             #ffffff;
+  --color-bg-soft:        #fafafa;
   --color-surface:        #ffffff;
+  --color-surface-alt:    #ffffff;   /* (no gray) 塗りは白で統一。区切りは枠線/影で */
   --color-text:           #171717;
-  --color-text-muted:     #5b6470;
-  --color-text-soft:      #8b96a3;
+  --color-text-muted:     #1a1a1a;   /* (no gray) 補助テキストも黒に — 可読性優先 */
+  --color-text-soft:      #333333;   /* (no gray) 細字も濃いめ */
   --color-border:         #e5e5e0;
   --color-border-strong:  #c8cad0;
   --color-success:        #2f7d3a;
@@ -52,27 +53,29 @@ li { list-style: none; }
   /* Typography */
   --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, -apple-system, sans-serif;
   --font-display: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
-  --fs-hero:     clamp(2.5rem, 6.5vw, 4.75rem);
-  --fs-h1:       clamp(2rem, 4vw, 3rem);
+  --fs-hero:     clamp(2.5rem, 6vw, 4rem);
+  --fs-h1:       clamp(2rem, 4.5vw, 3rem);
   --fs-h2:       clamp(1.5rem, 3vw, 2.25rem);
-  --fs-h3:       1.25rem;
+  --fs-h3:       clamp(1.125rem, 2vw, 1.375rem);
   --fs-body:     1rem;
   --fs-small:    0.9rem;
   --lh-tight:    1.2;
-  --lh-body:     1.7;
+  --lh-body:     1.75;
+  --measure:     68ch;     /* 欧文 measure */
+  --measure-cjk: 40ch;     /* 和文 measure（1行≈40字） */
 
   /* Radius */
-  --radius-sm:  10px;
-  --radius-md:  16px;
-  --radius-lg:  24px;
-  --radius-xl:  32px;
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
   --radius-pill: 999px;
 
-  /* Shadow */
-  --shadow-sm:    0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-card:  0 20px 60px rgba(20, 20, 30, 0.07);
-  --shadow-pop:   0 12px 40px rgba(139, 22, 143, 0.18);
-  --shadow-hover: 0 24px 70px rgba(20, 20, 30, 0.10);
+  /* Shadow (Tesla-minimal: soft, neutral, no purple glow) */
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-card:  0 1px 4px rgba(0, 0, 0, 0.06);
+  --shadow-pop:   0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.10);
 
   /* Spacing (8pt grid) */
   --space-1: 4px;
@@ -158,7 +161,13 @@ a {
 }
 a:hover { color: var(--color-primary-dark); }
 
-/* ---------- Utilities ---------- */
+/* ---------- 本文中の強調（太字）はブランド紫に ---------- */
+/* 説明文などの <strong>/<b> を黒ではなく紫色でアクセント表示。
+   見出し・ボタン・色付きバッジ内などはそれぞれの色を優先（個別指定が勝つ）。 */
+strong, b { color: var(--color-primary); font-weight: 700; }
+
+/* hidden 属性は常に最優先で非表示（.c-field 等が display を持っていても効くように） */
+[hidden] { display: none !important; }
 .u-sr-only {
   position: absolute;
   width: 1px; height: 1px;
@@ -182,7 +191,6 @@ a:hover { color: var(--color-primary-dark); }
   left: 8px;
 }
 .u-stack > * + * { margin-top: var(--space-3); }
-.u-stack-lg > * + * { margin-top: var(--space-5); }
 
 /* Selection color */
 ::selection {

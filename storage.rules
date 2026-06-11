@@ -1,0 +1,41 @@
+rules_version = '2';
+
+// Imagine Deck — Storage rules
+// 個人名入り資料(attachments/ 等)を保護：ログイン者のみ読み書き可。
+// URL 形式を知るだけの第三者はアクセス不可。
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'k520185k@mails.cc.ehime-u.ac.jp'
+        && request.auth.token.email_verified == true;
+    }
+
+    // 管理者は全領域を読み書き可
+    match /{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+
+    // 添付・申請資料：本人がアップロード、本人と管理者のみ閲覧（非公開）
+    match /attachments/{uid}/{fileName=**} {
+      allow read:  if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow write: if signedIn() && request.auth.uid == uid
+                   && request.resource.size < 25 * 1024 * 1024;
+    }
+
+    // 開催報告の写真：公開カードに表示するため誰でも閲覧可。投稿は本人(画像のみ・10MBまで)
+    match /event-photos/{uid}/{fileName=**} {
+      allow read:  if true;
+      allow write: if signedIn() && request.auth.uid == uid
+                   && request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // 既定：ログイン者のみ（=リンクを知るだけの第三者は不可）
+    match /{allPaths=**} {
+      allow read, write: if signedIn();
+    }
+  }
+}

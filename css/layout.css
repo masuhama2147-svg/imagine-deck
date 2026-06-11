@@ -10,7 +10,6 @@
   padding-inline: clamp(20px, 5vw, 40px);
 }
 .l-container--narrow { max-width: var(--container-narrow); }
-.l-container--prose  { max-width: var(--container-prose); }
 
 /* ---------- Section ---------- */
 .l-section {
@@ -18,11 +17,7 @@
 }
 .l-section--tight  { padding-block: clamp(40px, 6vw, 72px); }
 .l-section--accent {
-  background: var(--color-primary-soft);
-}
-.l-section--dark {
-  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 60%, #a72cab 100%);
-  color: #fff;
+  background: var(--color-surface-alt);
 }
 .l-section__head {
   text-align: center;
@@ -38,17 +33,13 @@
 .l-grid { display: grid; gap: var(--space-4); }
 .l-grid--2 { grid-template-columns: 1fr; }
 .l-grid--3 { grid-template-columns: 1fr; }
-.l-grid--4 { grid-template-columns: 1fr; }
-.l-grid--auto { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .l-grid--gap-lg { gap: var(--space-5); }
 @media (min-width: 768px) {
   .l-grid--2 { grid-template-columns: repeat(2, 1fr); }
   .l-grid--3 { grid-template-columns: repeat(2, 1fr); }
-  .l-grid--4 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1024px) {
   .l-grid--3 { grid-template-columns: repeat(3, 1fr); }
-  .l-grid--4 { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ---------- Header ---------- */
@@ -83,15 +74,6 @@
   color: var(--color-primary);
   text-decoration: none;
   letter-spacing: -0.01em;
-}
-.l-header__brand-mark {
-  width: 32px; height: 32px;
-  display: grid; place-items: center;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
 }
 .l-header__brand small {
   display: block;
@@ -157,6 +139,91 @@
 @media (min-width: 1024px) {
   .l-header__menu-toggle { display: none; }
 }
+
+/* ---- ヘッダー アカウントメニュー（ログイン状態） ---- */
+.l-header__auth { display: inline-flex; align-items: center; min-width: 0; }
+/* ログイン（未ログイン時）ボタン */
+.l-auth__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.l-auth__btn:hover { background: var(--color-primary); color: #fff; }
+
+/* アバター（クリックでメニュー） */
+.l-auth__menu-wrap { position: relative; }
+.l-auth__avatar {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  background: var(--color-primary);
+  color: #fff;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.l-auth__avatar:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(139,22,143,.32); }
+.l-auth__avatar-letter { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; line-height: 1; }
+
+/* ドロップダウン */
+.l-auth__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 240px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 44px rgba(0,0,0,.16);
+  padding: 8px;
+  z-index: 1200;
+  animation: l-auth-pop var(--dur-fast) var(--ease-out);
+}
+@keyframes l-auth-pop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.l-auth__menu[hidden] { display: none; }
+.l-auth__menu-head {
+  display: grid; gap: 4px;
+  padding: 10px 12px 12px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 6px;
+}
+.l-auth__menu-name { font-weight: 700; color: var(--color-text); word-break: break-all; }
+.l-auth__menu-email { font-size: 0.8rem; color: var(--color-text-soft); word-break: break-all; }
+.l-auth__menu-role {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem; font-weight: 700;
+}
+.l-auth__menu-role--staff      { background: var(--color-primary-light); color: var(--color-primary-dark); }
+.l-auth__menu-role--university { background: #e9f7ee; color: #1c8c4a; }
+.l-auth__menu-role--external   { background: #fff5e0; color: #9a6a00; }
+.l-auth__menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 11px 12px;
+  border: 0;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem; font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.l-auth__menu-item:hover { background: var(--color-primary-light); color: var(--color-primary-dark); }
 
 /* Mobile drawer */
 .l-mobile-nav {
@@ -270,7 +337,11 @@
   background-position: center;
   background-size: cover;
   color: #fff;
-  padding-block: clamp(80px, 12vw, 140px);
+  /* 写真が大きすぎないよう高さを制御（PCでもスマホでも適切なバナー比率に） */
+  padding-block: clamp(72px, 10vw, 120px);
+  min-height: clamp(300px, 40vh, 440px);
+  display: grid;
+  align-content: center;
   position: relative;
   overflow: hidden;
 }
@@ -287,7 +358,18 @@
   position: relative;
   display: grid;
   gap: 16px;
-  max-width: 720px;
+}
+/* 見出し・本文は読みやすい行長に制限しつつ、左端は本文カラムと揃える */
+.l-page-hero__inner h1 { max-width: 20ch; }
+.l-page-hero__inner p { max-width: 48ch; }
+/* スマホでは写真を低めのバナーにして可読性とテンポを優先 */
+@media (max-width: 767px) {
+  .l-page-hero {
+    min-height: 200px;
+    padding-block: 44px 36px;
+  }
+  .l-page-hero h1 { font-size: clamp(1.7rem, 8vw, 2.25rem); }
+  .l-page-hero p { font-size: 0.95rem; line-height: 1.7; }
 }
 .l-page-hero h1 {
   font-family: var(--font-display);
@@ -322,3 +404,21 @@
     linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%),
     url("../assets/images/hero/page-hero-eventlog.jpg");
 }
+
+/* ---- Portal site button (museum portal) ---- */
+.l-nav__portal {
+  margin-left: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.l-nav__portal:hover { background: var(--color-primary); color: #fff; }
+.l-mobile-nav__portal { color: var(--color-primary); border-color: var(--color-primary) !important; font-weight: 700; }

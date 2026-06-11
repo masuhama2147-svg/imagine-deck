@@ -91,12 +91,24 @@ function initModals() {
   });
 }
 
+/* ----- Graceful image fallback (hide broken/placeholder images) ----- */
+function initImageFallback() {
+  $$('img').forEach(img => {
+    const onErr = () => {
+      img.style.visibility = 'hidden';
+      const media = img.closest('[class*="__media"]');
+      if (media) media.classList.add('is-img-missing');
+    };
+    img.addEventListener('error', onErr, { once: true });
+    if (img.complete && img.naturalWidth === 0) onErr();
+  });
+}
+
 /* ----- Init ----- */
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
   initMobileMenu();
   initSmoothAnchors();
   initModals();
+  initImageFallback();
 });
-
-export { $, $$ };

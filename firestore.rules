@@ -1,0 +1,83 @@
+rules_version = '2';
+
+// Imagine Deck — Firestore rules
+// 承認者(管理者) = k520185k@mails.cc.ehime-u.ac.jp（メール検証済み）
+// events(開催ログ): published のみ公開・作成は本人(要ログイン)・公開化(承認)は管理者のみ
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'k520185k@mails.cc.ehime-u.ac.jp'
+        && request.auth.token.email_verified == true;
+    }
+    function isUniversity() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.matches('.*@([a-z0-9-]+[.])*ehime-u[.]ac[.]jp');
+    }
+    // サーバ側で確定する役割（クライアントの自己申告ではなく認証トークンから判定）
+    function serverRole() {
+      return isAdmin() ? 'staff' : (isUniversity() ? 'university' : 'external');
+    }
+
+    // ---- プロフィール ----
+    match /users/{uid} {
+      allow read:   if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create, update: if signedIn() && request.auth.uid == uid;
+      allow delete: if isAdmin();
+    }
+    // 公開射影（メンバー一覧/産学官バッジ用：氏名・所属のみ。メール等は持たせない）
+    match /users_public/{uid} {
+      allow read:  if true;
+      allow write: if false;   // 管理者(Admin SDK)経由のみ
+    }
+
+    // ---- 開催ログ（カードの元データ）----
+    match /events/{id} {
+      allow read:   if resource.data.status == 'published'
+                    || isAdmin()
+                    || (signedIn() && resource.data.ownerUid == request.auth.uid);
+      // 投稿：本人のみ・初期は審査待ち
+      allow create: if signedIn()
+                    && request.resource.data.ownerUid == request.auth.uid
+                    && request.resource.data.status == 'pending';
+      // 承認(公開化)は管理者だけ。本人は自分の pending を編集可（公開化は不可）
+      allow update: if isAdmin()
+                    || (signedIn()
+                        && resource.data.ownerUid == request.auth.uid
+                        && resource.data.status == 'pending'
+                        && request.resource.data.status == 'pending'
+                        && request.resource.data.ownerUid == request.auth.uid);
+      allow delete: if isAdmin();
+    }
+
+    // ---- 予約 ----
+    match /reservations/{id} {
+      allow get:    if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow list:   if isAdmin() || signedIn();   // 非管理者は .where('uid','==',uid) 必須
+      // 予約作成：メール確認済みの本人のみ。役割・料金区分・状態はサーバ側判定と一致必須。
+      allow create: if signedIn()
+                    && request.auth.token.email_verified == true
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.status == 'pending'
+                    && request.resource.data.reportReminderSent == false
+                    && request.resource.data.role == serverRole()
+                    && request.resource.data.feeType == (serverRole() == 'external' ? 'paid' : 'free')
+                    && request.resource.data.orgName is string
+                    && request.resource.data.orgName.size() <= 120
+                    && request.resource.data.studentEmail is string
+                    && request.resource.data.studentEmail.size() <= 200
+                    && request.resource.data.staffEmail is string
+                    && request.resource.data.staffEmail.size() <= 200;
+      allow update: if isAdmin()
+                    || (signedIn() && resource.data.uid == request.auth.uid
+                        && resource.data.status == 'pending');
+      allow delete: if isAdmin();
+    }
+
+    // ---- メール送信キュー（Trigger Email 拡張 / Functions 専用）----
+    match /mail/{id} { allow read, write: if false; }
+  }
+}

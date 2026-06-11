@@ -1,0 +1,12 @@
+{
+  "name": "functions",
+  "description": "Imagine Deck Cloud Functions (開催報告リマインドメール 等)",
+  "engines": { "node": "22" },
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0",
+    "@sendgrid/mail": "^8.1.3"
+  }
+}

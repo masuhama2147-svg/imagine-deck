@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>開催報告フォーム｜Imagine Deck</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css?v=6">
+<link rel="stylesheet" href="css/layout.css?v=6">
+<link rel="stylesheet" href="css/components.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+</head>
+<body>
+<header class="l-header" id="site-header">
+  <div class="l-container l-header__inner">
+    <a class="l-header__brand" href="index.html" aria-label="Imagine Deck トップへ">
+      <img class="l-header__logo" src="assets/logo/imagine-deck-logo.png" alt="Imagine Deck" width="125" height="44">
+    </a>
+    <span class="l-header__auth" data-auth-slot hidden></span>
+  </div>
+</header>
+
+<main id="main" class="l-section">
+  <div class="l-container l-container--narrow">
+    <div class="c-rules">
+      <header class="c-rules__head">
+        <span class="t-eyebrow">Event Report</span>
+        <h2>開催報告フォーム</h2>
+        <p class="c-rules__intro">開催されたイベントの内容をご記入ください。<strong>運営の承認後に「開催ログ」へ自動掲載</strong>されます。写真は背景白の作品写真を推奨します。</p>
+      </header>
+      <form id="report-form" novalidate>
+        <div class="c-field">
+          <label class="c-field__label c-field__label--required" for="type">カテゴリ</label>
+          <select class="c-select" id="type" name="type" required>
+            <option value="exhibition">展示</option>
+            <option value="workshop">ワークショップ</option>
+            <option value="academic">学術</option>
+            <option value="event">イベント</option>
+          </select>
+        </div>
+        <div class="c-field">
+          <label class="c-field__label c-field__label--required" for="date">開催日</label>
+          <input class="c-input" type="date" id="date" name="date" required>
+        </div>
+        <div class="c-field">
+          <label class="c-field__label c-field__label--required" for="title">タイトル</label>
+          <input class="c-input" type="text" id="title" name="title" required maxlength="80" placeholder="例：学生たちが選んだ「私のミュージアム」展">
+        </div>
+        <div class="c-field">
+          <label class="c-field__label c-field__label--required" for="organizer">主催者・団体名</label>
+          <input class="c-input" type="text" id="organizer" name="organizer" required maxlength="80" placeholder="例：学芸ゼミ有志">
+        </div>
+        <div class="c-field">
+          <label class="c-field__label" for="participants">参加人数（任意）</label>
+          <input class="c-input" type="number" id="participants" name="participants" min="0" max="100000" inputmode="numeric" placeholder="例：120">
+        </div>
+        <div class="c-field">
+          <label class="c-field__label c-field__label--required" for="excerpt">概要（カードに表示・1〜2文）</label>
+          <textarea class="c-textarea" id="excerpt" name="excerpt" required maxlength="160" rows="2" placeholder="どんな催しだったかを簡潔に。"></textarea>
+        </div>
+        <div class="c-field">
+          <label class="c-field__label" for="body">詳細レポート（任意・詳細ページに表示）</label>
+          <textarea class="c-textarea" id="body" name="body" maxlength="4000" rows="6" placeholder="当日の様子、来場者の反応、学び など"></textarea>
+        </div>
+        <div class="c-field">
+          <label class="c-field__label" for="photo">写真（任意・10MBまで／背景白を推奨）</label>
+          <input class="c-input" type="file" id="photo" name="photo" accept="image/*">
+        </div>
+        <p class="c-error-message" id="report-error" hidden></p>
+        <div id="report-done" class="c-alert c-alert--success" hidden>
+          <span class="c-alert__icon" aria-hidden="true">✓</span>
+          <div><strong>送信しました。</strong><p style="margin-top:6px;font-weight:400">運営の承認後に開催ログへ掲載されます。ご協力ありがとうございました。</p></div>
+        </div>
+        <button class="c-button c-button--primary c-button--block c-button--lg" type="submit">この内容で報告する</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+  import { requireAuth, roleOf } from "./js/auth.js";
+  import { db, storage } from "./js/firebase.js";
+  import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
+
+  const sectorOf = (u) => (roleOf(u) === "external" ? "other" : "academia");
+
+  const user = await requireAuth(); // 未ログインなら login.html へ
+  const form = document.getElementById("report-form");
+  const err = document.getElementById("report-error");
+  const done = document.getElementById("report-done");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    err.hidden = true;
+    const btn = form.querySelector("button[type=submit]");
+    btn.disabled = true; btn.textContent = "送信中…";
+    try {
+      let photoUrl = "";
+      const file = form.photo.files[0];
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) throw new Error("写真は10MBまでです。");
+        const safe = file.name.replace(/[^\w.\-]/g, "_");
+        const r = ref(storage, `event-photos/${user.uid}/${Date.now()}_${safe}`);
+        await uploadBytes(r, file);
+        photoUrl = await getDownloadURL(r);
+      }
+      await addDoc(collection(db, "events"), {
+        type: form.type.value,
+        date: form.date.value,
+        title: form.title.value.trim(),
+        organizer: form.organizer.value.trim(),
+        participants: form.participants.value === "" ? null : Number(form.participants.value),
+        excerpt: form.excerpt.value.trim(),
+        body: form.body.value.trim(),
+        tags: form.type.value,
+        photoUrl,
+        ownerUid: user.uid,
+        ownerEmail: user.email,
+        sector: sectorOf(user),
+        status: "pending",
+        createdAt: serverTimestamp(),
+      });
+      form.hidden = true;
+      done.hidden = false;
+      done.scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch (ex) {
+      err.textContent = ex.message || "送信に失敗しました。時間をおいて再度お試しください。";
+      err.hidden = false;
+      btn.disabled = false; btn.textContent = "この内容で報告する";
+    }
+  });
+</script>
+</body>
+</html>

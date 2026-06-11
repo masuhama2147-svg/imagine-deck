@@ -90,27 +90,7 @@ function initHeadlineMaskReveal() {
   masks.forEach(m => io.observe(m));
 }
 
-/* ---------- 3. Magnetic hover (pointer-based translate) ---------- */
-function initMagnetic() {
-  if (prefersReduced) return;
-  const magnets = document.querySelectorAll('[data-magnet]');
-  magnets.forEach(el => {
-    const strength = Number(el.dataset.magnetStrength || 0.25);
-    el.addEventListener('pointermove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) * strength;
-      const dy = (e.clientY - cy) * strength;
-      el.style.transform = `translate(${dx}px, ${dy}px)`;
-    });
-    el.addEventListener('pointerleave', () => {
-      el.style.transform = '';
-    });
-  });
-}
-
-/* ---------- 4. Pointer spotlight (set --mx / --my on hover) ---------- */
+/* ---------- Pointer spotlight (set --mx / --my on hover) ---------- */
 function initSpotlight() {
   if (prefersReduced) return;
   const targets = document.querySelectorAll('.m-spotlight');
@@ -213,40 +193,12 @@ function initParallax() {
   update();
 }
 
-/* ---------- 8. Sticky-stage slide tracker ---------- */
-function initStickyStage() {
-  const stages = document.querySelectorAll('.m-stage');
-  if (!stages.length) return;
-  stages.forEach(stage => {
-    const slides = stage.querySelectorAll('.m-stage__slide');
-    const indicators = stage.querySelectorAll('[data-stage-indicator]');
-    if (!slides.length) return;
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const idx = Number(e.target.dataset.slideIndex);
-          slides.forEach(s => s.classList.toggle('is-active', s === e.target));
-          indicators.forEach((ind, i) => ind.classList.toggle('is-active', i === idx));
-        }
-      });
-    }, { threshold: 0.5 });
-
-    slides.forEach((s, i) => {
-      s.dataset.slideIndex = String(i);
-      io.observe(s);
-    });
-  });
-}
-
-/* ---------- 9. Init ---------- */
+/* ---------- Init ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initHeadlineMaskReveal();
-  initMagnetic();
   initSpotlight();
   initProgressBar();
   initCounters();
   initParallax();
-  initStickyStage();
 });

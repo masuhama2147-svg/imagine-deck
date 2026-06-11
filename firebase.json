@@ -1,0 +1,51 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**",
+      "scripts/**",
+      "docs/**",
+      "*.md",
+      "*.rules",
+      "firestore.indexes.json",
+      "**/*.MOV",
+      "**/*.mov",
+      "**/*.docx",
+      "**/*.pdf",
+      "イマジンデッキ動画/**",
+      "イマジンデッキ　資料/**",
+      "ダミー写真/**",
+      ".remember/**",
+      "キッチン.png",
+      "全体図.png",
+      "全体図_2.png",
+      "展示窓.png"
+    ],
+    "headers": [
+      { "source": "**/*.@(js|css|html|json)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "functions": {
+    "source": "functions"
+  },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "firestore": { "port": 8088 },
+    "functions": { "port": 5001 },
+    "storage": { "port": 9199 },
+    "hosting": { "port": 5055 },
+    "ui": { "enabled": true, "port": 4000 },
+    "singleProjectMode": true
+  }
+}

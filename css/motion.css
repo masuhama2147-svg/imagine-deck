@@ -110,21 +110,6 @@ html { scroll-behavior: smooth; }
 [data-reveal-stagger].is-in-view > *:nth-child(8) { transition-delay: 620ms; }
 
 /* ============== 4. Hero typography upgrade (Antigravity scale) ============== */
-.t-display-1 {
-  font-family: var(--font-display);
-  font-size: var(--display-1);
-  line-height: 1.02;
-  letter-spacing: -0.028em;
-  font-weight: 600;
-  font-feature-settings: "palt";
-}
-.t-display-2 {
-  font-family: var(--font-display);
-  font-size: var(--display-2);
-  line-height: 1.05;
-  letter-spacing: -0.024em;
-  font-weight: 600;
-}
 .t-display-3 {
   font-family: var(--font-display);
   font-size: var(--display-3);
@@ -167,151 +152,6 @@ html { scroll-behavior: smooth; }
 .m-arrow-link:hover::before,
 .m-arrow-link:focus-visible::before {
   transform: scaleX(1);
-}
-
-/* ============== 5. Frosted glass surface ============== */
-.m-glass {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: var(--radius-lg);
-}
-.m-glass--dark {
-  background: rgba(26, 19, 34, 0.55);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: #fff;
-}
-.m-glass--light {
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-}
-
-/* ============== 6. Gradient mesh / aurora background ============== */
-.m-mesh {
-  position: relative;
-  isolation: isolate;
-}
-.m-mesh::before,
-.m-mesh::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: .65;
-  pointer-events: none;
-  animation: meshDrift 14s ease-in-out infinite alternate;
-}
-.m-mesh::before {
-  width: 50vw;
-  height: 50vw;
-  top: -10%; left: -10%;
-  background: radial-gradient(circle, #8b168f 0%, transparent 70%);
-}
-.m-mesh::after {
-  width: 45vw;
-  height: 45vw;
-  bottom: -15%; right: -5%;
-  background: radial-gradient(circle, #f4a93a 0%, transparent 70%);
-  animation-delay: -4s;
-}
-.m-mesh--soft::before { opacity: .25; }
-.m-mesh--soft::after  { opacity: .20; }
-
-@keyframes meshDrift {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(6%, -4%) scale(1.08); }
-  100% { transform: translate(-4%, 6%) scale(.96); }
-}
-
-/* ============== 7. Aurora line (thin gradient divider) ============== */
-.m-aurora {
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(139,22,143,.0) 8%,
-    rgba(139,22,143,.6) 35%,
-    rgba(244,169,58,.7) 55%,
-    rgba(139,22,143,.6) 75%,
-    transparent 100%);
-  border: 0;
-  margin: 0;
-}
-
-/* ============== 8. Magnetic hover (JS-driven, CSS transition only) ============== */
-[data-magnet] {
-  transition: transform var(--dur-3) var(--ease-out-expo);
-  will-change: transform;
-}
-[data-magnet-target] {
-  transition: transform var(--dur-3) var(--ease-out-expo);
-  will-change: transform;
-}
-
-/* ============== 9. Sticky-stage (Antigravity use-cases-detail style) ============== */
-.m-stage {
-  position: relative;
-}
-.m-stage__pin {
-  position: sticky;
-  top: calc(var(--header-height, 72px) + 24px);
-  height: calc(100vh - var(--header-height, 72px) - 48px);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.m-stage__slides {
-  display: grid;
-}
-.m-stage__slide {
-  min-height: 100vh;
-  display: grid;
-  align-items: center;
-  padding-block: clamp(40px, 6vw, 80px);
-}
-
-/* ============== 10. Marquee / infinite ticker ============== */
-.m-marquee {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-}
-.m-marquee__track {
-  display: flex;
-  gap: 56px;
-  width: max-content;
-  animation: marquee 40s linear infinite;
-}
-.m-marquee:hover .m-marquee__track {
-  animation-play-state: paused;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-/* ============== 11. Hero kinetic underline / shimmer ============== */
-.m-shimmer {
-  background: linear-gradient(110deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0) 40%,
-    rgba(255,255,255,.85) 50%,
-    rgba(255,255,255,0) 60%,
-    rgba(255,255,255,0) 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmerSweep 4.5s var(--ease-in-out-quint) infinite;
-}
-@keyframes shimmerSweep {
-  0%   { background-position: 220% 0; }
-  100% { background-position: -120% 0; }
 }
 
 /* ============== 12. Cursor / pointer follow (subtle spotlight) ============== */
@@ -385,18 +225,6 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 30px 80px rgba(20, 20, 30, 0.18);
 }
 
-/* ============== 18. Subtle bg-noise grain ============== */
-.m-grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: .08;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.7'/></svg>");
-  z-index: 1;
-}
-
 /* ============== 19. Pill-hover (CTA in hero) ============== */
 .m-pill {
   position: relative;
@@ -413,3 +241,13 @@ html { scroll-behavior: smooth; }
 }
 .m-pill:hover::after,
 .m-pill:focus-visible::after { opacity: 1; }
+
+/* ============== Robustness (progressive enhancement) ==============
+   If JS is unavailable/failed (no .js on <html>), never leave reveal
+   content stuck invisible — show everything. With JS, reveals animate. */
+html:not(.js) [data-reveal],
+html:not(.js) [data-reveal-stagger] > * {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}

@@ -29,3 +29,24 @@ node_modules/
 # Don't commit private memory or local plans
 plans/
 memory/
+
+# Playwright verification artifacts
+.playwright-mcp/
+*-check.png
+*-check.jpeg
+
+# 公開リポジトリ(GitHub Pages)に載せない：個人情報PDF・大容量動画・サンプル・写真の元データ
+イマジンデッキ　資料/
+イマジンデッキ動画/
+ダミー写真/
+キッチン.png
+全体図.png
+全体図_2.png
+展示窓.png
+*.MOV
+*.mov
+*.pdf
+*.docx
+.firebase/
+.firebaserc
+tomita-site-backup/
