@@ -1,6 +1,7 @@
 /* firebase.js — Firebase 接続の共通モジュール
-   ・本番(ライブ)プロジェクト imagine-deck-v1-47b08 に接続
-   ・localhost / 127.0.0.1 のときだけ Emulator Suite に接続（安全なローカル検証用） */
+   ・localhost / 127.0.0.1 → Emulator Suite（安全なローカル検証用）
+   ・それ以外（GitHub Pages 等）→ ステージング用プロジェクト imagine-deck-staging に接続
+   ※ 富田先生の本番 imagine-deck-v1-47b08 には接続しない（再設計版は独立したバックエンドで運用テスト） */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import { getAuth, connectAuthEmulator } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
@@ -9,12 +10,12 @@ import { getStorage, connectStorageEmulator } from "https://www.gstatic.com/fire
 import { getFunctions, connectFunctionsEmulator } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-functions.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAf4VNtOyqF0uCefMVIhOma23tijYK_o-0",
-  authDomain: "imagine-deck-v1-47b08.firebaseapp.com",
-  projectId: "imagine-deck-v1-47b08",
-  storageBucket: "imagine-deck-v1-47b08.firebasestorage.app",
-  messagingSenderId: "182080455605",
-  appId: "1:182080455605:web:95d85e62ec56c0170e8ffc",
+  apiKey: "AIzaSyBpwKUdTZ0aCPEe2vgC-EcyDFG7RNYvf0E",
+  authDomain: "imagine-deck-staging.firebaseapp.com",
+  projectId: "imagine-deck-staging",
+  storageBucket: "imagine-deck-staging.firebasestorage.app",
+  messagingSenderId: "841915121823",
+  appId: "1:841915121823:web:4c7c56d4cac41fa254e2aa",
 };
 
 const app = initializeApp(firebaseConfig);
