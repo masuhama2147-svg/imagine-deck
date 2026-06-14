@@ -386,23 +386,19 @@
 .l-page-hero .t-eyebrow::before { background: #f4a93a; }
 .l-page-hero--reserve {
   background-image:
-    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%),
-    url("../assets/images/hero/page-hero-reserve.jpg");
+    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%);
 }
 .l-page-hero--guidelines {
   background-image:
-    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%),
-    url("../assets/images/hero/page-hero-guidelines.jpg");
+    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%);
 }
 .l-page-hero--calendar {
   background-image:
-    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%),
-    url("../assets/images/hero/page-hero-calendar.jpg");
+    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%);
 }
 .l-page-hero--eventlog {
   background-image:
-    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%),
-    url("../assets/images/hero/page-hero-eventlog.jpg");
+    linear-gradient(90deg, rgba(42, 7, 46, 0.92) 0%, rgba(74, 12, 79, 0.78) 48%, rgba(111, 17, 115, 0.42) 100%);
 }
 
 /* ---- Portal site button (museum portal) ---- */

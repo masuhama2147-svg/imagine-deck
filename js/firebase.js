@@ -1,22 +1,27 @@
 /* firebase.js — Firebase 接続の共通モジュール
-   ・localhost / 127.0.0.1 → Emulator Suite（安全なローカル検証用）
-   ・それ以外（GitHub Pages 等）→ ステージング用プロジェクト imagine-deck-staging に接続
-   ※ 富田先生の本番 imagine-deck-v1-47b08 には接続しない（再設計版は独立したバックエンドで運用テスト） */
+   ・本番(ライブ)プロジェクト imagine-deck-v1-47b08（富田先生から引き継いだ、
+     セキュリティ硬化済みのバックエンド：APIキー制限／クォータ／予算アラート／App Check）に接続
+   ・localhost / 127.0.0.1 → Emulator Suite（安全なローカル検証用。App Check は使わない）
+   ・App Check（reCAPTCHA v3）でフロントエンドを保護。万一失敗してもアプリは止めない（フェイルセーフ） */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 import { getAuth, connectAuthEmulator } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 import { getFirestore, connectFirestoreEmulator } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 import { getStorage, connectStorageEmulator } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
 import { getFunctions, connectFunctionsEmulator } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-functions.js";
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app-check.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBpwKUdTZ0aCPEe2vgC-EcyDFG7RNYvf0E",
-  authDomain: "imagine-deck-staging.firebaseapp.com",
-  projectId: "imagine-deck-staging",
-  storageBucket: "imagine-deck-staging.firebasestorage.app",
-  messagingSenderId: "841915121823",
-  appId: "1:841915121823:web:4c7c56d4cac41fa254e2aa",
+  apiKey: "AIzaSyAf4VNtOyqF0uCefMVIhOma23tijYK_o-0",
+  authDomain: "imagine-deck-v1-47b08.firebaseapp.com",
+  projectId: "imagine-deck-v1-47b08",
+  storageBucket: "imagine-deck-v1-47b08.firebasestorage.app",
+  messagingSenderId: "182080455605",
+  appId: "1:182080455605:web:95d85e62ec56c0170e8ffc",
 };
+
+// reCAPTCHA v3 サイトキー（imagine-deck-v1-47b08 の App Check に登録済み）
+const RECAPTCHA_V3_SITE_KEY = "6LcTnRctAAAAAOlbdk13sP61JkbwvBCVgDjucTTz";
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -26,6 +31,21 @@ export const functions = getFunctions(app, "asia-northeast1");
 
 /* ローカル開発時のみ Emulator に接続（本番データに触れず安全に試せる） */
 export const USING_EMULATOR = ["localhost", "127.0.0.1"].includes(location.hostname);
+
+/* App Check（reCAPTCHA v3）：本番ドメインでのみ初期化。
+   ローカル(エミュレータ)では使わない。どんな環境でもランタイムエラーで
+   アプリを止めないよう try/catch のフェイルセーフで包む（App Check は現在「助走期間」＝未強制）。 */
+if (!USING_EMULATOR) {
+  try {
+    initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(RECAPTCHA_V3_SITE_KEY),
+      isTokenAutoRefreshEnabled: true,
+    });
+  } catch (e) {
+    console.warn("[App Check] 初期化をスキップしました:", e?.message || e);
+  }
+}
+
 if (USING_EMULATOR) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
   connectFirestoreEmulator(db, "127.0.0.1", 8088);

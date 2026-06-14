@@ -9,7 +9,6 @@
   background:
     linear-gradient(90deg, rgba(34, 5, 38, 0.90) 0%, rgba(74, 12, 79, 0.78) 42%, rgba(111, 17, 115, 0.54) 100%),
     radial-gradient(circle at 86% 10%, rgba(244, 169, 58, 0.22), transparent 38%),
-    url("../assets/images/hero/home-hero.jpg") center / cover no-repeat,
     linear-gradient(135deg, #4a0c4f 0%, #6f1173 40%, #8b168f 100%);
   color: #fff;
   padding-block: clamp(110px, 16vw, 180px) clamp(60px, 10vw, 120px);
@@ -374,7 +373,7 @@
   position: relative;
   z-index: 1;
 }
-.p-calendar-aside-card--legend { --calendar-aside-image: url("../assets/images/hero/page-hero-calendar.jpg"); }
+.p-calendar-aside-card--legend { --calendar-aside-image: url("../assets/images/reserve/step-01-date.jpg"); }
 .p-calendar-aside-card--hint { --calendar-aside-image: url("../assets/images/reserve/step-01-date.jpg"); }
 
 /* ---------- Event log ---------- */
