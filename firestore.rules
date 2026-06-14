@@ -68,6 +68,26 @@ service cloud.firestore {
                     && request.resource.data.role == serverRole()
                     && request.resource.data.feeType in ['paid', 'free']
                     && (request.resource.data.feeType == 'paid' || serverRole() != 'external')
+                    // 学外団体として利用(externalOrg=true)なら必ず有料。学内者の無料すり抜けを防ぐ。
+                    && request.resource.data.externalOrg is bool
+                    && (request.resource.data.externalOrg == false || request.resource.data.feeType == 'paid')
+                    // 料金区分と概算額の整合（無料は0／有料は整数の概算）。過少申告レコードを防ぐ。
+                    && request.resource.data.estimatedFee is number
+                    && request.resource.data.estimatedFee >= 0
+                    && (request.resource.data.feeType == 'paid' || request.resource.data.estimatedFee == 0)
+                    // 値域チェック（不正値の保存を防ぐ）
+                    && request.resource.data.reserveMode in ['standard', 'long-exhibition']
+                    && request.resource.data.purposeType in ['exhibition', 'event', 'workshop', 'other']
+                    && request.resource.data.reserveType in ['shared', 'exclusive']
+                    // 展示は「壁面のみ・貸切(専有)不可」。展示×貸切×フロア全体などの無効組合せをサーバで拒否。
+                    && (request.resource.data.purposeType != 'exhibition'
+                        || (request.resource.data.reserveType == 'shared' && request.resource.data.area == 'wall'))
+                    // 長期壁面展示は1〜21日・目的=展示。
+                    && (request.resource.data.reserveMode != 'long-exhibition'
+                        || (request.resource.data.exhibitionDays is number
+                            && request.resource.data.exhibitionDays >= 1
+                            && request.resource.data.exhibitionDays <= 21
+                            && request.resource.data.purposeType == 'exhibition'))
                     && request.resource.data.orgName is string
                     && request.resource.data.orgName.size() <= 120
                     && request.resource.data.studentEmail is string

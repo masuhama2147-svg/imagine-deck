@@ -162,6 +162,7 @@
                 <li><strong>利用時間について：</strong>ご利用は原則としてミュージアムの開館時間（午前10時～午後4時30分）内とし、休館日（日曜・祝日、その他）はお休みとなります。なお、本学の教員が同席する場合に限り、時間外の利用を許可することがあります。</li>
                 <li><strong>展示利用における特例：</strong>壁面を展示として利用する場合、展示会期中の利用料金はかかりません。ただし、展示準備の時間として開催日前日の1日分（午前10時から16時30分までの6.5時間分）と、展示撤去の時間として展示終了日翌日の1日分（午前10時から16時30分までの6.5時間分）の計13時間分の料金（15,080円）がかかります。実際の展示時間を前提としませんので、ご留意願います。また、展示として貸し出す最長期間は、21日間です。（展示の準備と撤去に関する作業日は、ミュージアムの休館日を除く。）</li>
               </ul>
+              <p class="t-muted" style="margin-top:10px;font-size:.88rem">※上記「展示利用における特例」の準備・撤去費（15,080円）がかかるのは<strong>学外の主催者</strong>の場合です。本学構成員（教職員・学生）は、展示会期中・準備・撤去とも原則無料です。</p>
             </div>
           </details>
           <details class="c-disclosure">
@@ -299,21 +300,22 @@
               <!-- 学内者向け：学外団体としての利用かを選択（有料切替）。役割が university のときだけ表示 -->
               <fieldset class="c-field" id="external-org-switch" hidden style="margin-bottom:28px">
                 <legend class="c-field__label c-field__label--required">どの立場でのご利用ですか？</legend>
-                <p class="c-field-help">学会など<strong>学外団体の立場</strong>でのご利用は、大学の活動とは別に<strong>施設使用料（有料）</strong>がかかります。該当する方を選んでください。</p>
+                <p class="c-field-help">学会など<strong>学外団体の立場</strong>でのご利用は、大学の活動とは別に<strong>施設使用料（有料）</strong>がかかります。<strong>必ず該当する方を選んでください</strong>（初期選択はありません）。</p>
                 <div class="c-choice-grid" role="radiogroup" aria-required="true">
                   <label class="c-choice-card">
-                    <input type="radio" name="usage-standpoint" value="internal" checked>
+                    <input type="radio" name="usage-standpoint" value="internal">
                     <span class="c-choice-card__check"></span>
                     <span class="c-choice-card__title">大学の活動として（無料）</span>
-                    <span class="c-choice-card__desc">愛媛大学の授業・研究・課外活動などでの利用</span>
+                    <span class="c-choice-card__desc">愛媛大学の授業・研究・正課／課外活動など。<strong>学会・外部団体の主催は含みません。</strong></span>
                   </label>
                   <label class="c-choice-card">
                     <input type="radio" name="usage-standpoint" value="external-org">
                     <span class="c-choice-card__check"></span>
                     <span class="c-choice-card__title">学外団体として（有料）</span>
-                    <span class="c-choice-card__desc">学会・外部団体としての利用（施設使用料がかかります）</span>
+                    <span class="c-choice-card__desc">学会・外部団体としての主催・利用。<strong>学内の方が関与していても有料</strong>です。</span>
                   </label>
                 </div>
+                <p class="c-error-message" data-error-for="usage-standpoint" hidden></p>
               </fieldset>
 
               <div class="c-field">
@@ -714,7 +716,8 @@
               <div class="c-alert c-alert--info" style="margin-top:24px;">
                 <span class="c-alert__icon" aria-hidden="true">ℹ︎</span>
                 <div>
-                  送信後、ご入力のメールアドレスに受付確認メールが自動で届きます。その後、数日以内に運営から内容確認のメールをお送りします。
+                  送信後、ご入力のメールアドレスに受付確認メールが自動で届きます。その後、数日以内に運営から内容確認のメールをお送りします。<br>
+                  なお、無断予約を防ぐため、ご記入の<strong>担当教員・職員の方へ運営から確認のご連絡</strong>をする場合があります。
                 </div>
               </div>
 
@@ -739,7 +742,8 @@
               <li>休館日: 日曜・祝日</li>
               <li>飲み物（蓋つき容器）OK / 食事 NG</li>
               <li>ゴミは持ち帰り</li>
-              <li>学外の方は有料（1時間 1,160円・概算自動表示）</li>
+              <li>学外の方／学外団体としての利用は有料（1時間 1,160円）</li>
+              <li>学外は56日前までに申込＋「施設一時使用申込書」提出</li>
             </ul>
           </div>
           <div class="p-reserve-aside-card">

@@ -55,8 +55,12 @@ function setupStandpointSwitch() {
     sw.querySelectorAll('input[name="usage-standpoint"]').forEach((r) => {
       r.addEventListener('change', () => {
         state.externalOrg = (document.querySelector('input[name="usage-standpoint"]:checked')?.value === 'external-org');
-        clearError('date'); // 立場を変えたら56日前ルールのエラーを一旦解消
+        clearError('usage-standpoint');
         renderFeeEstimate();
+        // 立場変更で課金区分(billingRole)が変わるため、56日前ルール(date)を即時再判定
+        clearError('date');
+        const de = validateField('date');
+        if (de) setError('date', de);
         // 選択カードの見た目を同期
         sw.querySelectorAll('.c-choice-card').forEach((c) => {
           const i = c.querySelector('input'); if (i) c.classList.toggle('is-selected', i.checked);
@@ -78,6 +82,7 @@ const STEP_LABELS = {
 
 const FIELD_LABELS = {
   date: '利用したい日',
+  'usage-standpoint': 'ご利用の立場',
   'reserve-mode': '利用タイプ',
   'exhibition-days': '展示日数',
   'start-time': '開始時間',
@@ -115,9 +120,12 @@ const FIELDS_BY_STEP = {
 /* STEP1 の検証対象は利用タイプで変わる（長期壁面展示は「時間」ではなく「日数」） */
 function fieldsForStep(n) {
   if (n === 1) {
-    return state.reserveMode === 'long-exhibition'
+    const base = state.reserveMode === 'long-exhibition'
       ? ['date', 'exhibition-days']
       : ['date', 'start-time', 'end-time'];
+    // 学内者には「立場（大学の活動=無料／学外団体=有料）」の選択を必須化（無自覚な無料申請を防ぐ）
+    if (state.role === 'university') base.unshift('usage-standpoint');
+    return base;
   }
   return FIELDS_BY_STEP[n] || [];
 }
@@ -379,6 +387,12 @@ function validateField(name) {
   if (name === 'teacher-consent') {
     return els[0].checked ? null : '担当教員の了解の確認にチェックしてください。';
   }
+  // 立場（学内者のみ：大学の活動／学外団体 を必ず選択。未選択での無料申請を防止）
+  if (name === 'usage-standpoint') {
+    if (state.role !== 'university') return null;
+    const checked = form.querySelector('input[name="usage-standpoint"]:checked');
+    return checked ? null : 'ご利用の立場（大学の活動／学外団体）を選択してください。';
+  }
   // 展示日数（長期壁面展示：1〜21の整数・必須）
   if (name === 'exhibition-days') {
     if (!value) return '展示日数を入力してください。';
@@ -621,7 +635,7 @@ function buildConfirmSummary() {
     ['イベント詳細', data['event-detail']],
     ['SNS リンク', data.sns],
     ['関連 URL', data['related-url']],
-    ['備考', data.notes],
+    ['備考', data.notes || '特になし'],
     ['添付資料', fileLabel],
   ]));
 }
