@@ -1,398 +1,61 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><link rel="icon" type="image/png" href="assets/logo/favicon.png">
-<script>document.documentElement.classList.add('js')</script>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Imagine Deck｜愛媛大学ミュージアム交流スペース</title>
-<meta name="description" content="Imagine Deck は、愛媛大学ミュージアムに新しく生まれた、学生・研究室・地域が知を開く交流スペースです。展示・イベント・ワークショップ・自習・対話の場として誰でも利用できます。">
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ただいま改修中です｜Imagine Deck</title>
+<link rel="icon" type="image/png" href="/assets/logo/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=8">
-<link rel="stylesheet" href="css/layout.css?v=8">
-<link rel="stylesheet" href="css/components.css?v=8">
-<link rel="stylesheet" href="css/pages.css?v=8">
-<link rel="stylesheet" href="css/motion.css?v=8">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#8b168f; --primary-dark:#6f1173; --primary-soft:#fbf3fc;
+    --accent:#f4a93a; --ink:#1b1820; --muted:#6b6570; --line:#ece8ef; --bg:#ffffff;
+    --display:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+    --sans:"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans); color:var(--ink); background:var(--bg);
+    min-height:100dvh; display:grid; place-items:center; padding:32px 20px;
+    line-height:1.85; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, var(--primary-soft) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(60% 40% at 110% 110%, rgba(244,169,58,.08) 0%, rgba(255,255,255,0) 70%);
+  }
+  .card{ width:min(640px,100%); text-align:center; }
+  .logo{ height:54px; width:auto; margin:0 auto 40px; display:block; }
+  @media(max-width:520px){ .logo{ height:44px; margin-bottom:30px } }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; font-size:.78rem; letter-spacing:.16em; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:22px; }
+  .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(244,169,58,.18); animation:pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.55;transform:scale(.82)} }
+  h1{ font-family:var(--display); font-weight:600; color:var(--ink); font-size:clamp(2rem,7vw,3.1rem); line-height:1.3; letter-spacing:.01em; margin-bottom:8px; }
+  h1 .accent{ color:var(--primary); }
+  .sub-en{ font-family:var(--display); color:var(--muted); font-size:.95rem; letter-spacing:.22em; margin-bottom:28px; }
+  p.lead{ color:#433d49; font-size:1.04rem; margin:0 auto 14px; max-width:34em; }
+  p.note{ color:var(--muted); font-size:.92rem; margin:0 auto; max-width:32em; }
+  .bar{ position:relative; height:5px; width:min(300px,72%); margin:34px auto 6px; background:var(--line); border-radius:99px; overflow:hidden; }
+  .bar::after{ content:""; position:absolute; inset:0; width:42%; border-radius:99px; background:linear-gradient(90deg,var(--primary),var(--accent)); animation:slide 1.9s cubic-bezier(.65,.05,.36,1) infinite; }
+  @keyframes slide{ 0%{transform:translateX(-110%)} 100%{transform:translateX(330%)} }
+  .divider{ width:40px; height:2px; background:var(--accent); margin:40px auto 22px; border:0; }
+  footer{ color:var(--muted); font-size:.82rem; letter-spacing:.04em; }
+  footer .org{ color:var(--ink); font-weight:500; }
+</style>
 </head>
 <body>
-<a class="u-skip-link" href="#main">本文へスキップ</a>
-
-<!-- ===== Header ===== -->
-<header class="l-header" id="site-header">
-  <div class="l-container l-header__inner">
-    <a class="l-header__brand" href="index.html" aria-label="Imagine Deck｜愛媛大学ミュージアム交流スペース トップへ">
-      <img class="l-header__logo" src="assets/logo/imagine-deck-logo.png" alt="Imagine Deck｜愛媛大学ミュージアム交流スペース" width="125" height="44">
-    </a>
-    <nav class="l-nav" aria-label="グローバル">
-      <a href="index.html" aria-current="page">ホーム</a>
-      <a href="event-log.html">開催ログ</a>
-      <a href="calendar.html">カレンダー</a>
-      <a href="guidelines.html">ガイドライン</a>
-      <a href="reserve.html">予約</a>
-          <a class="l-nav__portal" href="https://portal.museum.ehime-u.ac.jp/" target="_blank" rel="noopener">ミュージアムポータル<span aria-hidden="true"> ↗</span></a>
-    </nav>
-    <span class="l-header__auth" data-auth-slot hidden></span>
-    <a class="c-button c-button--primary l-header__cta" href="reserve.html">スペースを予約する</a>
-    <button class="l-header__menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="メニューを開く" data-menu-toggle>
-      <span></span>
-    </button>
-  </div>
-  </header>
-<nav class="l-mobile-nav" id="mobile-nav" aria-label="モバイル">
-    <ul>
-      <li><a href="index.html" aria-current="page">ホーム</a></li>
-      <li><a href="event-log.html">開催ログ</a></li>
-      <li><a href="calendar.html">カレンダー</a></li>
-      <li><a href="guidelines.html">ガイドライン</a></li>
-      <li><a href="reserve.html">予約</a></li>
-          <li><a class="l-mobile-nav__portal" href="https://portal.museum.ehime-u.ac.jp/" target="_blank" rel="noopener">ミュージアムポータル ↗</a></li>
-    </ul>
-    <a class="c-button c-button--primary" href="reserve.html">スペースを予約する</a>
-  </nav>
-
-<main id="main">
-
-  <!-- ===== Hero (Tesla-style full-bleed, background video) ===== -->
-  <section class="p-hero">
-    <video class="p-hero__video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-hidden="true">
-      <source src="assets/video/hero-bg.mp4" type="video/mp4">
-    </video>
-    <div class="l-container p-hero__inner">
-      <div class="p-hero__copy">
-        <span class="t-eyebrow t-eyebrow--light" data-reveal>Ehime University Museum</span>
-        <h1 class="p-hero__title" data-reveal="up">Imagine the Future.</h1>
-        <p class="p-hero__sub" data-reveal="up" style="--reveal-delay:160ms">
-          見る・聴く・触れる・考える・そして、共に行動する。<br>
-          大学と地域をつなぐ、知的交流のハブ。
-        </p>
-        <div class="p-hero__ctas" data-reveal="up" style="--reveal-delay:280ms">
-          <a class="c-button c-button--lg c-button--primary m-pill" href="reserve.html">
-            スペースを予約する <span aria-hidden="true">→</span>
-          </a>
-          <a class="c-button c-button--lg c-button--hero-ghost m-pill" href="event-log.html">開催ログを見る</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== About ===== -->
-  <section class="l-section" id="about">
-    <div class="l-container">
-      <div class="l-section__head">
-        <span class="t-eyebrow" data-reveal>About Imagine Deck</span>
-        <h2 class="t-display-3" data-mask-reveal>大学と地域をつなぐ、<br>知的交流のハブ。</h2>
-        <p class="t-lead" data-reveal="up" style="--reveal-delay:200ms">愛媛大学ミュージアムが新たに設けた、研究・学習・地域交流の交差点。<br>「見る・聴く・触れる・考える・そして、共に行動する」体験を、ここから。</p>
-      </div>
-
-      <div class="p-about">
-        <div class="p-about__text" data-reveal-stagger>
-          <p>
-            愛媛大学ミュージアムは、「研究成果の発信」「社会教育への地域参加」「学生の学習支援」の 3 つの基本機能を担っています。
-            <strong>Imagine Deck</strong> は、これらをさらに発展させるべく設計された交流スペースです。
-          </p>
-          <p>
-            「見る・聴く・触れる・考える・そして、共に行動する」という多角的な体験を通じて、市民・学生・子供など来館者の知的好奇心を刺激し、未来を創造する想像力（Imagine）を育みます。
-          </p>
-          <p>
-            さらに、Imagine Deck は <strong>「知的交流のハブ」</strong>として、大学と地域の多様なメンバーを有機的に結びつけ、相互協力の深化、持続可能な学習、新しい価値の共創を促進します。
-          </p>
-          <p class="p-bigquote">
-            見る・聴く・触れる・考える・そして、共に行動する。
-          </p>
-        </div>
-        <div class="p-about__media" aria-hidden="true" data-reveal="right" data-parallax="0.06">
-          <div class="p-about__media-illust">
-            見る<br>聴く<br>触れる<br>考える<br>共に行動する
-          </div>
-        </div>
-      </div>
-
-      <nav class="c-section-toc" aria-label="このページの目次" data-reveal>
-        <a href="#features"><span class="c-section-toc__num">01</span><span class="c-section-toc__label">4つのコア機能</span><span class="c-section-toc__arrow" aria-hidden="true">→</span></a>
-        <a href="#flow"><span class="c-section-toc__num">02</span><span class="c-section-toc__label">利用の流れ</span><span class="c-section-toc__arrow" aria-hidden="true">→</span></a>
-        <a href="#latest"><span class="c-section-toc__num">03</span><span class="c-section-toc__label">最近の開催</span><span class="c-section-toc__arrow" aria-hidden="true">→</span></a>
-        <a href="reserve.html"><span class="c-section-toc__num">04</span><span class="c-section-toc__label">スペースを予約</span><span class="c-section-toc__arrow" aria-hidden="true">→</span></a>
-      </nav>
-    </div>
-  </section>
-
-  <!-- ===== 4 Core Functions ===== -->
-  <section class="l-section l-section--accent" id="features">
-    <div class="l-container">
-      <div class="l-section__head">
-        <span class="t-eyebrow" data-reveal>Core Functions</span>
-        <h2 class="t-display-3" data-mask-reveal>4 つのコア機能</h2>
-        <p class="t-lead" data-reveal="up" style="--reveal-delay:180ms">Imagine Deck が果たす、4 つの役割。<br>使う人・場面に応じて、必要な機能を引き出せます。</p>
-      </div>
-
-      <div class="c-carousel" data-carousel data-reveal>
-        <div class="c-carousel__viewport">
-          <div class="c-carousel__track" data-carousel-track>
-
-            <article class="c-feature c-carousel__slide m-lift">
-              <span class="c-feature__badge">Open Space</span>
-              <h3>1. オープンスペース機能</h3>
-              <p>学内で居場所を見つけにくい社会人大学院生など、多様な人々が自習や対話の場として自由に利用できる環境を提供します。イベント等で使用されていない時間は、空き時間を有効活用し、多様な人々が交流するコモンズとして機能します。</p>
-            </article>
-
-            <article class="c-feature c-carousel__slide m-lift">
-              <span class="c-feature__badge" style="background:#e3f3e6;color:#1d5526;">Showcase</span>
-              <h3>2. ショーケース機能</h3>
-              <p>各研究科・学部・組織・センター等が開発した研究成果やソリューションを、プロトタイプや映像展示で来館者がインタラクティブに体験できます。研究の社会的意義を可視化し、市民からのフィードバックを得る窓口に。</p>
-            </article>
-
-            <article class="c-feature c-carousel__slide m-lift">
-              <span class="c-feature__badge" style="background:#ece5ff;color:#4c1d95;">Workshop &amp; Startup</span>
-              <h3>3. ワークショップ・起業支援機能</h3>
-              <p>学生が企画するワークショップやイベントの開催場所として活用。学生の起業につながる実践的な学習（PBL など）の場を提供し、学生の主体性とチャレンジ精神の育成を支援します。</p>
-            </article>
-
-            <article class="c-feature c-carousel__slide m-lift">
-              <span class="c-feature__badge" style="background:#fdebd0;color:#7c4506;">Community</span>
-              <h3>4. 地域社会支援機能</h3>
-              <p>学部・組織を超えた学生・教職員と地域の人々が共に学ぶ実習の場として活用します。地域の産業や文化をテーマにしたプロジェクト演習などを通じて、大学と地域が双方向に知を交換し、地域課題の解決と新たな価値の共創を進めます。</p>
-            </article>
-
-          </div>
-        </div>
-        <div class="c-carousel__ui">
-          <button class="c-carousel__play" type="button" data-carousel-play aria-pressed="false" aria-label="コア機能を自動再生">
-            <span class="c-carousel__play-icon" data-icon aria-hidden="true">▶</span><span data-label>自動再生</span>
-          </button>
-          <div class="c-carousel__dots" data-carousel-dots aria-label="スライド選択"></div>
-          <div class="c-carousel__nav">
-            <button type="button" data-carousel-prev aria-label="前の機能">‹</button>
-            <button type="button" data-carousel-next aria-label="次の機能">›</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Flow ===== -->
-  <section class="l-section" id="flow">
-    <div class="l-container">
-      <div class="l-section__head">
-        <span class="t-eyebrow" data-reveal>How to Use</span>
-        <h2 class="t-display-3" data-mask-reveal>3 ステップで、はじめられる。</h2>
-        <p class="t-lead" data-reveal="up" style="--reveal-delay:180ms">難しい手続きはありません。フォームに沿って入力するだけ。</p>
-      </div>
-
-      <div class="p-flow" data-reveal-stagger>
-        <article class="p-flow__step m-lift">
-          <span class="p-flow__step__num">01</span>
-          <h3>予約する</h3>
-          <p>カレンダーから空き状況を確認し、6 ステップのフォームで日時・利用内容・利用箇所を伝えます。最短 5 分。</p>
-          <a class="m-arrow-link" href="reserve.html">予約フォームへ</a>
-        </article>
-        <article class="p-flow__step m-lift">
-          <span class="p-flow__step__num">02</span>
-          <h3>当日利用する</h3>
-          <p>ミュージアムの開館時間 (10:00〜16:30) 内で、予約した内容を実施。飲み物 OK・食事 NG・ゴミは持ち帰り。</p>
-          <a class="m-arrow-link" href="guidelines.html">ガイドラインを見る</a>
-        </article>
-        <article class="p-flow__step m-lift">
-          <span class="p-flow__step__num">03</span>
-          <h3>振り返り・記録</h3>
-          <p>当日の様子を運営が開催ログにまとめます。次に使う人の参考になり、自分の活動の記録にもなります。</p>
-          <a class="m-arrow-link" href="event-log.html">開催ログを見る</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Stats ===== -->
-  <section class="l-section l-section--tight p-section-photo p-section-photo--stats" aria-label="数字で見る Imagine Deck">
-    <div class="l-container">
-      <div class="p-stats" data-reveal-stagger>
-        <div class="c-stat m-lift">
-          <span class="c-stat__value"><span data-counter="12" data-stat="events">0</span><span class="c-stat__suffix">件</span></span>
-          <span class="c-stat__label">これまでの開催イベント</span>
-        </div>
-        <div class="c-stat m-lift">
-          <span class="c-stat__value"><span data-counter="38" data-stat="organizers">0</span><span class="c-stat__suffix">人</span></span>
-          <span class="c-stat__label">主催した学生・教員</span>
-        </div>
-        <div class="c-stat m-lift">
-          <span class="c-stat__value"><span data-counter="7" data-stat="labs">0</span><span class="c-stat__suffix">室</span></span>
-          <span class="c-stat__label">関わった研究室</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Latest event log ===== -->
-  <section class="l-section l-section--tight" id="latest">
-    <div class="l-container">
-      <div class="l-section__head">
-        <span class="t-eyebrow" data-reveal>Recent Events</span>
-        <h2 class="t-display-3" data-mask-reveal>最近、ここで起きていたこと。</h2>
-        <p class="t-lead" data-reveal="up" style="--reveal-delay:180ms">学生・研究室・地域が持ち込んだ、知の交わり。</p>
-      </div>
-
-      <div class="p-latest" data-reveal-stagger>
-        <a class="c-event-card m-lift" href="event-detail.html">
-          <div class="c-event-card__media">
-            <img src="assets/images/event/event-01-mymuseum.jpg" alt="" loading="lazy">
-          </div>
-          <div class="c-event-card__body">
-            <div class="c-event-card__meta">
-              <span class="c-tag c-tag--exhibition">展示</span>
-              <span>2026.04.18</span>
-            </div>
-            <h3 class="c-event-card__title">学生たちが選んだ「私のミュージアム」展</h3>
-            <p class="c-event-card__excerpt">愛媛大学の学生が自分にとっての「ミュージアム的瞬間」を写真と短文で展示。3 日間で延べ 120 名が来場しました。</p>
-            <div class="c-event-card__footer">
-              <span>参加 120名</span>
-              <span>主催: 学芸ゼミ有志</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="c-event-card m-lift" href="event-detail.html">
-          <div class="c-event-card__media">
-            <img src="assets/images/event/event-02-3dprinter.jpg" alt="" loading="lazy">
-          </div>
-          <div class="c-event-card__body">
-            <div class="c-event-card__meta">
-              <span class="c-tag c-tag--workshop">ワークショップ</span>
-              <span>2026.03.22</span>
-            </div>
-            <h3 class="c-event-card__title">3D プリンタで「ミュージアムの猫」を作る</h3>
-            <p class="c-event-card__excerpt">工学部の学生が講師になり、来場者に 3D プリンタの基礎と造形の楽しさを伝える会。子どもから教員まで参加。</p>
-            <div class="c-event-card__footer">
-              <span>参加 24名</span>
-              <span>主催: 機械工学・学生プロジェクト</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="c-event-card m-lift" href="event-detail.html">
-          <div class="c-event-card__media">
-            <img src="assets/images/event/event-03-publictalk.jpg" alt="" loading="lazy">
-          </div>
-          <div class="c-event-card__body">
-            <div class="c-event-card__meta">
-              <span class="c-tag c-tag--academic">学術</span>
-              <span>2026.02.09</span>
-            </div>
-            <h3 class="c-event-card__title">研究を、誰のために語るか — 公開トーク</h3>
-            <p class="c-event-card__excerpt">大学院生 4 名が、自分の研究を「専門外の人に 5 分で伝える」ことに挑戦。司会は地域の高校教員。</p>
-            <div class="c-event-card__footer">
-              <span>参加 45名</span>
-              <span>主催: 大学院連携委員会</span>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <div style="text-align:center;margin-top:32px;" data-reveal>
-        <a class="m-arrow-link" href="event-log.html" style="color:var(--color-primary);font-size:1rem;">すべての開催ログを見る</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CTA banner ===== -->
-  <section class="l-section">
-    <div class="l-container">
-      <div class="p-cta-banner m-spotlight" data-reveal="up-lg">
-        <div>
-          <span class="t-eyebrow" style="color:#f4d96a">Reserve the space</span>
-          <h2 class="t-display-3" data-mask-reveal>「やってみたい」を、<br>5 分で、ここから。</h2>
-          <p>愛媛大学の学生・研究室・教職員は無料で利用できます。<br>学外の主催者は有料となりますが、いつでもご相談ください。</p>
-        </div>
-        <div class="p-cta-banner__actions">
-          <a class="c-button c-button--lg m-pill" style="background:#fff;color:var(--color-primary-dark)" href="reserve.html">
-            予約フォームを開く <span aria-hidden="true">→</span>
-          </a>
-          <a class="c-button c-button--lg c-button--ghost m-pill" href="guidelines.html">先にガイドラインを読む</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Guidelines hint (3 categories) ===== -->
-  <section class="l-section l-section--accent l-section--tight p-section-photo p-section-photo--guidelines-hint">
-    <div class="l-container">
-      <div class="l-section__head" style="text-align:left;align-items:start;justify-items:start;">
-        <span class="t-eyebrow" data-reveal>Guidelines</span>
-        <h2 class="t-display-3" data-mask-reveal>利用形態は 3 区分。<br>あなたに合ったルールを。</h2>
-        <p class="t-lead" style="margin-top:0;" data-reveal="up" style="--reveal-delay:180ms">Imagine Deck は、利用する立場ごとにルールが整理されています。該当する区分のルールをご確認ください。</p>
-      </div>
-      <div class="l-grid l-grid--3 l-grid--gap-lg" data-reveal-stagger>
-        <a class="c-card c-card--interactive m-spotlight m-lift" href="guidelines.html#organizer" style="text-decoration:none;">
-          <span class="c-card__eyebrow" style="display:flex;align-items:center;gap:6px;"><span class="c-tag c-tag--event">主催者</span></span>
-          <h3 class="c-card__title">イベントを開催する方</h3>
-          <p class="c-card__body">スペースを貸し切ってイベント・ワークショップ・展示を行う方向けの 8 つのルール（申請内容遵守、責任者立会、安全運営、食品提供、撤収など）。</p>
-          <span class="m-arrow-link" style="margin-top:12px;color:var(--color-primary);">ルールを見る</span>
-        </a>
-        <a class="c-card c-card--interactive m-spotlight m-lift" href="guidelines.html#participant" style="text-decoration:none;">
-          <span class="c-card__eyebrow" style="display:flex;align-items:center;gap:6px;"><span class="c-tag c-tag--workshop">参加者</span></span>
-          <h3 class="c-card__title">イベントに参加する方</h3>
-          <p class="c-card__body">主催されているイベント・ワークショップに参加する方向けの 7 つのルール（スタッフ指示、展示物の取り扱い、撮影マナー、飲食、貴重品管理など）。</p>
-          <span class="m-arrow-link" style="margin-top:12px;color:var(--color-primary);">ルールを見る</span>
-        </a>
-        <a class="c-card c-card--interactive m-spotlight m-lift" href="guidelines.html#open" style="text-decoration:none;">
-          <span class="c-card__eyebrow" style="display:flex;align-items:center;gap:6px;"><span class="c-tag c-tag--exhibition">自由利用</span></span>
-          <h3 class="c-card__title">普段、自由に使う方</h3>
-          <p class="c-card__body">自習・対話・休憩などで自由に使う方向けの 7 つのルール（イベント時の協力、利用時間、整理整頓、飲食、長時間利用の配慮など）。</p>
-          <span class="m-arrow-link" style="margin-top:12px;color:var(--color-primary);">ルールを見る</span>
-        </a>
-      </div>
-      <div style="text-align:center;margin-top:32px;" data-reveal>
-        <a class="c-button c-button--secondary m-pill" href="guidelines.html">利用ガイドライン全文を読む →</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ===== Footer ===== -->
-<footer class="l-footer">
-  <div class="l-container">
-    <div class="l-footer__inner">
-      <div class="l-footer__brand">
-        <h3>Imagine Deck</h3>
-        <p>愛媛大学ミュージアムに生まれた、知的交流のハブ。研究のショーケース、学生のワークショップ、自由な対話の場として。</p>
-      </div>
-      <div class="l-footer__cols">
-        <div class="l-footer__col">
-          <h4>About</h4>
-          <ul>
-            <li><a href="index.html#about">Imagine Deck とは</a></li>
-            <li><a href="index.html#features">できること</a></li>
-            <li><a href="index.html#flow">利用の流れ</a></li>
-          </ul>
-        </div>
-        <div class="l-footer__col">
-          <h4>Use</h4>
-          <ul>
-            <li><a href="reserve.html">予約フォーム</a></li>
-            <li><a href="calendar.html">カレンダー</a></li>
-            <li><a href="guidelines.html">ガイドライン</a></li>
-          </ul>
-        </div>
-        <div class="l-footer__col">
-          <h4>Archive</h4>
-          <ul>
-            <li><a href="event-log.html">開催ログ</a></li>
-            <li><a href="https://portal.museum.ehime-u.ac.jp/" rel="noopener" target="_blank">ミュージアムポータル ↗</a></li>
-            <li><a href="https://www.ehime-u.ac.jp/" rel="noopener" target="_blank">愛媛大学 ↗</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="l-container l-footer__bottom">
-      <span>© Imagine Deck / 愛媛大学ミュージアム</span>
-      <span>利用時間: 10:00 – 16:30 / 休館日: 日曜・祝日</span>
-    </div>
-  </div>
-</footer>
-
-<script type="module" src="js/auth.js"></script>
-<script type="module" src="js/main.js"></script>
-<script type="module" src="js/motion.js"></script>
-<script type="module" src="js/carousel.js"></script>
+  <main class="card">
+    <img class="logo" src="/assets/logo/imagine-deck-logo.png" alt="Imagine Deck">
+    <span class="eyebrow">Renewal in progress</span>
+    <h1>ただいま<span class="accent">改修中</span>です</h1>
+    <p class="sub-en">UNDER&nbsp;RENOVATION</p>
+    <p class="lead">Imagine Deck の予約システムを、より分かりやすく安心してお使いいただけるよう、リニューアル作業を行っています。</p>
+    <p class="note">ご不便をおかけしますが、まもなく新しくなって戻ってまいります。今しばらくお待ちください。</p>
+    <div class="bar" role="progressbar" aria-label="改修作業中"></div>
+    <hr class="divider">
+    <footer><span class="org">愛媛大学ミュージアム 交流スペース Imagine&nbsp;Deck</span></footer>
+  </main>
 </body>
 </html>
