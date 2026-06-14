@@ -522,6 +522,7 @@ function buildConfirmSummary() {
   if (!wrap) return;
   while (wrap.firstChild) wrap.removeChild(wrap.firstChild);
   const data = collectFormData();
+  const isLong = data['reserve-mode'] === 'long-exhibition';
 
   // 学外の方（学内者の学外団体利用を含む）：確認画面(STEP6)の先頭に「料金・仮予約・2段階手続き」を強調表示
   if (billingRole() === 'external') {
@@ -529,8 +530,8 @@ function buildConfirmSummary() {
     const fee = el('div', { class: 'c-fee-notice c-fee-notice--paid', style: { marginBottom: '22px' } },
       el('p', { class: 'c-fee-notice__title' }, '施設使用料 ・ 学外（仮予約）'),
       el('p', { class: 'c-fee-notice__amount' },
-        h ? `${yen(Math.round(h * HOURLY_RATE))} ` : '日時が未選択です',
-        h ? el('small', {}, `概算（${h}時間 × ${yen(HOURLY_RATE)}）`) : null),
+        isLong ? '展示会期中は無料' : (h ? `${yen(Math.round(h * HOURLY_RATE))} ` : '日時が未選択です'),
+        (!isLong && h) ? el('small', {}, `概算（${h}時間 × ${yen(HOURLY_RATE)}）`) : null),
       el('p', { class: 'c-fee-notice__text' }, '学外の方は、利用希望日の56日前までにお申し込みください。送信後の流れ ── ①運営が申請を承認 → ②事務局が内容を確認し、請求書等をメールでご連絡 → ③お支払いで確定します。'),
     );
     if (data['purpose-type'] === 'exhibition') {
@@ -565,7 +566,6 @@ function buildConfirmSummary() {
   const feeLine = br === 'external'
     ? `${yen(Math.round(h * HOURLY_RATE))}（概算：${h}時間 × ${yen(HOURLY_RATE)}）`
     : (state.role === 'staff' ? '—（管理者）' : '無料（大学関係者）');
-  const isLong = data['reserve-mode'] === 'long-exhibition';
   let feeRows;
   if (isLong) {
     const days = Number(data['exhibition-days']);
