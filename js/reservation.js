@@ -29,7 +29,44 @@ const state = {
   uploadedFiles: [],
   user: null,
   role: 'guest',
+  externalOrg: false, // 学内者が「学外団体として利用（有料）」を選んだか
+  reserveMode: 'standard', // 'standard' | 'long-exhibition'（長期壁面展示・最長21日間）
 };
+
+/* 課金上の役割：学内者が「学外団体として利用」を選んだ場合は external（有料）扱い。
+   本人確認(identity)の役割は state.role のまま（Firestoreルールの role==serverRole 用）。 */
+function billingRole() {
+  if (state.role === 'university' && state.externalOrg) return 'external';
+  return state.role;
+}
+
+/* 学内者のときだけ「立場（無料/学外団体・有料）」スイッチを表示・配線する */
+function setupStandpointSwitch() {
+  const sw = document.getElementById('external-org-switch');
+  if (!sw) return;
+  if (state.role !== 'university') { // 学外・管理者・guest には出さない
+    sw.hidden = true;
+    state.externalOrg = false;
+    return;
+  }
+  sw.hidden = false;
+  if (!sw.dataset.wired) {
+    sw.dataset.wired = '1';
+    sw.querySelectorAll('input[name="usage-standpoint"]').forEach((r) => {
+      r.addEventListener('change', () => {
+        state.externalOrg = (document.querySelector('input[name="usage-standpoint"]:checked')?.value === 'external-org');
+        clearError('date'); // 立場を変えたら56日前ルールのエラーを一旦解消
+        renderFeeEstimate();
+        // 選択カードの見た目を同期
+        sw.querySelectorAll('.c-choice-card').forEach((c) => {
+          const i = c.querySelector('input'); if (i) c.classList.toggle('is-selected', i.checked);
+        });
+      });
+    });
+  }
+  // 初期状態を反映
+  state.externalOrg = (sw.querySelector('input[name="usage-standpoint"]:checked')?.value === 'external-org');
+}
 
 const STEP_LABELS = {
   1: '日時',
@@ -42,6 +79,8 @@ const STEP_LABELS = {
 
 const FIELD_LABELS = {
   date: '利用したい日',
+  'reserve-mode': '利用タイプ',
+  'exhibition-days': '展示日数',
   'start-time': '開始時間',
   'end-time': '終了時間',
   'org-name': '主催者・団体名',
@@ -75,6 +114,16 @@ const FIELDS_BY_STEP = {
   5: ['project-name', 'purpose', 'event-detail', 'sns', 'related-url', 'notes'],
 };
 
+/* STEP1 の検証対象は利用タイプで変わる（長期壁面展示は「時間」ではなく「日数」） */
+function fieldsForStep(n) {
+  if (n === 1) {
+    return state.reserveMode === 'long-exhibition'
+      ? ['date', 'exhibition-days']
+      : ['date', 'start-time', 'end-time'];
+  }
+  return FIELDS_BY_STEP[n] || [];
+}
+
 const PURPOSE_LABEL = { exhibition: '展示', event: 'イベント・発表・交流', workshop: 'ワークショップ', other: 'その他' };
 const RESERVE_LABEL = { shared: '通常利用（共有）', exclusive: '専有利用（貸切）' };
 const AUDIENCE_LABEL = { public: '一般公開', campus: '学内のみ', closed: '関係者のみ' };
@@ -97,7 +146,18 @@ function yen(n) { return '¥' + Number(n || 0).toLocaleString('ja-JP'); }
 function renderFeeEstimate() {
   const box = document.getElementById('fee-estimate');
   if (!box) return;
-  if (state.role !== 'external') { box.hidden = true; box.replaceChildren(); box.className = ''; return; }
+  if (billingRole() !== 'external') { box.hidden = true; box.replaceChildren(); box.className = ''; return; }
+  // 長期壁面展示：時間単位ではなく展示特例（会期中無料・準備撤去は事務局案内）
+  if (state.reserveMode === 'long-exhibition') {
+    box.className = 'c-fee-line';
+    box.replaceChildren(
+      el('span', { class: 'c-fee-line__label' }, '施設使用料 ・ 学外（長期壁面展示）'),
+      el('p', { class: 'c-fee-line__hint' }, '展示会期中の施設使用料は無料です。'),
+      el('p', { class: 'c-fee-line__sub' }, '準備・撤去にかかる費用は、運営・事務局からご案内します。学外の方は利用希望日の56日前までにお申し込みください。'),
+    );
+    box.hidden = false;
+    return;
+  }
   const start = document.getElementById('start-time')?.value;
   const end = document.getElementById('end-time')?.value;
   const h = hoursBetween(start, end);
@@ -148,7 +208,8 @@ function initAuthGate() {
     if (verifyGate) verifyGate.hidden = true;
     if (agreement) agreement.hidden = false;
     renderAuthPreview(preview);  // ヘッダーのアカウントメニュー（役割はここで分かる）
-    renderFeeEstimate();          // 学外のみ STEP1 に料金案内
+    setupStandpointSwitch();      // 学内者には「学外団体として利用」スイッチを表示
+    renderFeeEstimate();          // 学外（学外団体含む）のみ STEP1 に料金案内
     if (!agreementInitialized) { initAgreementGate(); agreementInitialized = true; }
     return; // 実際の認証監視はスキップ（プレビュー表示のみ）
   }
@@ -175,6 +236,7 @@ function initAuthGate() {
     if (gate) gate.hidden = true;
     if (verifyGate) verifyGate.hidden = true;
     if (agreement) agreement.hidden = false;
+    setupStandpointSwitch();
     renderFeeEstimate();
     prefillFromUser(user);
     if (!agreementInitialized) { initAgreementGate(); agreementInitialized = true; }
@@ -319,6 +381,13 @@ function validateField(name) {
   if (name === 'teacher-consent') {
     return els[0].checked ? null : '担当教員の了解の確認にチェックしてください。';
   }
+  // 展示日数（長期壁面展示：1〜21の整数・必須）
+  if (name === 'exhibition-days') {
+    if (!value) return '展示日数を入力してください。';
+    const days = Number(value);
+    if (!Number.isInteger(days) || days < 1 || days > 21) return '展示日数は1〜21の整数で入力してください。';
+    return null;
+  }
   // 「その他」の簡単な内容は、利用目的タイプ=その他 のときだけ必須
   if (name === 'purpose-other') {
     const pt = form.querySelector('[name="purpose-type"]:checked')?.value;
@@ -353,7 +422,7 @@ function validateField(name) {
     return `イベント詳細は100文字以上で入力してください（現在 ${value.length} 文字）。`;
   }
   // 学外の方は、利用希望日の56日前までに申し込む必要がある（事務処理・請求のため）
-  if (name === 'date' && state.role === 'external') {
+  if (name === 'date' && billingRole() === 'external') {
     const today = new Date(); today.setHours(0, 0, 0, 0);
     const sel = new Date(`${value}T00:00:00`);
     const diffDays = Math.round((sel - today) / 86400000);
@@ -375,7 +444,7 @@ function validateField(name) {
 }
 
 function validateStep(n) {
-  const fields = FIELDS_BY_STEP[n] || [];
+  const fields = fieldsForStep(n);
   const errors = [];
   fields.forEach(name => {
     clearError(name);
@@ -440,6 +509,8 @@ function collectFormData() {
       data[name] = first.value.trim();
     }
   });
+  data['reserve-mode'] = document.querySelector('input[name="reserve-mode"]:checked')?.value || 'standard';
+  data['exhibition-days'] = (document.getElementById('exhibition-days')?.value || '').trim();
   data.files = state.uploadedFiles.map(f => ({ name: f.name, size: f.size, type: f.type }));
   state.formData = data;
   return data;
@@ -452,8 +523,8 @@ function buildConfirmSummary() {
   while (wrap.firstChild) wrap.removeChild(wrap.firstChild);
   const data = collectFormData();
 
-  // 学外の方：確認画面(STEP6)の先頭に「料金・仮予約・2段階手続き」を強調表示する
-  if (state.role === 'external') {
+  // 学外の方（学内者の学外団体利用を含む）：確認画面(STEP6)の先頭に「料金・仮予約・2段階手続き」を強調表示
+  if (billingRole() === 'external') {
     const h = hoursBetween(data['start-time'], data['end-time']);
     const fee = el('div', { class: 'c-fee-notice c-fee-notice--paid', style: { marginBottom: '22px' } },
       el('p', { class: 'c-fee-notice__title' }, '施設使用料 ・ 学外（仮予約）'),
@@ -487,19 +558,41 @@ function buildConfirmSummary() {
   const dateLabel = data.date ? data.date : '';
   const timeLabel = (data['start-time'] && data['end-time']) ? `${data['start-time']} 〜 ${data['end-time']}` : '';
   const h = hoursBetween(data['start-time'], data['end-time']);
-  const roleLine = state.role === 'external' ? '学外（有料）'
+  const br = billingRole();
+  const roleLine = br === 'external'
+    ? (state.role === 'university' ? '学外団体として利用（有料）' : '学外（有料）')
     : (state.role === 'staff' ? '管理者' : '大学関係者（無料）');
-  const feeLine = state.role === 'external'
+  const feeLine = br === 'external'
     ? `${yen(Math.round(h * HOURLY_RATE))}（概算：${h}時間 × ${yen(HOURLY_RATE)}）`
     : (state.role === 'staff' ? '—（管理者）' : '無料（大学関係者）');
-  const feeRows = [
-    ['利用日', dateLabel],
-    ['利用時間', timeLabel],
-    ['料金区分', roleLine],
-    ['施設使用料（概算）', feeLine],
-  ];
-  if (state.role === 'external' && data['purpose-type'] === 'exhibition') {
-    feeRows.push(['展示特例', '展示会期中は無料（準備・撤去にかかる費用は事務局からご案内）']);
+  const isLong = data['reserve-mode'] === 'long-exhibition';
+  let feeRows;
+  if (isLong) {
+    const days = Number(data['exhibition-days']);
+    let rangeStr = '';
+    if (data.date && Number.isInteger(days) && days >= 1) {
+      const s = new Date(`${data.date}T00:00:00`); const e = new Date(s); e.setDate(e.getDate() + days - 1);
+      const f = (x) => `${x.getFullYear()}/${x.getMonth() + 1}/${x.getDate()}`;
+      rangeStr = `${f(s)} 〜 ${f(e)}（${days}日間）`;
+    }
+    feeRows = [
+      ['利用タイプ', '長期壁面展示（最長21日間）'],
+      ['展示開始日', dateLabel],
+      ['展示期間', rangeStr],
+      ['料金区分', roleLine],
+      ['施設使用料', br === 'external' ? '展示会期中は無料（準備・撤去費は事務局からご案内）' : '無料（大学関係者）'],
+    ];
+  } else {
+    feeRows = [
+      ['利用タイプ', '通常利用（時間単位）'],
+      ['利用日', dateLabel],
+      ['利用時間', timeLabel],
+      ['料金区分', roleLine],
+      ['施設使用料（概算）', feeLine],
+    ];
+    if (br === 'external' && data['purpose-type'] === 'exhibition') {
+      feeRows.push(['展示特例', '展示会期中は無料（準備・撤去にかかる費用は事務局からご案内）']);
+    }
   }
   wrap.appendChild(card('日時・料金', 1, feeRows));
   wrap.appendChild(card('主催者情報', 2, [
@@ -692,6 +785,64 @@ function initConditionalForm() {
   syncPurposeDependents();
 }
 
+/* ---------- 利用タイプ（通常 / 長期壁面展示・最長21日間） ---------- */
+function updateExhibitionRange() {
+  const out = document.getElementById('exhibition-range');
+  if (!out) return;
+  if (state.reserveMode !== 'long-exhibition') { out.textContent = ''; return; }
+  const d = document.getElementById('date')?.value;
+  const days = Number(document.getElementById('exhibition-days')?.value);
+  if (d && Number.isInteger(days) && days >= 1 && days <= 21) {
+    const start = new Date(`${d}T00:00:00`);
+    const end = new Date(start); end.setDate(end.getDate() + days - 1);
+    const f = (x) => `${x.getFullYear()}年${x.getMonth() + 1}月${x.getDate()}日`;
+    out.textContent = `展示期間：${f(start)} 〜 ${f(end)}（${days}日間）`;
+  } else {
+    out.textContent = '';
+  }
+}
+
+/* 長期壁面展示では利用目的を「展示」に固定（→連動で 壁面・共有 に） */
+function lockPurposeForLongExhibition(isLong) {
+  const radios = document.querySelectorAll('input[name="purpose-type"]');
+  if (!radios.length) return;
+  radios.forEach((r) => {
+    if (isLong) { r.disabled = (r.value !== 'exhibition'); if (r.value === 'exhibition') r.checked = true; }
+    else { r.disabled = false; }
+  });
+  syncPurposeDependents();
+}
+
+function syncReserveMode() {
+  const mode = document.querySelector('input[name="reserve-mode"]:checked')?.value || 'standard';
+  state.reserveMode = mode;
+  const isLong = mode === 'long-exhibition';
+  const timeRow = document.getElementById('time-row');
+  const daysField = document.getElementById('exhibition-days-field');
+  const startSel = document.getElementById('start-time');
+  const endSel = document.getElementById('end-time');
+  const dateLabel = document.querySelector('label[for="date"]');
+  if (timeRow) timeRow.hidden = isLong;
+  if (daysField) daysField.hidden = !isLong;
+  if (startSel) { startSel.required = !isLong; if (isLong) { startSel.value = ''; clearError('start-time'); } }
+  if (endSel) { endSel.required = !isLong; if (isLong) { endSel.value = ''; clearError('end-time'); } }
+  if (dateLabel) dateLabel.textContent = isLong ? '展示開始日' : '利用したい日';
+  if (!isLong) clearError('exhibition-days');
+  lockPurposeForLongExhibition(isLong);
+  updateExhibitionRange();
+  renderFeeEstimate();
+  document.querySelectorAll('#reserve-mode-field .c-choice-card').forEach((c) => {
+    const i = c.querySelector('input'); if (i) c.classList.toggle('is-selected', i.checked);
+  });
+}
+
+function initReserveMode() {
+  document.querySelectorAll('input[name="reserve-mode"]').forEach((r) => r.addEventListener('change', syncReserveMode));
+  document.getElementById('exhibition-days')?.addEventListener('input', () => { updateExhibitionRange(); renderFeeEstimate(); });
+  document.getElementById('date')?.addEventListener('change', updateExhibitionRange);
+  syncReserveMode();
+}
+
 /* ---------- Step navigation ---------- */
 function initNav() {
   document.querySelectorAll('[data-next]').forEach(btn => {
@@ -795,9 +946,19 @@ function initSubmit() {
 
     const data = collectFormData();
     const role = roleOf(user);
-    const feeType = role === 'external' ? 'paid' : 'free';
-    const hrs = hoursBetween(data['start-time'], data['end-time']);
-    const estimatedFee = feeType === 'paid' ? Math.round(hrs * HOURLY_RATE) : 0;
+    const externalOrg = (role === 'university' && state.externalOrg);
+    const feeType = (role === 'external' || externalOrg) ? 'paid' : 'free';
+    const isLong = data['reserve-mode'] === 'long-exhibition';
+    const exDays = isLong ? (Number(data['exhibition-days']) || null) : null;
+    let exEnd = '';
+    if (isLong && data.date && exDays) {
+      const s = new Date(`${data.date}T00:00:00`); s.setDate(s.getDate() + exDays - 1);
+      exEnd = `${s.getFullYear()}-${String(s.getMonth() + 1).padStart(2, '0')}-${String(s.getDate()).padStart(2, '0')}`;
+    }
+    const hrs = isLong ? 0 : hoursBetween(data['start-time'], data['end-time']);
+    const estimatedFee = (feeType === 'paid')
+      ? (isLong ? EXHIBITION_FEE : Math.round(hrs * HOURLY_RATE))
+      : 0;
 
     // Firestore に保存する予約データ（ルールで uid==auth.uid が必須）
     const reservation = {
@@ -805,7 +966,10 @@ function initSubmit() {
       reserverEmail: user.email || '',
       status: 'pending',
       reportReminderSent: false, // ← 終了30分後の自動メール対象フラグ
-      role, feeType, estimatedFee, hours: hrs,
+      role, feeType, externalOrg, estimatedFee, hours: hrs,
+      reserveMode: data['reserve-mode'] || 'standard',
+      exhibitionDays: exDays,
+      exhibitionEndDate: exEnd,
       date: data.date || '',
       startTime: data['start-time'] || '',
       endTime: data['end-time'] || '',
@@ -959,6 +1123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAvailability();
     initFeeWatchers();
     initConditionalForm();
+    initReserveMode();
     initSpaceGallery();
     initSubmit();
     updateStepper();

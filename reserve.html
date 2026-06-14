@@ -280,6 +280,46 @@
 
               <div class="c-error-summary" data-error-summary hidden></div>
 
+              <!-- 利用タイプ：通常（時間単位） / 長期壁面展示（最長21日間・終日） -->
+              <fieldset class="c-field" id="reserve-mode-field" style="margin-bottom:28px">
+                <legend class="c-field__label c-field__label--required">利用タイプ</legend>
+                <p class="c-field-help">1日のうち時間を決めて使う「通常利用」か、壁面に作品を飾る「長期壁面展示（最長21日間・終日）」かを選んでください。</p>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="reserve-mode" value="standard" checked>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">通常利用（時間単位）</span>
+                    <span class="c-choice-card__desc">1日のうち、開始・終了時間を決めて利用します</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="reserve-mode" value="long-exhibition">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">長期壁面展示（最長21日間）</span>
+                    <span class="c-choice-card__desc">壁面に作品を飾る展示・終日・最長21日間（時間指定は不要）</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <!-- 学内者向け：学外団体としての利用かを選択（有料切替）。役割が university のときだけ表示 -->
+              <fieldset class="c-field" id="external-org-switch" hidden style="margin-bottom:28px">
+                <legend class="c-field__label c-field__label--required">どの立場でのご利用ですか？</legend>
+                <p class="c-field-help">学会など<strong>学外団体の立場</strong>でのご利用は、大学の活動とは別に<strong>施設使用料（有料）</strong>がかかります。該当する方を選んでください。</p>
+                <div class="c-choice-grid" role="radiogroup" aria-required="true">
+                  <label class="c-choice-card">
+                    <input type="radio" name="usage-standpoint" value="internal" checked>
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">大学の活動として（無料）</span>
+                    <span class="c-choice-card__desc">愛媛大学の授業・研究・課外活動などでの利用</span>
+                  </label>
+                  <label class="c-choice-card">
+                    <input type="radio" name="usage-standpoint" value="external-org">
+                    <span class="c-choice-card__check"></span>
+                    <span class="c-choice-card__title">学外団体として（有料）</span>
+                    <span class="c-choice-card__desc">学会・外部団体としての利用（施設使用料がかかります）</span>
+                  </label>
+                </div>
+              </fieldset>
+
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="date">利用したい日</label>
                 <p class="c-field-help">予約済みの日には色が付きます。休館日は選べません。</p>
@@ -291,7 +331,7 @@
               <!-- 選択した日の開催内容（ガイドライン/カレンダーページと同様に表示） -->
               <div id="reserve-day-events" class="c-day-events" hidden></div>
 
-              <div class="c-time-row" style="margin-top:24px;">
+              <div class="c-time-row" id="time-row" style="margin-top:24px;">
                 <div class="c-field">
                   <label class="c-field__label c-field__label--required" for="start-time">開始時間</label>
                   <select class="c-select" id="start-time" name="start-time" required></select>
@@ -303,6 +343,15 @@
                   <select class="c-select" id="end-time" name="end-time" required></select>
                   <p class="c-error-message" data-error-for="end-time" hidden></p>
                 </div>
+              </div>
+
+              <!-- 長期壁面展示モードのみ表示：展示日数（最長21日間） -->
+              <div class="c-field" id="exhibition-days-field" hidden style="margin-top:24px">
+                <label class="c-field__label c-field__label--required" for="exhibition-days">展示日数（最長21日間）</label>
+                <p class="c-field-help">開始日から数えた展示期間の日数です（1〜21日）。展示準備日・撤去日は別途、運営・事務局よりご案内します。</p>
+                <input class="c-input" type="number" id="exhibition-days" name="exhibition-days" min="1" max="21" inputmode="numeric" placeholder="例：7" style="max-width:200px">
+                <p id="exhibition-range" class="c-field-help" style="margin-top:8px;color:var(--color-primary-dark)"></p>
+                <p class="c-error-message" data-error-for="exhibition-days" hidden></p>
               </div>
 
               <div class="p-reserve-feedback" id="availability-feedback" hidden></div>

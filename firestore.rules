@@ -57,14 +57,17 @@ service cloud.firestore {
     match /reservations/{id} {
       allow get:    if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
       allow list:   if isAdmin() || signedIn();   // 非管理者は .where('uid','==',uid) 必須
-      // 予約作成：メール確認済みの本人のみ。役割・料金区分・状態はサーバ側判定と一致必須。
+      // 予約作成：メール確認済みの本人のみ。役割はサーバ側判定と一致必須。
+      // 料金区分：学外は必ず有料。学内・管理者は無料が基本だが、「学外団体として利用」を選んだ
+      // 場合は有料(paid)も許可する（多く支払う方向は常に許容）。
       allow create: if signedIn()
                     && request.auth.token.email_verified == true
                     && request.resource.data.uid == request.auth.uid
                     && request.resource.data.status == 'pending'
                     && request.resource.data.reportReminderSent == false
                     && request.resource.data.role == serverRole()
-                    && request.resource.data.feeType == (serverRole() == 'external' ? 'paid' : 'free')
+                    && request.resource.data.feeType in ['paid', 'free']
+                    && (request.resource.data.feeType == 'paid' || serverRole() != 'external')
                     && request.resource.data.orgName is string
                     && request.resource.data.orgName.size() <= 120
                     && request.resource.data.studentEmail is string
