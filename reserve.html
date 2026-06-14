@@ -149,16 +149,18 @@
         <!-- 全文（段階的開示：必要な人だけ開く） -->
         <div class="c-rules__details">
           <details class="c-disclosure">
-            <summary>主催者（イベント・展示等を実施する方）の利用ルール</summary>
+            <summary>主催者（イベントやワークショップ・展示などを企画・開催する方）の利用ルール</summary>
             <div class="c-disclosure__body">
+              <p>イベントやプロジェクト活動などを行う場合は、次のことをお守りください。</p>
               <ul>
-                <li><strong>申請内容の遵守：</strong>承認された目的・内容・時間を厳守し、運営会議の指示に従ってください。</li>
-                <li><strong>常駐義務：</strong>準備・撤収を含む開催時間中は、実施責任者または代理者が必ず常駐してください。</li>
-                <li><strong>安全管理：</strong>参加者の安全確保に努め、機材・薬品等の取り扱いに注意してください。事故時は速やかに広報課へご報告ください。</li>
-                <li><strong>飲食・食品提供：</strong>食品の試作・試食は実施者の責任で行い、アレルギー等に十分配慮してください（大学は食品提供主体になりません）。</li>
-                <li><strong>法令遵守：</strong>許認可・届出が必要な場合は実施者の責任で対応し、必要な専門指導者を確保してください。</li>
-                <li><strong>原状回復：</strong>利用後は清掃・整理し速やかに原状回復を。ゴミは原則お持ち帰りください。</li>
-                <li><strong>広報：</strong>告知・広報は本学の品位を損なわないよう、広報ルールに沿って行ってください。</li>
+                <li><strong>申請内容を守る：</strong>事前に許可された目的、内容、時間をしっかり守り、運営側の指示に従ってください。</li>
+                <li><strong>責任者の立ち会い：</strong>準備から片付けまでの間、責任者または代理の方が必ずその場にいて、イベント全体を見守ってください。</li>
+                <li><strong>安全第一の運営：</strong>参加者の皆さんの安全を最優先にし、機材や薬品などは十分に注意して扱ってください。万が一事故が起きた場合は、すぐにミュージアム事務（広報課）へご連絡ください。</li>
+                <li><strong>必要な手続きと専門家の配置：</strong>飲食の提供や特殊な機材を使うなど、特別な手続き（保健所への届け出など）が必要な場合は、主催者の責任で事前に行ってください。また、専門的な知識が必要な活動では、専門家や指導者を配置し、適切なアドバイスを受けながら安全に運営してください。食品の試作や試食を行う場合、その食品の安全管理や提供に関する責任は、すべて主催者にあります。ミュージアムは、食品の提供者にはなりません。試食を行う際は、原材料表示やアレルギーへの配慮等を主催者の責任において十分に行ってください。</li>
+                <li><strong>元通りに片付ける：</strong>利用が終わったら、使った設備や備品を掃除・整理し、元の状態に戻してください。ゴミは必ずお持ち帰りください。</li>
+                <li><strong>広報・お知らせについて：</strong>イベントの宣伝をする時は、愛媛大学ミュージアムのイメージを大切にしてください。なお、本学の広報ルールに則り行ってください。</li>
+                <li><strong>利用時間について：</strong>ご利用は原則としてミュージアムの開館時間（午前10時～午後4時30分）内とし、休館日（日曜・祝日、その他）はお休みとなります。なお、本学の教員が同席する場合に限り、時間外の利用を許可することがあります。</li>
+                <li><strong>展示利用における特例：</strong>壁面を展示として利用する場合、展示会期中の利用料金はかかりません。ただし、展示準備の時間として開催日前日の1日分（午前10時から16時30分までの6.5時間分）と、展示撤去の時間として展示終了日翌日の1日分（午前10時から16時30分までの6.5時間分）の計13時間分の料金（15,080円）がかかります。実際の展示時間を前提としませんので、ご留意願います。また、展示として貸し出す最長期間は、21日間です。（展示の準備と撤去に関する作業日は、ミュージアムの休館日を除く。）</li>
               </ul>
             </div>
           </details>
@@ -326,28 +328,28 @@
 
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="org-name">主催者・団体名</label>
-                <p class="c-field-help">例：「○○ゼミ」「学生団体△△」「機械工学科 学生プロジェクト」</p>
-                <input class="c-input" type="text" id="org-name" name="org-name" required maxlength="100" placeholder="〇〇ゼミ / △△プロジェクト">
+                <p class="c-field-help">イベント・展示を主催する個人または団体の名称をご記入ください。</p>
+                <input class="c-input" type="text" id="org-name" name="org-name" required maxlength="100" placeholder="">
                 <p class="c-error-message" data-error-for="org-name" hidden></p>
               </div>
 
               <div class="c-field">
-                <label class="c-field__label c-field__label--required" for="student-name">担当学生 氏名</label>
-                <p class="c-field-help">当日 Imagine Deck で対応する学生の氏名を記入してください。</p>
+                <label class="c-field__label c-field__label--required" for="student-name">責任者 氏名</label>
+                <p class="c-field-help">当日 Imagine Deck で対応する方の氏名をご記入ください。</p>
                 <input class="c-input" type="text" id="student-name" name="student-name" required maxlength="50" placeholder="愛媛 太郎">
                 <p class="c-error-message" data-error-for="student-name" hidden></p>
               </div>
 
               <div class="c-field">
-                <label class="c-field__label c-field__label--required" for="student-email">担当学生 メールアドレス</label>
-                <p class="c-field-help">大学発行のメール（@stu.ehime-u.ac.jp など）を推奨します。運営から確認連絡がいきます。</p>
+                <label class="c-field__label c-field__label--required" for="student-email">責任者 メールアドレス</label>
+                <p class="c-field-help">運営から確認連絡が届きますので、正確にご記入ください。</p>
                 <input class="c-input" type="email" id="student-email" name="student-email" required maxlength="100" placeholder="taro@stu.ehime-u.ac.jp" inputmode="email" autocomplete="email">
                 <p class="c-error-message" data-error-for="student-email" hidden></p>
               </div>
 
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="staff-name">担当教員・担当職員 氏名</label>
-                <p class="c-field-why">企画内容を確認できる大学関係者を記入してください。研究室・授業・学生団体の場合は、指導教員・顧問など。</p>
+                <p class="c-field-why">規定時間外利用の場合に同席する大学関係者、また企画内容を確認できる大学関係者をご記入ください。研究室・授業・学生団体の場合は、指導教員・顧問など。</p>
                 <input class="c-input" type="text" id="staff-name" name="staff-name" required maxlength="50" placeholder="山田 花子（指導教員）">
                 <p class="c-error-message" data-error-for="staff-name" hidden></p>
               </div>
@@ -362,7 +364,7 @@
               <div class="c-field">
                 <label class="c-check" style="align-items:flex-start">
                   <input type="checkbox" id="teacher-consent" name="teacher-consent" required>
-                  <span>上記の<strong>担当教員の了解を得て</strong>予約しています。<br><small class="t-muted">※学生だけの無断予約を防ぐため、運営から担当教員へ確認のご連絡をする場合があります。</small></span>
+                  <span>上記の<strong>担当教員・担当職員の了解を得て</strong>予約しています。<br><small class="t-muted">※入力者だけの無断予約を防ぐため、運営からご記入の大学関係者へ確認のご連絡をします。</small></span>
                 </label>
                 <p class="c-error-message" data-error-for="teacher-consent" hidden></p>
               </div>
@@ -419,7 +421,7 @@
                     <input type="radio" name="purpose-type" value="exhibition" required>
                     <span class="c-choice-card__check"></span>
                     <span class="c-choice-card__title">🖼 展示</span>
-                    <span class="c-choice-card__desc">壁面や空間を使って作品・研究成果を見せる</span>
+                    <span class="c-choice-card__desc">壁面を使って作品・研究成果を見せる（壁面のみ・常駐は不要）</span>
                   </label>
                   <label class="c-choice-card">
                     <input type="radio" name="purpose-type" value="event">
@@ -485,12 +487,6 @@
                     <span class="c-choice-card__desc">どなたでも参加できる</span>
                   </label>
                   <label class="c-choice-card">
-                    <input type="radio" name="audience" value="campus">
-                    <span class="c-choice-card__check"></span>
-                    <span class="c-choice-card__title">学内のみ</span>
-                    <span class="c-choice-card__desc">愛媛大学の関係者のみ</span>
-                  </label>
-                  <label class="c-choice-card">
                     <input type="radio" name="audience" value="closed">
                     <span class="c-choice-card__check"></span>
                     <span class="c-choice-card__title">関係者のみ</span>
@@ -531,19 +527,19 @@
 
               <fieldset class="c-field" style="margin-top:28px;">
                 <legend class="c-field__label c-field__label--required">飲食</legend>
-                <p class="c-field-help">蓋付き容器の飲み物は通常利用でも可です。<strong>軽食を伴うイベントは、専任教員が責任者として同席する必要があり、学生だけでは実施できません。</strong></p>
+                <p class="c-field-help">蓋つき容器の飲み物は通常利用でも可です。<strong>規定時間外利用の軽食を伴うイベントは、大学関係者が責任者として同席する必要があります。</strong></p>
                 <div class="c-choice-grid" role="radiogroup" aria-required="true">
                   <label class="c-choice-card">
                     <input type="radio" name="catering" value="none" required>
                     <span class="c-choice-card__check"></span>
                     <span class="c-choice-card__title">なし</span>
-                    <span class="c-choice-card__desc">飲食物の提供・持込はしない（蓋付き容器の飲み物のみ可）</span>
+                    <span class="c-choice-card__desc">飲食物の提供・持込はしない（蓋つき容器の飲み物のみ可）</span>
                   </label>
                   <label class="c-choice-card">
                     <input type="radio" name="catering" value="snacks">
                     <span class="c-choice-card__check"></span>
                     <span class="c-choice-card__title">軽食あり（要相談）</span>
-                    <span class="c-choice-card__desc">専任教員の同席が必要・事前に運営と相談してください</span>
+                    <span class="c-choice-card__desc">大学関係者の同席が必要・事前に運営と相談してください</span>
                   </label>
                 </div>
                 <p class="c-error-message" data-error-for="catering" hidden></p>
@@ -561,7 +557,7 @@
                 <span class="c-step-card__num">STEP 04 / 06</span>
                 <h2 class="c-step-card__title" id="step4-title">どこを使いますか？</h2>
                 <p class="c-step-card__lead">
-                  Imagine Deck の中で、利用したい場所を1つ選んでください。利用目的に応じて選択肢が変わります（展示は「壁面」か「空間全体」、それ以外は「フロア全体」）。
+                  Imagine Deck の中で、利用したい場所を1つ選んでください。利用目的に応じて自動で選ばれます（展示は「壁面」のみ、それ以外は「フロア全体」）。
                 </p>
               </header>
 
@@ -569,7 +565,7 @@
 
               <fieldset class="c-field" aria-required="true">
                 <legend class="c-field__label c-field__label--required">利用箇所</legend>
-                <p class="c-field-help">利用目的に応じて選択肢が変わります。<strong>展示</strong>は「壁面」か「空間全体」、それ以外は「フロア全体」です。</p>
+                <p class="c-field-help">利用目的に応じて自動で選ばれます。<strong>展示</strong>は「壁面」のみ、それ以外は「フロア全体」です。</p>
 
                 <!-- 展示のとき：壁面のみ（議事録2026-06-09: 展示は壁面のみ・貸切不可） -->
                 <div class="c-choice-grid" data-area-set="exhibition" hidden>
@@ -616,16 +612,16 @@
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="project-name">企画名</label>
                 <p class="c-field-help">イベント・展示の「顔」になる名称です。申請・確認・開催ログで使われます。</p>
-                <input class="c-input" type="text" id="project-name" name="project-name" required maxlength="80" placeholder="例：機械工学科 学生プロジェクト成果展 2026">
+                <input class="c-input" type="text" id="project-name" name="project-name" required maxlength="80" placeholder="例：3Dプリンター ものづくり体験ワークショップ">
                 <p class="c-error-message" data-error-for="project-name" hidden></p>
               </div>
 
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="purpose">利用目的</label>
                 <p class="c-field-help">
-                  例：研究成果の展示、学生向けワークショップ、地域交流イベント、授業外活動の発表、ゼミの中間発表、研究室の合同勉強会 など
+                  例：研究成果の展示、ワークショップ、学会・研究会、地域交流イベント、成果発表会 など
                 </p>
-                <textarea class="c-textarea" id="purpose" name="purpose" required maxlength="500" rows="3" placeholder="例：機械工学科 学生プロジェクトの成果展示。3D プリンタで製作した作品 12 点を展示し、来場者に技術の裏側を解説します。"></textarea>
+                <textarea class="c-textarea" id="purpose" name="purpose" required maxlength="500" rows="3" placeholder="例：3Dプリンターを使ったものづくり体験ワークショップ。参加者が小物を制作し、技術や仕組みを解説します。"></textarea>
                 <p class="c-error-message" data-error-for="purpose" hidden></p>
               </div>
 
@@ -669,8 +665,8 @@
 
               <div class="c-field">
                 <label class="c-field__label c-field__label--optional" for="notes">備考</label>
-                <p class="c-field-help">参加費がある場合の金額、特別な備品、連絡事項などをご記入ください。</p>
-                <textarea class="c-textarea" id="notes" name="notes" maxlength="1000" rows="3" placeholder="参加費 500 円（材料費）。プロジェクター借用希望。"></textarea>
+                <p class="c-field-help">参加費がある場合の金額、運営からの確認が必要な事項、ご質問などがあればご記入ください。</p>
+                <textarea class="c-textarea" id="notes" name="notes" maxlength="1000" rows="3" placeholder=""></textarea>
                 <p class="c-error-message" data-error-for="notes" hidden></p>
               </div>
 
@@ -718,7 +714,7 @@
             <ul>
               <li>利用時間: 10:00〜16:30</li>
               <li>休館日: 日曜・祝日</li>
-              <li>飲み物 OK / 食事 NG</li>
+              <li>飲み物（蓋つき容器）OK / 食事 NG</li>
               <li>ゴミは持ち帰り</li>
               <li>学外主催者は有料（要見積）</li>
             </ul>
