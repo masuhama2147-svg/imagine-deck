@@ -5,15 +5,15 @@
 <script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>スペースを予約する｜Imagine Deck</title>
-<meta name="description" content="Imagine Deck を予約する 6 ステップフォーム。日時・主催者情報・利用内容・利用箇所・詳細・確認の順で、必要な情報を一つずつ入力できます。">
+<meta name="description" content="Imagine Deck を予約する 5 ステップフォーム。日時・主催者情報・利用内容・詳細・確認の順で、必要な情報を一つずつ入力できます。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=7">
-<link rel="stylesheet" href="css/layout.css?v=7">
-<link rel="stylesheet" href="css/components.css?v=7">
-<link rel="stylesheet" href="css/pages.css?v=7">
-<link rel="stylesheet" href="css/motion.css?v=7">
+<link rel="stylesheet" href="css/base.css?v=8">
+<link rel="stylesheet" href="css/layout.css?v=8">
+<link rel="stylesheet" href="css/components.css?v=8">
+<link rel="stylesheet" href="css/pages.css?v=8">
+<link rel="stylesheet" href="css/motion.css?v=8">
 </head>
 <body class="p-reserve-page">
 <a class="u-skip-link" href="#main">本文へスキップ</a>
@@ -54,7 +54,7 @@
     <div class="l-container l-page-hero__inner">
       <span class="t-eyebrow" data-reveal>Reserve</span>
       <h1 class="t-display-3" data-mask-reveal>スペースを予約する</h1>
-      <p>必要な情報を 6 ステップに分けてお聞きします。各ステップで「今やること」だけに集中できる構成です。<br>送信前に内容を確認できますので、安心して進めてください。</p>
+      <p>必要な情報を 5 ステップに分けてお聞きします。各ステップで「今やること」だけに集中できる構成です。<br>送信前に内容を確認できますので、安心して進めてください。</p>
     </div>
   </section>
 
@@ -83,7 +83,7 @@
         <span class="t-eyebrow">Verify your email</span>
         <h2>メールアドレスの確認が必要です</h2>
         <p class="c-rules__intro" style="margin-left:auto;margin-right:auto">
-          ご予約の前に、ご登録メールアドレスの<strong>確認（認証）</strong>をお願いします。届いている確認メールのリンクを開いてから、下の「確認した（再読み込み）」を押してください。
+          ご予約の前に、ご登録のメールアドレスが正しいことの確認をお願いします。<br>①届いている「確認メール」を開き、本文のリンクを押す → ②このページに戻り「確認した（再読み込み）」を押す、の順でお願いします。メールが見つからない場合は「確認メールを再送」を押してください。
         </p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
           <button type="button" class="c-button c-button--primary c-button--lg" id="resend-verify">確認メールを再送</button>
@@ -113,7 +113,7 @@
             <span class="c-rules__num">1</span>
             <div>
               <h3>予約システムと正式申込</h3>
-              <div class="c-rules__reveal"><p>本システムの申請内容は「イマジン・デッキ運営会議」が審査します。システム上の「<strong>仮承認</strong>」は<strong>施設利用の確定ではありません</strong>。学外の方は、利用希望日の<strong>1か月前まで</strong>に「施設一時使用申込書」を愛媛大学ミュージアム事務（広報課）へご提出ください。</p></div>
+              <div class="c-rules__reveal"><p>本システムの申請内容は「イマジン・デッキ運営会議」が審査します。システム上の「<strong>仮承認</strong>」は<strong>施設利用の確定ではありません</strong>。学外の方は、利用希望日の<strong>56日前（約2か月前）まで</strong>に「施設一時使用申込書」を愛媛大学ミュージアム事務（広報課）へご提出ください。</p></div>
             </div>
           </li>
           <li class="c-rules__point">
@@ -205,7 +205,7 @@
               <ul>
                 <li><strong>本学構成員（役員・教職員・学生）：</strong>原則無料（教材費等の実費は参加者から徴収可）。</li>
                 <li><strong>学外の主催者：</strong>施設使用料は<strong>1時間あたり1,160円</strong>。</li>
-                <li><strong>展示利用の特例：</strong>展示会期中は無料。ただし<strong>準備日（前日）＋撤去日（翌日）の計13時間分＝15,080円</strong>が必須です（展示は最長21日間、準備・撤去日は休館日を除く）。</li>
+                <li><strong>展示利用の特例：</strong>展示会期中の施設使用料は無料です。展示準備（前日）・撤去（翌日）にかかる費用（最長21日間／準備・撤去日は休館日を除く）は、運営・事務局からご案内します。</li>
                 <li>本格的な展示・展示説明会・大規模イベントは、ミュージアム窓口でのご相談・お手続きとなります。</li>
               </ul>
             </div>
@@ -237,7 +237,7 @@
             <div class="c-form-progress" aria-hidden="true">
               <span class="c-form-progress__bar" id="progress-bar"></span>
             </div>
-            <p class="c-stepper__status" id="reserve-step-status" aria-live="polite">ステップ 1 / 6：日時</p>
+            <p class="c-stepper__status" id="reserve-step-status" aria-live="polite">ステップ 1 / 5：日時</p>
             <ol class="c-stepper__list" id="stepper">
               <li class="c-stepper__item is-current" data-step="1">
                 <span class="c-stepper__item__num">1</span>
@@ -253,14 +253,10 @@
               </li>
               <li class="c-stepper__item" data-step="4">
                 <span class="c-stepper__item__num">4</span>
-                <span class="c-stepper__item__label">利用箇所</span>
+                <span class="c-stepper__item__label">詳細・添付</span>
               </li>
               <li class="c-stepper__item" data-step="5">
                 <span class="c-stepper__item__num">5</span>
-                <span class="c-stepper__item__label">詳細・添付</span>
-              </li>
-              <li class="c-stepper__item" data-step="6">
-                <span class="c-stepper__item__num">6</span>
                 <span class="c-stepper__item__label">確認</span>
               </li>
             </ol>
@@ -271,8 +267,8 @@
             <!-- ============ Step 1: 日時 ============ -->
             <section class="p-reserve-step c-step-card is-current" data-step="1" aria-labelledby="step1-title">
               <header class="c-step-card__head">
-                <span class="c-step-card__num">STEP 01 / 06</span>
-                <h2 class="c-step-card__title" id="step1-title">まず、予約できるか確認しましょう</h2>
+                <span class="c-step-card__num">STEP 01 / 05</span>
+                <h2 class="c-step-card__title" id="step1-title">利用する日時を選びましょう</h2>
                 <p class="c-step-card__lead">
                   最初に、希望する日付と時間を選んでください。Imagine Deck の利用時間は <strong>10:00〜16:30</strong>、休館日は日曜・祝日です。
                 </p>
@@ -349,7 +345,7 @@
               <div class="c-field" id="exhibition-days-field" hidden style="margin-top:24px">
                 <label class="c-field__label c-field__label--required" for="exhibition-days">展示日数（最長21日間）</label>
                 <p class="c-field-help">開始日から数えた展示期間の日数です（1〜21日）。展示準備日・撤去日は別途、運営・事務局よりご案内します。</p>
-                <input class="c-input" type="number" id="exhibition-days" name="exhibition-days" min="1" max="21" inputmode="numeric" placeholder="例：7" style="max-width:200px">
+                <input class="c-input" type="text" id="exhibition-days" name="exhibition-days" inputmode="numeric" pattern="[0-9]*" placeholder="例：7" style="max-width:200px">
                 <p id="exhibition-range" class="c-field-help" style="margin-top:8px;color:var(--color-primary-dark)"></p>
                 <p class="c-error-message" data-error-for="exhibition-days" hidden></p>
               </div>
@@ -366,10 +362,10 @@
             <!-- ============ Step 2: 主催者情報 ============ -->
             <section class="p-reserve-step c-step-card" data-step="2" aria-labelledby="step2-title" hidden>
               <header class="c-step-card__head">
-                <span class="c-step-card__num">STEP 02 / 06</span>
+                <span class="c-step-card__num">STEP 02 / 05</span>
                 <h2 class="c-step-card__title" id="step2-title">主催者情報を教えてください</h2>
                 <p class="c-step-card__lead">
-                  「誰が責任を持って利用するか」を明確にするための情報です。学生団体・授業・ゼミなどの場合は、代表者と確認者を分けて記入してください。
+                  当日その場で対応する「責任者」と、内容を確認する「大学関係者（担当教員・職員）」をそれぞれご記入ください。学生団体・授業・ゼミの場合は、代表の学生と指導教員などを分けて入力してください。
                 </p>
               </header>
 
@@ -378,14 +374,14 @@
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="org-name">主催者・団体名</label>
                 <p class="c-field-help">イベント・展示を主催する個人または団体の名称をご記入ください。</p>
-                <input class="c-input" type="text" id="org-name" name="org-name" required maxlength="100" placeholder="">
+                <input class="c-input" type="text" id="org-name" name="org-name" required maxlength="100" autocomplete="organization" placeholder="">
                 <p class="c-error-message" data-error-for="org-name" hidden></p>
               </div>
 
               <div class="c-field">
                 <label class="c-field__label c-field__label--required" for="student-name">責任者 氏名</label>
                 <p class="c-field-help">当日 Imagine Deck で対応する方の氏名をご記入ください。</p>
-                <input class="c-input" type="text" id="student-name" name="student-name" required maxlength="50" placeholder="愛媛 太郎">
+                <input class="c-input" type="text" id="student-name" name="student-name" required maxlength="50" autocomplete="name" placeholder="愛媛 太郎">
                 <p class="c-error-message" data-error-for="student-name" hidden></p>
               </div>
 
@@ -427,7 +423,7 @@
             <!-- ============ Step 3: 利用内容 ============ -->
             <section class="p-reserve-step c-step-card" data-step="3" aria-labelledby="step3-title" hidden>
               <header class="c-step-card__head">
-                <span class="c-step-card__num">STEP 03 / 06</span>
+                <span class="c-step-card__num">STEP 03 / 05</span>
                 <h2 class="c-step-card__title" id="step3-title">どんな利用内容ですか？</h2>
                 <p class="c-step-card__lead">
                   入力負担を減らすため、まずは選択式で大枠を決めましょう。詳細は次のステップで聞きます。
@@ -464,7 +460,7 @@
 
               <fieldset class="c-field">
                 <legend class="c-field__label c-field__label--required">利用目的タイプ</legend>
-                <p class="c-field-help">最も近いものを 1 つ選んでください。「発表」はイベントに含みます。</p>
+                <p class="c-field-help">最も近いものを 1 つ選んでください。研究発表・成果発表は「イベント・発表・交流」に含まれます。</p>
                 <div class="c-choice-grid" data-radio-group="purpose-type" role="radiogroup" aria-required="true">
                   <label class="c-choice-card">
                     <input type="radio" name="purpose-type" value="exhibition" required>
@@ -507,7 +503,7 @@
 
               <fieldset class="c-field" style="margin-top:28px;">
                 <legend class="c-field__label c-field__label--required">予約形態</legend>
-                <p class="c-field-help">スペース全体を貸し切るか、他の利用者と共有するか。</p>
+                <p class="c-field-help">スペース全体を貸し切る「専有」か、他の利用者と一緒に使う「共有」かを選びます。※展示（壁面利用）は専有できず共有のみです。</p>
                 <div class="c-choice-grid" role="radiogroup" aria-required="true">
                   <label class="c-choice-card">
                     <input type="radio" name="reserve-type" value="shared" required>
@@ -566,9 +562,9 @@
               </fieldset>
 
               <div class="c-field" style="margin-top:28px;">
-                <label class="c-field__label c-field__label--required" for="capacity">のべ参加人数</label>
-                <p class="c-field-help">イベント全体での<strong>延べ参加人数</strong>（来場者の合計見込み）を入力してください。<br>※屋内の<strong>同時最大収容人数は20名</strong>です（「延べ参加人数」とは異なります）。</p>
-                <input class="c-input" type="number" id="capacity" name="capacity" min="1" required inputmode="numeric" placeholder="例：30" style="max-width:200px;">
+                <label class="c-field__label c-field__label--required" for="capacity">参加人数の合計（のべ人数）</label>
+                <p class="c-field-help">開催期間を通じた来場者の合計見込みを入力してください（例：3日間で合計30名なら「30」）。<br>※会場に同時に入れるのは<strong>最大20名</strong>までです。</p>
+                <input class="c-input" type="text" id="capacity" name="capacity" required inputmode="numeric" pattern="[0-9]*" placeholder="例：30" style="max-width:200px;">
                 <p class="c-error-message" data-error-for="capacity" hidden></p>
               </div>
 
@@ -594,29 +590,10 @@
                 <p class="c-error-message" data-error-for="catering" hidden></p>
               </fieldset>
 
-              <div class="c-step-card__actions">
-                <button type="button" class="c-button c-button--ghost-dark" data-prev>← 戻る</button>
-                <button type="button" class="c-button c-button--primary" data-next>次へ進む →</button>
-              </div>
-            </section>
-
-            <!-- ============ Step 4: 利用箇所 ============ -->
-            <section class="p-reserve-step c-step-card" data-step="4" aria-labelledby="step4-title" hidden>
-              <header class="c-step-card__head">
-                <span class="c-step-card__num">STEP 04 / 06</span>
-                <h2 class="c-step-card__title" id="step4-title">どこを使いますか？</h2>
-                <p class="c-step-card__lead">
-                  Imagine Deck の中で、利用したい場所を1つ選んでください。利用目的に応じて自動で選ばれます（展示は「壁面」のみ、それ以外は「フロア全体」）。
-                </p>
-              </header>
-
-              <div class="c-error-summary" data-error-summary hidden></div>
-
-              <fieldset class="c-field" aria-required="true">
-                <legend class="c-field__label c-field__label--required">利用箇所</legend>
-                <p class="c-field-help">利用目的に応じて自動で選ばれます。<strong>展示</strong>は「壁面」のみ、それ以外は「フロア全体」です。</p>
-
-                <!-- 展示のとき：壁面のみ（議事録2026-06-09: 展示は壁面のみ・貸切不可） -->
+              <!-- 利用箇所（利用目的から自動決定・確認用） -->
+              <fieldset class="c-field" aria-required="true" style="margin-top:28px">
+                <legend class="c-field__label">利用箇所（自動で決まります）</legend>
+                <p class="c-field-help">上で選んだ利用目的に応じて自動で決まります。<strong>展示</strong>は「壁面」のみ、それ以外は「フロア全体」です。</p>
                 <div class="c-choice-grid" data-area-set="exhibition" hidden>
                   <label class="c-choice-card">
                     <input type="radio" name="area" value="wall" disabled>
@@ -625,8 +602,6 @@
                     <span class="c-choice-card__desc">壁面に作品・ポスターを掲示する展示です。展示は<strong>壁面のみ・貸切不可</strong>（他の利用と並行する場合があります）。</span>
                   </label>
                 </div>
-
-                <!-- 展示以外のとき：フロア全体 -->
                 <div class="c-choice-grid" data-area-set="other" hidden>
                   <label class="c-choice-card">
                     <input type="radio" name="area" value="floor-all" disabled>
@@ -635,7 +610,6 @@
                     <span class="c-choice-card__desc">イマジン・デッキの空間（カウンター含む）を利用します。</span>
                   </label>
                 </div>
-
                 <p class="c-field-help" data-area-hint hidden style="margin-top:10px;color:var(--color-primary-dark)"></p>
                 <p class="c-error-message" data-error-for="area" hidden></p>
               </fieldset>
@@ -646,10 +620,10 @@
               </div>
             </section>
 
-            <!-- ============ Step 5: 詳細・添付 ============ -->
-            <section class="p-reserve-step c-step-card" data-step="5" aria-labelledby="step5-title" hidden>
+            <!-- ============ Step 4: 詳細・添付 ============ -->
+            <section class="p-reserve-step c-step-card" data-step="4" aria-labelledby="step5-title" hidden>
               <header class="c-step-card__head">
-                <span class="c-step-card__num">STEP 05 / 06</span>
+                <span class="c-step-card__num">STEP 04 / 05</span>
                 <h2 class="c-step-card__title" id="step5-title">企画の詳細を教えてください</h2>
                 <p class="c-step-card__lead">
                   ここが最後の入力です。書きにくい場合は、あとで運営から確認連絡もできますので、まずは分かる範囲で大丈夫です。
@@ -726,9 +700,9 @@
             </section>
 
             <!-- ============ Step 6: 確認 ============ -->
-            <section class="p-reserve-step c-step-card" data-step="6" aria-labelledby="step6-title" hidden>
+            <section class="p-reserve-step c-step-card" data-step="5" aria-labelledby="step6-title" hidden>
               <header class="c-step-card__head">
-                <span class="c-step-card__num">STEP 06 / 06</span>
+                <span class="c-step-card__num">STEP 05 / 05</span>
                 <h2 class="c-step-card__title" id="step6-title">入力内容を確認してください</h2>
                 <p class="c-step-card__lead">
                   これが運営に届く内容です。各セクションの「修正」を押すと、入力内容を残したまま、そのステップに戻れます。
@@ -740,7 +714,7 @@
               <div class="c-alert c-alert--info" style="margin-top:24px;">
                 <span class="c-alert__icon" aria-hidden="true">ℹ︎</span>
                 <div>
-                  送信後、入力されたメールアドレスに受付確認の連絡が届きます（数日以内に運営から内容確認のメールがいきます）。
+                  送信後、ご入力のメールアドレスに受付確認メールが自動で届きます。その後、数日以内に運営から内容確認のメールをお送りします。
                 </div>
               </div>
 
@@ -765,7 +739,7 @@
               <li>休館日: 日曜・祝日</li>
               <li>飲み物（蓋つき容器）OK / 食事 NG</li>
               <li>ゴミは持ち帰り</li>
-              <li>学外主催者は有料（要見積）</li>
+              <li>学外の方は有料（1時間 1,160円・概算自動表示）</li>
             </ul>
           </div>
           <div class="p-reserve-aside-card">

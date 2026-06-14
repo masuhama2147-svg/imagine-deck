@@ -1,4 +1,4 @@
-/* reservation.js — 6-step reservation form (DOM-built; no innerHTML for data)
+/* reservation.js — 5-step reservation form (DOM-built; no innerHTML for data)
    ・予約はログイン必須（未ログインはログイン/新規登録へ誘導）
    ・メールアドレスで学内(無料)／学外(有料)を自動判別して表示
    ・送信時は Firestore の reservations に保存（reportReminderSent:false で終了後メール連携） */
@@ -13,7 +13,7 @@ import { openModal } from './main.js';
 const HOURLY_RATE = 1160;     // 学外：1時間あたり（円）
 const EXHIBITION_FEE = 15080; // 展示特例：準備+撤去 計13時間分（円）
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 5;
 const TIME_OPTS = [];
 for (let h = 10; h <= 16; h++) {
   for (const mm of (h === 16 ? ['00', '30'] : ['00', '30'])) {
@@ -72,9 +72,8 @@ const STEP_LABELS = {
   1: '日時',
   2: '主催者情報',
   3: '利用内容',
-  4: '利用箇所',
-  5: '詳細・添付',
-  6: '確認',
+  4: '詳細・添付',
+  5: '確認',
 };
 
 const FIELD_LABELS = {
@@ -110,8 +109,7 @@ const FIELDS_BY_STEP = {
   1: ['date', 'start-time', 'end-time'],
   2: ['org-name', 'student-name', 'student-email', 'staff-name', 'staff-email', 'teacher-consent'],
   3: ['purpose-type', 'purpose-other', 'reserve-type', 'audience', 'academic', 'capacity', 'catering'],
-  4: ['area'],
-  5: ['project-name', 'purpose', 'event-detail', 'sns', 'related-url', 'notes'],
+  4: ['project-name', 'purpose', 'event-detail', 'sns', 'related-url', 'notes'],
 };
 
 /* STEP1 の検証対象は利用タイプで変わる（長期壁面展示は「時間」ではなく「日数」） */
@@ -126,7 +124,7 @@ function fieldsForStep(n) {
 
 const PURPOSE_LABEL = { exhibition: '展示', event: 'イベント・発表・交流', workshop: 'ワークショップ', other: 'その他' };
 const RESERVE_LABEL = { shared: '通常利用（共有）', exclusive: '専有利用（貸切）' };
-const AUDIENCE_LABEL = { public: '一般公開', campus: '学内のみ', closed: '関係者のみ' };
+const AUDIENCE_LABEL = { public: '一般公開', closed: '関係者のみ' };
 const ACADEMIC_LABEL = { academic: '学術イベント', 'non-academic': '学術以外' };
 const CATERING_LABEL = { none: 'なし', snacks: '軽食あり（要相談・大学関係者同席）' };
 const AREA_LABEL = { wall: '壁面', 'floor-all': 'フロア全体（カウンター含む）' };
@@ -336,7 +334,7 @@ function showStep(n) {
     cur.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   // Build summary at step 6
-  if (n === 6) buildConfirmSummary();
+  if (n === 5) buildConfirmSummary();
 }
 
 /* ---------- Validation ---------- */
@@ -511,6 +509,7 @@ function collectFormData() {
   });
   data['reserve-mode'] = document.querySelector('input[name="reserve-mode"]:checked')?.value || 'standard';
   data['exhibition-days'] = (document.getElementById('exhibition-days')?.value || '').trim();
+  data['area'] = document.querySelector('input[name="area"]:checked')?.value || ''; // 利用目的から自動確定
   data.files = state.uploadedFiles.map(f => ({ name: f.name, size: f.size, type: f.type }));
   state.formData = data;
   return data;
@@ -611,14 +610,12 @@ function buildConfirmSummary() {
     ['学術かどうか', ACADEMIC_LABEL[data['academic']] || ''],
     ['のべ参加人数', data.capacity ? `${data.capacity} 名` : ''],
     ['飲食', CATERING_LABEL[data.catering] || ''],
-  ]));
-  wrap.appendChild(card('利用箇所', 4, [
     ['利用箇所', AREA_LABEL[data.area] || data.area || ''],
   ]));
   const fileLabel = state.uploadedFiles.length
     ? state.uploadedFiles.map(f => `${f.name}（${formatBytes(f.size)}）`).join(', ')
     : '添付なし';
-  wrap.appendChild(card('詳細・添付資料', 5, [
+  wrap.appendChild(card('詳細・添付資料', 4, [
     ['企画名', data['project-name']],
     ['利用目的', data.purpose],
     ['イベント詳細', data['event-detail']],
@@ -926,11 +923,11 @@ function initSubmit() {
     e.preventDefault();
     // Validate all steps once more
     let ok = true;
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 4; i++) {
       if (!validateStep(i)) { ok = false; }
     }
     if (!ok) {
-      const firstErrorStep = [1, 2, 3, 4, 5].find(n => state.validationErrors[n]?.length);
+      const firstErrorStep = [1, 2, 3, 4].find(n => state.validationErrors[n]?.length);
       if (firstErrorStep) showStep(firstErrorStep);
       return;
     }
@@ -1021,7 +1018,7 @@ function initSubmit() {
           el('span', { class: 'c-alert__icon', 'aria-hidden': 'true' }, '✓'),
           el('div', {},
             el('strong', {}, '予約リクエストを送信しました。'),
-            el('p', { style: { marginTop: '6px', fontWeight: '400' } }, '運営（イマジン・デッキ運営会議）が内容を確認し、仮承認の可否をご連絡します。学外の方は別途「施設一時使用申込書」のご提出が必要です。終了後には開催報告のご案内メールをお送りします。'),
+            el('p', { style: { marginTop: '6px', fontWeight: '400' } }, '運営（イマジン・デッキ運営会議）が内容を確認し、仮承認の可否をご連絡します。' + (billingRole() === 'external' ? '学外の方は別途「施設一時使用申込書」のご提出が必要です。' : '') + '終了後には開催報告のご案内メールをお送りします。'),
             el('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '16px' } },
               el('a', { class: 'c-button c-button--primary c-button--sm', href: 'event-log.html' }, '開催ログを見る'),
               el('a', { class: 'c-button c-button--ghost-dark c-button--sm', href: 'guidelines.html' }, 'ガイドラインを見る'),
@@ -1100,6 +1097,7 @@ function initSpaceGallery() {
     const img = fig.querySelector('img');
     if (!img) return;
     lbImg.src = img.currentSrc || img.src;
+    lbImg.style.visibility = ''; // フォールバックで隠れた場合に備えて毎回クリア
     lbImg.alt = img.alt || '';
     if (lbCap) lbCap.textContent = fig.querySelector('figcaption')?.textContent || '';
     openModal(lb);

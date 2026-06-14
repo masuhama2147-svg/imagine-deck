@@ -94,6 +94,10 @@ function initModals() {
 /* ----- Graceful image fallback (hide broken/placeholder images) ----- */
 function initImageFallback() {
   $$('img').forEach(img => {
+    // 空src（ライトボックス等、クリック後に src を差し込む画像）は対象外。
+    // これを隠すと拡大画像が visibility:hidden のままになり表示されない。
+    const src = img.getAttribute('src');
+    if (!src) return;
     const onErr = () => {
       img.style.visibility = 'hidden';
       const media = img.closest('[class*="__media"]');

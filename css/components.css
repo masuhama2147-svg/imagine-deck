@@ -435,7 +435,7 @@
   gap: 12px;
   grid-template-columns: 1fr;
 }
-@media (min-width: 540px) {
+@media (min-width: 768px) {
   .c-choice-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -726,9 +726,11 @@
 .c-step-card[data-step="1"] { --step-image: url("../assets/images/reserve/step-01-date.jpg"); }
 .c-step-card[data-step="2"] { --step-image: url("../assets/images/reserve/step-02-organizer.jpg"); }
 .c-step-card[data-step="3"] { --step-image: url("../assets/images/reserve/step-03-content.jpg"); }
-.c-step-card[data-step="4"] { --step-image: url("../assets/images/reserve/step-04-area.jpg"); }
-.c-step-card[data-step="5"] { --step-image: url("../assets/images/reserve/step-05-detail.jpg"); }
-.c-step-card[data-step="6"] { --step-image: url("../assets/images/reserve/step-06-confirm.jpg"); }
+.c-step-card[data-step="4"] { --step-image: url("../assets/images/reserve/step-05-detail.jpg"); }
+.c-step-card[data-step="5"] { --step-image: url("../assets/images/reserve/step-06-confirm.jpg"); }
+/* ステップ切替・アンカー時に見出しが固定ヘッダー/ステッパーの下へ隠れないよう余白を確保 */
+.p-reserve-page .c-step-card { scroll-margin-top: 88px; }
+@media (max-width: 767px) { .p-reserve-page .c-step-card { scroll-margin-top: 148px; } }
 .c-step-card > * {
   position: relative;
   z-index: 1;
@@ -994,7 +996,7 @@
   gap: 12px;
   grid-template-columns: 1fr;
 }
-@media (min-width: 540px) {
+@media (min-width: 768px) {
   .c-time-row { grid-template-columns: 1fr auto 1fr; align-items: end; }
 }
 .c-time-row__sep {
@@ -1004,7 +1006,7 @@
   color: var(--color-text-muted);
   padding-bottom: 14px;
 }
-@media (max-width: 540px) {
+@media (max-width: 767px) {
   .c-time-row__sep { display: none; }
 }
 
@@ -1282,8 +1284,8 @@
   border-top: 1px solid var(--color-border); padding-top: 20px; margin-top: 4px;
   display: grid; gap: 14px; justify-items: start;
 }
-.c-check { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-weight: 500; line-height: 1.6; }
-.c-check input { width: 22px; height: 22px; accent-color: var(--color-primary); flex: none; margin-top: 2px; }
+.c-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-weight: 500; line-height: 1.6; padding: 4px 0; }
+.c-check input { width: 24px; height: 24px; accent-color: var(--color-primary); flex: none; margin-top: 1px; }
 .c-rules__agree-hint { font-size: 0.85rem; color: var(--color-text-soft); }
 
 /* Gate the form until agreed — only when JS is active (robust without JS) */
